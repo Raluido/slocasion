@@ -1,0 +1,14 @@
+Información del servidor
+Nombre de host: slocasion.es
+Dirección IP principal: 54.37.168.122
+Contraseña de "Root": 04xbd077nfmc02gu
+
+
+Acceso al panel de virtualización
+El panel de virtualización (también conocido como "VPS panel") te permite realizar sobre tu VPS operaciones tales como: iniciar, apagar o reinstalar.
+
+El siguiente acceso te permite acceder directamente al VPS panel directamente, pero puedes entrar en él directamente desde tu área de clientes sin necesidad de recordar la contraseña.
+
+URL de acceso: https://vpspanel.raiolanetworks.es:5656
+Usuario VPS Panel: vps-59260-srbefrzk
+Contraseña VPS Panel: 04xbd077nfmc02gu (*)
