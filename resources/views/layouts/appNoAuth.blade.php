@@ -28,7 +28,7 @@
                     </button>
                 </div>
                 <div class="mobileMenuLinks">
-                    <ul class="">
+                    <ul class="mobileMenuLinksTop">
                         <li class="">
                             <a class="" href="/">Principal</a>
                         </li>
@@ -39,11 +39,13 @@
                             <a class="" href="/contact">Contacto</a>
                         </li>
                     </ul>
-                    <div class=""><a class="" href="https://api.whatsapp.com/send?phone=+34629294597"><i class="fab fa-whatsapp me-1"></i></a>
-                    </div>
-                    <div class=""><a class="" href="http://www.facebook.com/SL-ocasión-106083305099628/"><i class="fab fa-facebook-f"></i></a>
-                    </div>
-                    <div class=""><a class="" href="mailto:sumaymas@gmail.com"><i class="fas fa-at me-1"></i></a>
+                    <div class="mobileMenuBottom">
+                        <div class=""><a class="" href="https://api.whatsapp.com/send?phone=+34629294597"><i class="fab fa-whatsapp me-1"></i></a>
+                        </div>
+                        <div class=""><a class="" href="http://www.facebook.com/SL-ocasión-106083305099628/"><i class="fab fa-facebook-f"></i></a>
+                        </div>
+                        <div class=""><a class="" href="mailto:sumaymas@gmail.com"><i class="fas fa-at me-1"></i></a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -137,6 +139,7 @@
         </div>
     </footer>
 </body>
-<script src="{{ asset('js/jquery-3.6.0.slim.min.js') }}"></script>
+<script src="{{ asset('js/jquery-3.7.0.min.js') }}"></script>
+<script src="{{ asset('js/menu.js') }}"></script>
 
 </html>

@@ -4,7 +4,7 @@
 <div class="">
     <div class="">
         <div class="wall">
-            <img src="{{ Storage::url('/img/bgPanoramic.jpg') }}" width="100%" height="200px">
+            <img src="{{ Storage::url('/img/bgPanoramic.jpg') }}">
         </div>
         @foreach ($cars as $car)
         <div class="">
