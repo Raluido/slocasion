@@ -27,29 +27,26 @@
                         <img src="{{ Storage::url('/img/mobileMenu.png') }}" alt="" class="">
                     </button>
                 </div>
-                <div class="mobileMenuLinks">
-                    <ul class="mobileMenuLinksTop">
-                        <li class="">
-                            <a class="" href="/">Principal</a>
-                        </li>
-                        <li class="">
-                            <a class="" href="/aboutus">Sobre nosotros</a>
-                        </li>
-                        <li class="">
-                            <a class="" href="/contact">Contacto</a>
-                        </li>
-                    </ul>
-                    <div class="mobileMenuBottom">
-                        <div class=""><a class="" href="https://api.whatsapp.com/send?phone=+34629294597"><i class="fab fa-whatsapp me-1"></i></a>
-                        </div>
-                        <div class=""><a class="" href="http://www.facebook.com/SL-ocasión-106083305099628/"><i class="fab fa-facebook-f"></i></a>
-                        </div>
-                        <div class=""><a class="" href="mailto:sumaymas@gmail.com"><i class="fas fa-at me-1"></i></a>
-                        </div>
-                    </div>
+            </div>
+            <div class="mobileMenuLinks d-none">
+                <ul class="mobileMenuLinksTop">
+                    <li class="">
+                        <a class="" href="/">Principal</a>
+                    </li>
+                    <li class="">
+                        <a class="" href="/aboutus">Sobre nosotros</a>
+                    </li>
+                    <li class="">
+                        <a class="" href="/contact">Contacto</a>
+                    </li>
+                </ul>
+                <div class="mobileMenuBottom">
+                    <a class="" href="https://api.whatsapp.com/send?phone=+34629294597"><i class="fab fa-whatsapp me-1"></i></a>
+                    <a class="" href="http://www.facebook.com/SL-ocasión-106083305099628/"><i class="fab fa-facebook-f"></i></a>
+                    <a class="" href="mailto:sumaymas@gmail.com"><i class="fas fa-at me-1"></i></a>
                 </div>
             </div>
-            <div class="desktopMenu" id="">
+            <div class="desktopMenu d-none" id="">
                 <div class="logo">
                     <a class="" href="{{ url('/') }}"><img src="{{ Storage::url('/img/' . 'logo3.png') }}"></a>
                 </div>

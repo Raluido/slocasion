@@ -9,6 +9,13 @@
 a {
     text-decoration: none;
     color: gray;
+}
+
+.d-none {
+    display: none;
+}
+
+.d-block {
     display: block;
 }
 
@@ -21,9 +28,6 @@ header {
     height: auto;
 }
 
-header nav .desktopMenu {
-    display: none;
-}
 
 header nav .mobileMenu {
     display: flex;
@@ -31,9 +35,6 @@ header nav .mobileMenu {
     padding: .2em;
 }
 
-header nav .mobileMenu .mobileMenuLinks {
-    display: none;
-}
 
 header nav .mobileMenu .mobileMenuLogo a {
     display: flex;
@@ -42,7 +43,7 @@ header nav .mobileMenu .mobileMenuLogo a {
 
 header nav .mobileMenu .mobileMenuLogo a,
 header nav .mobileMenu .mobileMenuLogo a img {
-    width: 5em;
+    width: 8em;
     height: auto;
 }
 
@@ -63,8 +64,34 @@ header nav .mobileMenu .mobileMenuButton button {
 
 header nav .mobileMenu .mobileMenuButton button,
 header nav .mobileMenu .mobileMenuButton button img {
-    width: 2em;
+    width: 3em;
     height: auto;
+}
+
+header nav .mobileMenuLinks {
+    z-index: 9999;
+    position: absolute;
+    background-color: white;
+    width: 100%;
+    padding: 1em;
+}
+
+header nav .mobileMenuLinks ul li,
+header nav .mobileMenuLinks .mobileMenuBottom {
+    display: flex;
+    justify-content: center;
+}
+
+header nav .mobileMenuLinks .mobileMenuLinksTop li:nth-child(-n+2) {
+    margin-bottom: .5em;
+}
+
+header nav .mobileMenuLinks .mobileMenuBottom {
+    margin-top: 1em;
+}
+
+header nav .mobileMenuLinks .mobileMenuBottom a:nth-child(n+2) {
+    margin-left: .5em;
 }
 
 header nav .desktopMenu {
@@ -79,6 +106,10 @@ header nav .desktopMenu {
 /* end header */
 
 /* main */
+
+main .wall {
+    margin-bottom: 2em;
+}
 
 main .wall,
 main .wall img {
@@ -96,30 +127,44 @@ main .wall img {
 
 .car {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.car .topCar,
-.car .topCar img {
-    width: 90%;
-    height: auto;
-}
-
-.car .topCar,
-.car .state {
-    display: flex;
     justify-content: center;
+    margin: 2em 0;
 }
 
-.car .state,
-.car .state img {
+.innerCar {
     width: 90%;
+    border-radius: 1%;
+    border: 1px solid lightgray;
+}
+
+.innerCar .innerCarTop,
+.innerCar .innerCarTop img {
+    width: 90%;
+    height: auto;
+    border-radius: 1%;
+}
+
+.innerCar .state,
+.innerCar .state img {
+    width: 100%;
     height: auto;
 }
 
-.car .bottomCar {
-    padding: 2em;
+
+.innerCar .bottomCar {
+    padding: 1em;
+}
+
+.innerCar .bottomCar .pricesOptions {
+    display: flex;
+}
+
+.innerCar .bottomCar div:nth-child(1) {
+    margin-bottom: 1em;
+}
+
+.innerCar .bottomCar .pricesOptions div:nth-child(2) {
+    margin-left: 2.5em;
 }
 
 .carInfo {
