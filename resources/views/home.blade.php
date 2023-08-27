@@ -7,19 +7,19 @@
             <img src="{{ Storage::url('/img/bgPanoramic.jpg') }}">
         </div>
         @foreach ($cars as $car)
-        <div class="car">
-            <div class="innerCar">
-                <div class="innerCarTop">
-                    <img class="mainImage" src="{{ Storage::url('media/' . $car->car_numberPlate . '0sm.' . pathinfo($car->car_photo_main, PATHINFO_EXTENSION)) }}" />
+        <div class="cars">
+            <a class="innerCars" href="{{ url('showcar/' . $car->id) }}" style="position:relative">
+                <div class="innerCarsTop">
+                    <img class="" src="{{ Storage::url('media/' . $car->car_numberPlate . '0sm.' . pathinfo($car->car_photo_main, PATHINFO_EXTENSION)) }}" />
                 </div>
                 @if ($car->car_soldOrBooked == 'Vendido')
-                <a class="state" href="{{ url('showcar/' . $car->id) }}"><img class="img-fluid card-img-top overImage" src="{{ Storage::url('img/sold.png') }}"></a>
+                <div class="state"><img class="" src="{{ Storage::url('img/sold.png') }}"></div>
                 @elseif ($car->car_soldOrBooked == 'Reservado')
-                <a class="state" href="{{ url('showcar/' . $car->id) }}"><img class="img-fluid card-img-top overImage" src="{{ Storage::url('img/reservedBg.png') }}"></a>
+                <div class="state"><img class="" src="{{ Storage::url('img/reservedBg.png') }}"></div>
                 @else
-                <a class="state" href="{{ url('showcar/' . $car->id) }}"><img class="img-fluid card-img-top overImage" src="{{ Storage::url('img/onsale.png') }}"></a>
+                <div class="state"><img class="" src="{{ Storage::url('img/onsale.png') }}"></div>
                 @endif
-                <div class="bottomCar">
+                <div class="bottomCars">
                     <div class="">
                         <h3 class="">{{ strtoupper($car->car_brand) }} - {{ strtoupper($car->car_model) }}</h3>
                     </div>
@@ -38,10 +38,11 @@
                         </div>
                     </div>
                     <div class="">
-                        <h4 class="">{{ $car->car_motorFuel }} &bull; {{ $car->car_horsePower }} cv</h4>
+                        <h4 class="">{{ $car->car_motorFuel }} &bull; {{ $car->car_horsePower }} cv &bull; {{ $car->car_cylinder }} cc</h4>
+                        </h4>
                     </div>
                 </div>
-            </div>
+            </a>
         </div>
         @endforeach
     </div>

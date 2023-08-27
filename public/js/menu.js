@@ -1,5 +1,5 @@
 window.addEventListener("load", function () {
-    this.window.addEventListener("click", function () {
+    $('.mobileMenuButton').on("click", function () {
         if ($('.mobileMenuLinks').hasClass('d-none')) {
             $('.mobileMenuLinks').removeClass('d-none');
             $('.mobileMenuLinks').addClass('d-block');

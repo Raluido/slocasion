@@ -79,7 +79,7 @@
     <main class="">
         @yield('content')
     </main>
-    <footer>
+    <footer class="">
         <div class="">
             <div class="">
                 <div class="">
@@ -92,7 +92,7 @@
                     <div class="">
                         <div class="">
                             <a class="">
-                                <i class=""></i>
+                                <i class="fas fa-map-marker-alt"></i>
                                 <div>
                                     <h4>Encuéntranos</h4>
                                     <a class="" href="https://goo.gl/maps/PhkNTNaXUaWnBzvDA" target="_blank">
@@ -104,17 +104,17 @@
                             </a>
                         </div>
                         <div class="">
-                            <a class=""><i class=""></i>
+                            <a class=""><i class="fas fa-phone-alt"></i>
                                 <div>
                                     <h4>Llámanos / Envíanos un whatsapp</h4>
                                     <a class="" href="https://api.whatsapp.com/send?phone=+34629294597">
-                                        <p class="">+34 629 294 597</p>
+                                        <p class="fs-6">+34 629 294 597</p>
                                     </a>
                                 </div>
                             </a>
                         </div>
                         <div class="">
-                            <a class="" href="mailto:raul@websiwebs.es"><i class="fas fa-envelope-open fs-2 me-4"></i>
+                            <a class="" href="mailto:raul@websiwebs.es"><i class="fas fa-envelope-open"></i>
                                 <div>
                                     <h4>Escríbenos</h4>
                                     <p class="">
@@ -124,9 +124,6 @@
                         </div>
                     </div>
                     <div class="">
-
-                    </div>
-                    <div class="" style="margin-top:100px;">
                         <p id="transRegistered">&regSL OCASIÓN ha sido desarrollada con cariño en HTML, CSS, PHP Y
                             JS.
                         </p>
