@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Http\Controllers;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,24 +16,28 @@ use Illuminate\Support\Facades\Route;
 */
 
 // RUTAS GET
-Route::get('/', [App\Http\Controllers\HomeController::class, 'showHome'])->name('home');
-Route::get('/showcar/{id}', [App\Http\Controllers\HomeController::class, 'showCar']);
-Auth::routes(['register' => false]);
-Route::get('/admin', [App\Http\Controllers\AdminController::class, 'showCars']);
-Route::get('/newcar', [App\Http\Controllers\AdminController::class, 'showNewCar']);
-Route::get('editcar/{id}', [App\Http\Controllers\AdminController::class, 'editCar']);
-Route::get('/aboutus', [App\Http\Controllers\HomeController::class, 'aboutUs']);
-Route::get('/contact', [App\Http\Controllers\SendEmailController::class, 'contact']);
-Route::get('reload-captcha', [App\Http\Controllers\SendEmailController::class, 'reloadCaptcha']);
+// admin
+Route::group(['middleware' => ['auth']], function () {
+    Route::group(['prefix' => 'admin'], function () {
+        Route::get('/showCars', [AdminController::class, 'showCars']);
+        Route::get('/newcar', [AdminController::class, 'showNewCar']);
+        Route::get('editcar/{id}', [AdminController::class, 'editCar']);
 
-// RUTAS POST
-Route::post('/newcar', [App\Http\Controllers\AdminController::class, 'createNewCar']);
-Route::post('/contact', [App\Http\Controllers\SendEmailController::class, 'sendEmail']);
+        Route::post('/newcar', [AdminController::class, 'createNewCar']);
+        Route::post('/contact', [SendEmailController::class, 'sendEmail']);
 
-// RUTAS PUT
-Route::put('updatecar/{id}', [App\Http\Controllers\AdminController::class, 'updateCar']);
-Route::put('updatestatus/{id}', [App\Http\Controllers\AdminController::class, 'updateStatus']);
+        Route::put('updatecar/{id}', [AdminController::class, 'updateCar']);
+        Route::put('updatestatus/{id}', [AdminController::class, 'updateStatus']);
 
-// RUTAS DELETE
-Route::get('deletecar/{id}', [App\Http\Controllers\AdminController::class, 'deleteCar']);
-Route::get('deleteallphotos/{id}', [App\Http\Controllers\AdminController::class, 'deleteAllPhotos']);
+        Route::get('deletecar/{id}', [AdminController::class, 'deleteCar']);
+        Route::get('deleteallphotos/{id}', [AdminController::class, 'deleteAllPhotos']);
+    });
+});
+
+Route::get('/login', [LoginController::class, 'login'])->name('login');
+
+Route::get('/', [HomeController::class, 'showHome'])->name('home');
+Route::get('/showcar/{id}', [HomeController::class, 'showCar']);
+Route::get('/aboutus', [HomeController::class, 'aboutUs']);
+Route::get('/contact', [SendEmailController::class, 'contact']);
+Route::get('reload-captcha', [SendEmailController::class, 'reloadCaptcha']);

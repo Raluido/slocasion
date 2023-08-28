@@ -80,57 +80,48 @@
         @yield('content')
     </main>
     <footer class="">
-        <div class="">
-            <div class="">
+        <div class="innerFooter">
+            <div class="innerFooterTop">
                 <div class="">
-                    <h5 class="">¿AÚN TIENES DUDAS? TE LAS RESOLVEMOS</h5>
-                    <a class="" href="mailto:sumaymas@gmail.com">CONTACTA</a>
+                    <h3 class="">¿AÚN TIENES DUDAS? TE LAS RESOLVEMOS</h3>
+                    <button class=""><a class="" href="mailto:sumaymas@gmail.com">CONTACTA</a></button>
                 </div>
             </div>
-            <div class="">
-                <div class="">
+            <div class="innerFooterBottom">
+                <a class="" href="https://goo.gl/maps/PhkNTNaXUaWnBzvDA" target="_blank">
                     <div class="">
+                        <div class=""><i class="fas fa-map-marker-alt"></i></div>
                         <div class="">
-                            <a class="">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <div>
-                                    <h4>Encuéntranos</h4>
-                                    <a class="" href="https://goo.gl/maps/PhkNTNaXUaWnBzvDA" target="_blank">
-                                        <p class="fs-6">Calle Colegio 3, La Orotava, Santa Cruz de
-                                            Tenerife
-                                        </p>
-                                    </a>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="">
-                            <a class=""><i class="fas fa-phone-alt"></i>
-                                <div>
-                                    <h4>Llámanos / Envíanos un whatsapp</h4>
-                                    <a class="" href="https://api.whatsapp.com/send?phone=+34629294597">
-                                        <p class="fs-6">+34 629 294 597</p>
-                                    </a>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="">
-                            <a class="" href="mailto:raul@websiwebs.es"><i class="fas fa-envelope-open"></i>
-                                <div>
-                                    <h4>Escríbenos</h4>
-                                    <p class="">
-                                        sumaymas@gmail.com</p>
-                                </div>
-                            </a>
+                            <h3>Encuéntranos</h3>
+                            <p class="">Calle Colegio 3, La Orotava , S/C de Tenerife</p>
                         </div>
                     </div>
+                </a>
+                <a class="" href="https://api.whatsapp.com/send?phone=+34629294597">
                     <div class="">
-                        <p id="transRegistered">&regSL OCASIÓN ha sido desarrollada con cariño en HTML, CSS, PHP Y
-                            JS.
-                        </p>
+                        <div class=""><i class="fas fa-phone-alt"></i></div>
+                        <div class="">
+                            <h3>Llámanos / Envíanos un whatsapp</h3>
+                            <p class="">+34 629 294 597</p>
+                        </div>
                     </div>
+                </a>
+                <a class="" href="mailto:raul@websiwebs.es">
+                    <div class="">
+                        <div class=""><i class="fas fa-envelope-open"></i></div>
+                        <div class="">
+                            <h3>Escríbenos</h3>
+                            <p class="">
+                                sumaymas@gmail.com</p>
+                        </div>
+                    </div>
+                </a>
+                <div class="" id="transRegistered">
+                    <p>&reg; &nbsp SL OCASIÓN ha sido desarrollada con cariño en HTML, CSS, PHP Y
+                        JS.
+                    </p>
                 </div>
             </div>
-        </div>
     </footer>
 </body>
 <script src="{{ asset('js/jquery-3.7.0.min.js') }}"></script>

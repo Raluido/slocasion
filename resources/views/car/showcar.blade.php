@@ -5,24 +5,24 @@
     <div class="innerCar">
         <div class="innerCarMainCharacts">
             <div class="">
-                <h3 class="">{{ strtoupper($car->car_brand) }} - {{ strtoupper($car->car_model) }}</h3>
+                <h2 class="">{{ strtoupper($car->car_brand) }} - {{ strtoupper($car->car_model) }}</h2>
             </div>
             <div class="pricesOptions">
                 <div class="">
-                    <h4 class="">Precio al contado</h4>
-                    <h3 class="">
-                        {{ number_format($car->car_price) }} €
-                    </h3>
+                    <h3 class="">Precio al contado</3>
+                        <h2 class="">
+                            {{ number_format($car->car_price) }} €
+                        </h2>
                 </div>
                 <div class="">
-                    <h4 class="">Otros</h4>
-                    <h3 class="">
+                    <h3 class="">Otros</h3>
+                    <h2 class="">
                         Consultar
-                    </h3>
+                    </h2>
                 </div>
             </div>
             <div class="">
-                <h4 class="">{{ $car->car_motorFuel }} &bull; {{ $car->car_horsePower }} cv &bull; {{ $car->car_cylinder }} cc</h4>
+                <h2 class="">{{ $car->car_motorFuel }} &bull; {{ $car->car_horsePower }} cv &bull; {{ $car->car_cylinder }} cc</h2>
             </div>
         </div>
         <div class="innerCarGallery">
@@ -49,70 +49,63 @@
                 </div>
             </div>
         </div>
-        <div class="innerCarWtsappBg">
-            <div class="">
-                <a href="https://wa.me/+34629294597/?text={{ $car->car_brand }} {{ $car->car_model }}"><img class="" src="{{ Storage::url('img/WhatsApp_icon.png') }}" width="60"></a>
-                <p class="">Estoy interesado!</p>
+        <a class="innerCarWtsapp" href="https://wa.me/+34629294597/?text={{ $car->car_brand }} {{ $car->car_model }}">
+            <div class="innerCarWtsappLogo">
+                <img class="" src="{{ Storage::url('img/WhatsApp_icon.png') }}">
             </div>
-        </div>
-        <div class="innerCarWtsappSm">
-            <a href="https://wa.me/+34629294597/?text={{ $car->car_brand }} {{ $car->car_model }}"><img class="" src="{{ Storage::url('img/WhatsApp_icon.png') }}" width="30"></a>
             <p class="mt-2">Estoy interesado!</p>
-        </div>
+        </a>
         <div class="innerCarInfo">
             <div class="innerInfo">
                 <div class="innerInfoDetails">
-                    <div class="">
-                        <h3 class="">Detalles del vehículo</h3>
+                    <div class="title">
+                        <h2 class="">Detalles del vehículo</h2>
                     </div>
-                    <div class="fs-3">
-                        <h5 class="">Color</h5>
-                        <p>{{ $car->car_color }}
-                        <h5 class="">Motor</h5>
-                        <p>{{ $car->car_motorFuel }}
-                        <h5 class="">Transmisión</h5>
-                        <p>{{ $car->car_gear }}
-                        <h5 class="">Carrocería</h5>
-                        <p>{{ $car->car_body }}
-                        <h5 class="">Cilindrada</h5>
+                    <div class="items">
+                        <h3 class="">Color</h3>
+                        <h2>{{ $car->car_color }}</h2>
+                        <h3 class="">Motor</h3>
+                        <h2>{{ $car->car_motorFuel }}</h2>
+                        <h3 class="">Transmisión</h3>
+                        <h2>{{ $car->car_gear }}</h2>
+                        <h3 class="">Carrocería</h3>
+                        <h2>{{ $car->car_body }}</h2>
+                        <h3 class="">Cilindrada</h3>
                         @php
                         $cyl = number_format($car->car_cylinder, 1);
                         @endphp
-                        <p>{{ $cyl }} cc</p>
-                        <h5 class="">Tipo de vehículo</h5>
-                        <p>{{ $car->car_horsePower }}
-                        <h5 class="">Fecha de matriculación</h5>
+                        <h2>{{ $cyl }} cc</h2>
+                        <h3 class="">Tipo de vehículo</h3>
+                        <h2>{{ $car->car_horsePower }}</h2>
+                        <h3 class="">Fecha de matriculación</h3>
                         @php
                         $registration_date = explode('-', $car->car_registration_date);
                         $registration_dateFix = $registration_date[2] . '-' . $registration_date[1] . '-' . $registration_date[0];
                         @endphp
-                        <p>{{ $registration_dateFix }}
-                        <h5 class="">Número de puertas</h5>
-                        <p>{{ $car->car_doors }}
-                        <h5 class="">Kilometraje</h5>
+                        <h2>{{ $registration_dateFix }}</h2>
+                        <h3 class="">Número de puertas</h3>
+                        <h2>{{ $car->car_doors }}</h2>
+                        <h3 class="">Kilometraje</h3>
                         @php
                         $km = number_format($car->car_km, 1);
                         @endphp
-                        <p>{{ $km }} km</p>
-                    </div>
-                    <div class="">
-
+                        <h2>{{ $km }} km</h2>
                     </div>
                 </div>
                 <div class="innerInfoImportant">
-                    <div class="">
-                        <h3 class="">Equipamiento destacado</h3>
+                    <div class="title">
+                        <h2 class="">Equipamiento destacado</h2>
                     </div>
-                    <div class="">
-                        <p>{!! html_entity_decode($EquipmentOrdered) !!}</p>
+                    <div class="items">
+                        <h3>{!! html_entity_decode($EquipmentOrdered) !!}</h3>
                     </div>
                 </div>
                 <div class="innerInfoNotes">
-                    <div class="">
-                        <h3 class="">Observaciones</h3>
+                    <div class="title">
+                        <h2 class="">Observaciones</h2>
                     </div>
-                    <div class="">
-                        <p>{{ $car->car_observations }}</p>
+                    <div class="items">
+                        <p>{{ $car->car_observations }}.</p>
                     </div>
                 </div>
             </div>
