@@ -6,7 +6,7 @@
         <div class="title">
             <h3 class="">Acceso panel administrador</h3>
         </div>
-        <form method="POST" action="{{ route('login') }}">
+        <form method="POST" action="{{ route('authenticate') }}">
             @csrf
 
             <div class="inputForm">

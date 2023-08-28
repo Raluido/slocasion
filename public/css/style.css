@@ -27,6 +27,17 @@ h5 {
     display: block;
 }
 
+.blueButton {
+    padding: .5em;
+    border-radius: 10%;
+    border: unset;
+    background-color: #0667f9;
+}
+
+.text-white {
+    color: white;
+}
+
 /* end general */
 
 /* header */
@@ -128,7 +139,7 @@ main .wall img {
 .cars {
     display: flex;
     justify-content: center;
-    margin: 2em 0;
+    margin-top: 2em;
 }
 
 .innerCars {
@@ -213,6 +224,24 @@ main .wall img {
     line-height: 1.5;
     font-size: 1.3em;
 }
+
+.edition {
+    margin: 1em;
+    padding: 1em;
+    border: 1px solid lightgray;
+    border-radius: 1%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.edition .editDelete .edit {
+    margin: 1em 0;
+}
+
+.edition .editDelete .delete {
+    margin: 2em 0;
+}
+
 
 /* end Home */
 
@@ -696,7 +725,7 @@ textarea {
     color: gray;
 }
 
-form {
+.innerContact form {
     margin: 2em 0;
 }
 
@@ -704,17 +733,10 @@ form {
     margin: 1em 0;
 }
 
-
 .submitForm {
     margin: 2em 0;
     text-align: center;
 }
-
-.submitForm button {
-    padding: .2em;
-    border-radius: .5em;
-}
-
 
 /* end contact */
 

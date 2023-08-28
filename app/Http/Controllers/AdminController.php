@@ -25,7 +25,7 @@ class AdminController extends Controller
         $car = Car::find($id);
         $car->car_soldOrBooked = $request->input('car_soldOrBooked');
         $car->update();
-        return redirect('/admin');
+        return redirect('/');
     }
 
 
@@ -63,8 +63,8 @@ class AdminController extends Controller
             Image::open('storage/media/' . $numberPlate . '0.' . $extension)
                 ->scaleResize(1000, 850)
                 ->save('storage/media/' . $numberPlate . '0' . 'sm.' . $extension);
-           
-           Storage::disk('public')->delete('/media/' . $numberPlate . '0.' . $extension);
+
+            Storage::disk('public')->delete('/media/' . $numberPlate . '0.' . $extension);
         }
         $car->save();
 
@@ -85,7 +85,7 @@ class AdminController extends Controller
                 if ($check) {
                     $addOne = $key + 1;
                     $file->storeAs('public/media', $numberPlate . $addOne . '.' . $extension);
-                    $path = 'public/media/'. $numberPlate . $addOne . 'sm.' . $extension;
+                    $path = 'public/media/' . $numberPlate . $addOne . 'sm.' . $extension;
                     $images[] = new Item([
                         'filename' => $path,
                     ]);
@@ -94,8 +94,7 @@ class AdminController extends Controller
                         ->scaleResize(1000, 850)
                         ->save('storage/media/' . $numberPlate . $addOne . 'sm.' . $extension);
 
-		    Storage::disk('public')->delete('/media/' . $numberPlate . $addOne . '.' . $extension);
-
+                    Storage::disk('public')->delete('/media/' . $numberPlate . $addOne . '.' . $extension);
                 } else {
                     echo '<div class="alert alert-warning"><strong>Warning!</strong> Sólo se admiten éstas extensiones png , jpg , jpeg</div>';
                 }
@@ -175,7 +174,7 @@ class AdminController extends Controller
                 if ($check) {
                     $result += 1;
                     $item->storeAs('public/media', $numberPlate . $result . '.' . $extension);
-                                        $path = $item->storeAs('public/media', $numberPlate . $result . 'sm.' . $extension);
+                    $path = $item->storeAs('public/media', $numberPlate . $result . 'sm.' . $extension);
                     $images[] = new Item([
                         'filename' => $path,
                     ]);
@@ -185,7 +184,6 @@ class AdminController extends Controller
                         ->save('storage/media/' . $numberPlate . $result . 'sm.' . $extension);
 
                     Storage::disk('public')->delete('/media/' . $numberPlate . $result . '.' . $extension);
-
                 } else {
                     echo '<div class="alert alert-warning"><strong>Warning!</strong> Sólo se admiten éstas extensiones png , jpg , jpeg</div>';
                 }
@@ -229,6 +227,6 @@ class AdminController extends Controller
             Storage::disk('public')->delete('/media/' . $fixed);
         }
         Item::where('car_id', $id)->delete();
-        return redirect('editcar' . '/' .$id);
+        return redirect('editcar' . '/' . $id);
     }
 }
