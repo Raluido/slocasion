@@ -254,30 +254,26 @@ class AdminController extends Controller
         }
     }
 
-    public function deleteAllPhotos($id)
+    public function deleteImg($id)
     {
-        $oldFiles = DB::Table('items')
-            ->where('car_id', $id)
-            ->select('filename')
+        $oldFile = DB::Table('items')
+            ->where('id', $id)
             ->get();
-        foreach ($oldFiles as $oldFile) {
-            $search = 'public/media/';
-            $fixed = str_replace($search, '', $oldFile->filename);
-            if (Storage::exists('/media/' . $fixed)) {
-                unlink(public_path('storage/media/' . $fixed));
-            }
-        }
 
-        $deleted = Item::where('car_id', $id)
-            ->delete();
-        if ($deleted >= 0) {
-            return redirect()
-                ->back()
-                ->withSuccess("Se han eliminado correctamente todas las fotos");
-        } else {
-            return redirect()
-                ->back()
-                ->withErrors("Ha habido un error al intentar eliminar todas las fotos");
+        if (Storage::exists('/media/' . $oldFile)) {
+            unlink(public_path('storage/media/' . $oldFile));
+
+            $deleted = Item::where('car_id', $id)
+                ->delete();
+            if ($deleted) {
+                return redirect()
+                    ->back()
+                    ->withSuccess("Se ha eliminado correctamente la foto");
+            } else {
+                return redirect()
+                    ->back()
+                    ->withErrors("Ha habido un error al intentar eliminar la foto");
+            }
         }
     }
 }

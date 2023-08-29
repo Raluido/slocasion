@@ -42,6 +42,6 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::put('updatestatus/{id}', [AdminController::class, 'updateStatus']);
 
-    Route::get('deletecar/{id}', [AdminController::class, 'deleteCar']);
-    Route::get('deleteallphotos/{id}', [AdminController::class, 'deleteAllPhotos']);
+    Route::get('deletecar/{id}', [AdminController::class, 'deleteCar'])->name('deleteCar');
+    Route::get('deleteimg/{id}', [AdminController::class, 'deleteImg'])->name('deleteImg');
 });
