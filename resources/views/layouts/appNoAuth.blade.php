@@ -39,6 +39,15 @@
                     <li class="">
                         <a class="" href="/contact">Contacto</a>
                     </li>
+                    @if(auth()->id())
+                    <li class="">
+                        <a class="" href="/logout">Logout</a>
+                    </li>
+                    @else
+                    <li class="">
+                        <a class="" href="/login">Login</a>
+                    </li>
+                    @endif
                 </ul>
                 <div class="mobileMenuBottom">
                     <a class="" href="https://api.whatsapp.com/send?phone=+34629294597"><i class="fab fa-whatsapp me-1"></i></a>
@@ -60,6 +69,9 @@
                         </li>
                         <li class="">
                             <a class="" href="/contact">Contacto</a>
+                        </li>
+                        <li class="">
+                            <a class="" href="/login">Intranet</a>
                         </li>
                     </ul>
                 </div>

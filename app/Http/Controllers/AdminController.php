@@ -14,20 +14,14 @@ use Illuminate\Support\Facades\Log;
 
 class AdminController extends Controller
 {
-    public function showCars()
-    {
-        $cars = Car::select()->orderBy('car_SoldOrBooked')->get();
-        return view('admin')->with('cars', $cars);
-    }
-
     public function updateStatus(Request $request, $id)
     {
         $car = Car::find($id);
         $car->car_soldOrBooked = $request->input('car_soldOrBooked');
         $car->update();
-        return redirect('/');
+        return redirect()
+            ->back();
     }
-
 
     public function showNewCar()
     {
@@ -135,28 +129,49 @@ class AdminController extends Controller
         $car->car_gear = $request->input('car_gear');
         $car->car_registration_date = $request->input('car_registration_date');
         $car->car_soldOrBooked = $request->input('car_soldOrBooked');
+
         if ($request->hasFile('photoMain')) {
-            $oldFileMain = DB::Table('cars')->where('id', $id)->value('car_photo_main');
-            Storage::disk('public')->delete('/media/' . $oldFileMain);
+            $oldFileMain = DB::Table('cars')
+                ->where('id', $id)
+                ->value('car_photo_main');
+
+            if (Storage::exists('/media/' . $oldFileMain)) {
+                unlink(public_path('/media/' . $oldFileMain));
+            }
+
+            $allowedfileExtension = ['jpg', 'png', 'jpeg'];
             $extension = $request->file('photoMain')->getClientOriginalExtension();
-            $request->photoMain->storeAs('public/media', $numberPlate . '0.' . $extension);
-            $car->car_photo_main = $numberPlate . '0' . 'sm.' . $extension;
+            if (in_array($extension, $allowedfileExtension)) {
+                $request->photoMain->storeAs('public/media', $numberPlate . '0.' . $extension);
 
-            Image::open('storage/media/' . $numberPlate . '0.' . $extension)
-                ->scaleResize(1000, 800)
-                ->save('storage/media/' . $numberPlate . '0' . 'sm.' . $extension);
+                // compress image
 
-            Storage::disk('public')->delete('/media/' . $numberPlate . '0.' . $extension);
+                Image::open('storage/media/' . $numberPlate . '0.' . $extension)
+                    ->scaleResize(1000, 800)
+                    ->save('storage/media/' . $numberPlate . '0' . 'sm.' . $extension);
+
+                if (Storage::exists('/media/' . $numberPlate . '0.' . $extension)) {
+                    unlink(public_path('storage/media/' . $numberPlate . '0.' . $extension));
+                }
+
+                // end
+
+                $car->car_photo_main = $numberPlate . '0' . 'sm.' . $extension;
+            } else {
+                redirect()
+                    ->back()
+                    ->withErrors('La extensión de las imagenes no está permitida.');
+            }
         }
         $car->update();
 
         if ($request->hasFile('photos')) {
 
-            $this->validate($request, [
-                'photos' => 'nullable',
-            ]);
+            $oldFiles = DB::Table('items')
+                ->where('car_id', $id)
+                ->select('filename')
+                ->get();
 
-            $oldFiles = DB::Table('items')->where('car_id', $id)->select('filename')->get()->toArray();
             $result = 0;
 
             foreach ($oldFiles as $oldFile) {
@@ -185,48 +200,82 @@ class AdminController extends Controller
 
                     Storage::disk('public')->delete('/media/' . $numberPlate . $result . '.' . $extension);
                 } else {
-                    echo '<div class="alert alert-warning"><strong>Warning!</strong> Sólo se admiten éstas extensiones png , jpg , jpeg</div>';
+                    redirect()
+                        ->back()
+                        ->withErrors('La extensión de las imagenes no está permitida.');
                 }
             }
             $car->items()->saveMany($images);
         }
 
-        return redirect('/admin');
+        return redirect()
+            ->back();
     }
 
     public function deleteCar($id)
     {
-        $oldFileMain = DB::Table('cars')->where('id', $id)->value('car_photo_main');
-        Storage::disk('public')->delete('/media/' . $oldFileMain);
-        $oldFileMainFix = str_replace('sm', "", $oldFileMain);
-        Storage::disk('public')->delete('/media/' . $oldFileMainFix);
-
-        $oldFiles = DB::Table('items')->where('car_id', $id)->select('filename')->get()->toArray();
-        foreach ($oldFiles as $oldFile) {
-            $search = 'public/media/';
-            $fixed = str_replace($search, '', $oldFile->filename);
-            Storage::disk('public')->delete('/media/' . $fixed);
-            $fixedFix = str_replace('sm', "", $fixed);
-            Storage::disk('public')->delete('/media/' . $fixedFix);
+        $oldFileMain = DB::Table('cars')
+            ->where('id', $id)
+            ->value('car_photo_main');
+        if (Storage::exists('/media/' . $oldFileMain)) {
+            unlink(public_path('storage/media/' . $oldFileMain));
         }
 
-        Item::where('car_id', $id)->delete();
-        $car = Car::find($id);
-        $car->id = Auth::user()->id;
-        $car->delete();
+        $oldFiles = DB::Table('items')
+            ->select('filename')
+            ->where('car_id', $id)
+            ->get();
+        foreach ($oldFiles as $oldFile) {
+            $search = 'public/media/';
+            $oldFile = str_replace($search, '', $oldFile->filename);
+            if (Storage::exists('/media/' . $oldFile)) {
+                unlink(public_path('storage/media/' . $oldFile));
+            }
+        }
 
-        return redirect('/admin');
+        $deleted = Item::where('car_id', $id)->delete();
+        if ($deleted >= 0) {
+            $deleted = Car::where('id', $id)->delete();
+            if ($deleted >= 0) {
+                return redirect()
+                    ->back()
+                    ->withSuccess("El anuncio se ha eliminado correctamente");
+            } else {
+                return redirect()
+                    ->back()
+                    ->withSuccess("Han habido errores al intentar eliminar el anuncio");
+            }
+        } else {
+            return redirect()
+                ->back()
+                ->withSuccess("Han habido errores al intentar eliminar el anuncio");
+        }
     }
 
     public function deleteAllPhotos($id)
     {
-        $oldFiles = DB::Table('items')->where('car_id', $id)->select('filename')->get()->toArray();
+        $oldFiles = DB::Table('items')
+            ->where('car_id', $id)
+            ->select('filename')
+            ->get();
         foreach ($oldFiles as $oldFile) {
             $search = 'public/media/';
             $fixed = str_replace($search, '', $oldFile->filename);
-            Storage::disk('public')->delete('/media/' . $fixed);
+            if (Storage::exists('/media/' . $fixed)) {
+                unlink(public_path('storage/media/' . $fixed));
+            }
         }
-        Item::where('car_id', $id)->delete();
-        return redirect('editcar' . '/' . $id);
+
+        $deleted = Item::where('car_id', $id)
+            ->delete();
+        if ($deleted >= 0) {
+            return redirect()
+                ->back()
+                ->withSuccess("Se han eliminado correctamente todas las fotos");
+        } else {
+            return redirect()
+                ->back()
+                ->withErrors("Ha habido un error al intentar eliminar todas las fotos");
+        }
     }
 }

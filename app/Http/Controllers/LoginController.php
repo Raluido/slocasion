@@ -22,14 +22,15 @@ class LoginController extends Controller
             'password' => ['required'],
         ]);
 
-        if (Auth::attempt($credentials)) {
+        if (Auth::attempt($credentials, $request->input('remember'))) {
             $request->session()->regenerate();
 
             return redirect()->intended('/');
         }
 
         return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ])->onlyInput('email');
+            'email' => 'El email que has utilizado no figura en nuestra base de datos.',
+            'password' => 'El password que has utilizado no es correcto.'
+        ]);
     }
 }

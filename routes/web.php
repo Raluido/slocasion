@@ -25,24 +25,23 @@ Route::get('/', [HomeController::class, 'showHome'])->name('home');
 Route::get('showcar/{id}', [HomeController::class, 'showCar']);
 Route::get('aboutus', [HomeController::class, 'aboutUs']);
 Route::get('contact', [SendEmailController::class, 'contact']);
+Route::post('contact', [SendEmailController::class, 'sendEmail']);
 Route::get('reload-captcha', [SendEmailController::class, 'reloadCaptcha']);
 
 
 // admin
 
 Route::group(['middleware' => ['auth']], function () {
-    Route::group(['prefix' => 'admin'], function () {
-        Route::get('showCars', [AdminController::class, 'showCars'])->name('showCars');
-        Route::get('newcar', [AdminController::class, 'showNewCar']);
-        Route::get('editcar/{id}', [AdminController::class, 'editCar']);
+    Route::get('logout', [LogoutController::class, 'logout'])->name('logout');
 
-        Route::post('/newcar', [AdminController::class, 'createNewCar']);
-        Route::post('/contact', [SendEmailController::class, 'sendEmail']);
+    Route::get('editcar/{id}', [AdminController::class, 'editCar']);
+    Route::put('updatecar/{id}', [AdminController::class, 'updateCar']);
 
-        Route::put('updatecar/{id}', [AdminController::class, 'updateCar']);
-        Route::put('updatestatus/{id}', [AdminController::class, 'updateStatus']);
+    Route::get('newcar', [AdminController::class, 'showNewCar']);
+    Route::post('/newcar', [AdminController::class, 'createNewCar']);
 
-        Route::get('deletecar/{id}', [AdminController::class, 'deleteCar']);
-        Route::get('deleteallphotos/{id}', [AdminController::class, 'deleteAllPhotos']);
-    });
+    Route::put('updatestatus/{id}', [AdminController::class, 'updateStatus']);
+
+    Route::get('deletecar/{id}', [AdminController::class, 'deleteCar']);
+    Route::get('deleteallphotos/{id}', [AdminController::class, 'deleteAllPhotos']);
 });
