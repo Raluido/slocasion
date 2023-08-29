@@ -101,11 +101,13 @@ class AdminController extends Controller
 
     public function editCar($id)
     {
+        $items = Item::where('car_id', $id)
+            ->get();
         $car = Car::find($id);
         $car->user_id = Auth::user()->id;
         $car_equipment = DB::Table('cars')->where('id', $id)->value('car_equipment');
         $car_observations = DB::Table('cars')->where('id', $id)->value('car_observations');
-        return view('car.editcar', compact('car', 'car_equipment', 'car_observations'));
+        return view('car.editcar', compact('car', 'car_equipment', 'car_observations', 'items'));
     }
 
     public function updateCar(Request $request, $id)

@@ -839,3 +839,15 @@ footer .innerFooterBottom>a>div div:nth-child(2) h3 {
 }
 
 /*end newcar */
+
+/* edit car */
+
+.thumbnail,
+.thumbnail img {
+    margin: .5em 0;
+    width: 2em;
+    height: auto;
+    display: inline;
+}
+
+/* end edit car */
