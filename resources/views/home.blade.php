@@ -7,6 +7,9 @@
             <div class="wall">
                 <img src="{{ Storage::url('/img/bgPanoramic.jpg') }}">
             </div>
+            <div class="messages">
+                @include('layouts.partials.messages')
+            </div>
             @auth('web')
             <div class="add">
                 <button class="blueButton"><a class="text-white" href="{{ url('/newcar') }}">{{ Lang::get('car.newCar') }}</a></button>
@@ -16,9 +19,6 @@
         @foreach ($cars as $car)
         <div class="bottom">
             <div class="cars">
-                <div class="">
-                    @include('layouts.partials.messages')
-                </div>
                 <a class="innerCars" href="{{ url('showcar/' . $car->id) }}" style="position:relative">
                     <div class="innerCarsTop">
                         <img class="" src="{{ Storage::url('media/' . $car->car_numberPlate . '0sm.' . pathinfo($car->car_photo_main, PATHINFO_EXTENSION)) }}" />

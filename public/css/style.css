@@ -68,6 +68,11 @@ h5 {
     margin-top: .5em;
 }
 
+.messages {
+    background-color: antiquewhite;
+    margin: 1em;
+}
+
 /* end general */
 
 /* header */
@@ -853,6 +858,15 @@ footer .innerFooterBottom>a>div div:nth-child(2) h3 {
     justify-content: center;
 }
 
+.thumbnails {
+    margin: 1em 0;
+}
+
+.thumbnail {
+    display: inline-block;
+    position: relative;
+}
+
 .thumbnailImg,
 .thumbnailImg img {
     margin: .5em 0;
@@ -860,17 +874,26 @@ footer .innerFooterBottom>a>div div:nth-child(2) h3 {
     height: auto;
 }
 
-.thumbnailImg {}
+.thumbnailImg {
+    display: inline-block;
+}
 
-.thumbnailDelete {}
-
-.thumbnailDelete>input {
+.thumbnailDelete {
     width: .8em;
     height: .8em;
     border-radius: 100%;
     background-color: red;
     border: unset;
     margin-top: 0 !important;
+    display: inline-block;
+    text-align: center;
+    position: absolute;
+    top: .5em;
+    right: .01em;
+}
+
+.thumbnailDelete a {
+    display: inline-block;
 }
 
 

@@ -44,4 +44,5 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('deletecar/{id}', [AdminController::class, 'deleteCar'])->name('deleteCar');
     Route::get('deleteimg/{id}', [AdminController::class, 'deleteImg'])->name('deleteImg');
+    Route::get('deleteimgmain/{id}', [AdminController::class, 'deleteImgMain'])->name('deleteImgMain');
 });

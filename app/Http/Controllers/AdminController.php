@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Models\Car;
 use App\Models\Item;
 use DB;
-use File;
 use Gregwar\Image\Image;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
@@ -219,7 +218,7 @@ class AdminController extends Controller
         $oldFileMain = DB::Table('cars')
             ->where('id', $id)
             ->value('car_photo_main');
-        if (Storage::exists('/media/' . $oldFileMain)) {
+        if (Storage::exists('media/' . $oldFileMain)) {
             unlink(public_path('storage/media/' . $oldFileMain));
         }
 
@@ -230,7 +229,7 @@ class AdminController extends Controller
         foreach ($oldFiles as $oldFile) {
             $search = 'public/media/';
             $oldFile = str_replace($search, '', $oldFile->filename);
-            if (Storage::exists('/media/' . $oldFile)) {
+            if (Storage::exists('media/' . $oldFile)) {
                 unlink(public_path('storage/media/' . $oldFile));
             }
         }
@@ -251,6 +250,33 @@ class AdminController extends Controller
             return redirect()
                 ->back()
                 ->withSuccess("Han habido errores al intentar eliminar el anuncio");
+        }
+    }
+
+    public function deleteImgMain($id)
+    {
+        $oldFile = DB::Table('cars')
+            ->where('id', $id)
+            ->get();
+
+        log::info($oldFile[0]->car_photo_main);
+        if (Storage::exists('media/' . $oldFile[0]->car_photo_main)) {
+            unlink(public_path('storage/media/' . $oldFile[0]->car_photo_main));
+
+            $car = Car::find($id);
+            $car->car_photo_main = null;
+            $deleted = $car->update();
+
+
+            if ($deleted) {
+                return redirect()
+                    ->back()
+                    ->withSuccess("Se ha eliminado correctamente la foto");
+            } else {
+                return redirect()
+                    ->back()
+                    ->withErrors("Ha habido un error al intentar eliminar la foto");
+            }
         }
     }
 

@@ -62,27 +62,31 @@
                     <div class="inputForm">
                         <label for="car_photo">{{ Lang::get('car.car_photo_main') }}</label><br>
                         <input type="file" class="form-control" name="photoMain"><br>
-                        <div class="thumbnailImg">
-                            <img src="{{ Storage::url('media/' . $car->car_photo_main) }}" alt="" class="">
-                        </div>
-                        <div class="">
-
+                        <div class="thumbnail">
+                            <div class="thumbnailImg">
+                                <img src="{{ Storage::url('media/' . $car->car_photo_main) }}" alt="" class="">
+                            </div>
+                            <div class="thumbnailDelete">
+                                <a href="{{ route('deleteImgMain', $car->id) }}" class="text-white">X</a>
+                            </div>
                         </div>
                     </div>
                     <div class="">
                         <div class="inputForm">
                             <label for="car_photo">{{ Lang::get('car.car_addPhoto') }}</label><br>
                             <input type="file" class="form-control" name="photos[]" multiple />
-                            @foreach($items as $item)
-                            <div class="thumbnail">
-                                <div class="thumbnailImg">
-                                    <img src="{{ Storage::url('media/' . str_replace('public/media/', '', $item->filename)) }}" alt="" class="">
+                            <div class="thumbnails">
+                                @foreach($items as $item)
+                                <div class="thumbnail">
+                                    <div class="thumbnailImg">
+                                        <img src="{{ Storage::url('media/' . str_replace('public/media/', '', $item->filename)) }}" alt="" class="">
+                                    </div>
+                                    <div class="thumbnailDelete">
+                                        <a href="{{ route('deleteImg', $item->idItem) }}" class="text-white">X</a>
+                                    </div>
                                 </div>
-                                <form action="{{ route('deleteImg', $item->idItem) }}" method="get" class="thumbnailDelete">
-                                    <input type="submit" class="text-white" value="X">
-                                </form>
+                                @endforeach
                             </div>
-                            @endforeach
                         </div>
                     </div>
                 </div>
