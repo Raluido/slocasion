@@ -138,5 +138,6 @@
 </body>
 <script src="{{ asset('js/jquery-3.7.0.min.js') }}"></script>
 <script src="{{ asset('js/menu.js') }}"></script>
+@yield('js')
 
 </html>

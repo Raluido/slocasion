@@ -259,9 +259,9 @@ class AdminController extends Controller
             ->where('id', $id)
             ->get();
 
-        log::info($oldFile[0]->car_photo_main);
-        if (Storage::exists('media/' . $oldFile[0]->car_photo_main)) {
-            unlink(public_path('storage/media/' . $oldFile[0]->car_photo_main));
+        $path = 'storage/media/' . $oldFile[0]->car_photo_main;
+        if (Storage::exists($path)) {
+            Storage::delete($path);
 
             $car = Car::find($id);
             $car->car_photo_main = null;
@@ -283,13 +283,16 @@ class AdminController extends Controller
     public function deleteImg($id)
     {
         $oldFile = DB::Table('items')
-            ->where('id', $id)
+            ->where('idItem', $id)
             ->get();
 
-        if (Storage::exists('/media/' . $oldFile)) {
-            unlink(public_path('storage/media/' . $oldFile));
+        $oldFile = (str_replace('public/media/', '', $oldFile[0]->filename));
 
-            $deleted = Item::where('car_id', $id)
+        $path = 'storage/media/' . $oldFile;
+        if (Storage::exists($path)) {
+            Storage::delete($path);
+
+            $deleted = Item::where('idItem', $id)
                 ->delete();
             if ($deleted) {
                 return redirect()

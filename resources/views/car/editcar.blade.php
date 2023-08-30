@@ -62,6 +62,7 @@
                     <div class="inputForm">
                         <label for="car_photo">{{ Lang::get('car.car_photo_main') }}</label><br>
                         <input type="file" class="form-control" name="photoMain"><br>
+                        @if($car->car_photo_main != null)
                         <div class="thumbnail">
                             <div class="thumbnailImg">
                                 <img src="{{ Storage::url('media/' . $car->car_photo_main) }}" alt="" class="">
@@ -70,12 +71,20 @@
                                 <a href="{{ route('deleteImgMain', $car->id) }}" class="text-white">X</a>
                             </div>
                         </div>
+                        @endif
+                    </div>
+                    <div class="">
+                        <input type="hidden" class="file-input">
+                    </div>
+                    <div class="previewImg">
+                        <img src="" alt="" class="">
                     </div>
                     <div class="">
                         <div class="inputForm">
                             <label for="car_photo">{{ Lang::get('car.car_addPhoto') }}</label><br>
                             <input type="file" class="form-control" name="photos[]" multiple />
                             <div class="thumbnails">
+                                @if(!empty($items[0]))
                                 @foreach($items as $item)
                                 <div class="thumbnail">
                                     <div class="thumbnailImg">
@@ -86,6 +95,7 @@
                                     </div>
                                 </div>
                                 @endforeach
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -131,3 +141,6 @@
     </div>
 </div>
 @endsection
+section('js')
+<script class="" src="{{ asset('js/editImages.js') }}"></script>
+endsection

@@ -29,25 +29,27 @@ return [
     */
 
     'disks' => [
-        'google' => [
-            'driver' => 'google',
-            'clientId' => env('GOOGLE_DRIVE_CLIENT_ID'),
-            'clientSecret' => env('GOOGLE_DRIVE_CLIENT_SECRET'),
-            'refreshToken' => env('GOOGLE_DRIVE_REFRESH_TOKEN'),
-            'folderId' => env('GOOGLE_DRIVE_FOLDER_ID'),
-        ],
 
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app'),
         ],
+        'throw' => false,
 
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
             'url' => env('APP_URL') . '/storage',
             'visibility' => 'public',
-            'throw' => true
+            'throw' => false,
+        ],
+
+        'images' => [
+            'driver' => 'local',
+            'root' => storage_path('app/images'),
+            'url' => env('APP_URL') . '/images',
+            'visibility' => 'public',
+            'throw' => false
         ],
 
         's3' => [
@@ -59,6 +61,14 @@ return [
             'url' => env('AWS_URL'),
             'endpoint' => env('AWS_ENDPOINT'),
             'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
+        ],
+
+        'google' => [
+            'driver' => 'google',
+            'clientId' => env('GOOGLE_DRIVE_CLIENT_ID'),
+            'clientSecret' => env('GOOGLE_DRIVE_CLIENT_SECRET'),
+            'refreshToken' => env('GOOGLE_DRIVE_REFRESH_TOKEN'),
+            'folderId' => env('GOOGLE_DRIVE_FOLDER_ID'),
         ],
 
     ],
@@ -75,7 +85,8 @@ return [
     */
 
     'links' => [
-        public_path('storage') => storage_path('app/public'),
+        public_path('storage') => storage_path('app/storage'),
+        public_path('images') => storage_path('app/images'),
     ],
 
 ];
