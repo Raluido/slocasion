@@ -74,12 +74,6 @@
                         @endif
                     </div>
                     <div class="">
-                        <input type="hidden" class="file-input">
-                    </div>
-                    <div class="previewImg">
-                        <img src="" alt="" class="">
-                    </div>
-                    <div class="">
                         <div class="inputForm">
                             <label for="car_photo">{{ Lang::get('car.car_addPhoto') }}</label><br>
                             <input type="file" class="form-control" name="photos[]" multiple />
@@ -99,6 +93,9 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="">
+                    <button class="blueButton"><a href="{{ route('editImg', $car->id) }}" class="text-white">Editar fotos</a></button>
                 </div>
                 <div class="">
                     <div class="inputForm">
@@ -141,6 +138,3 @@
     </div>
 </div>
 @endsection
-section('js')
-<script class="" src="{{ asset('js/editImages.js') }}"></script>
-endsection

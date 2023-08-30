@@ -213,6 +213,15 @@ class AdminController extends Controller
             ->back();
     }
 
+    public function editImg($id)
+    {
+        $car = Car::find($id);
+        $items = Item::where('car_id', $id)
+            ->get();
+
+        return view('image.edit', compact('car', 'items'));
+    }
+
     public function deleteCar($id)
     {
         $oldFileMain = DB::Table('cars')

@@ -34,6 +34,7 @@ Route::get('reload-captcha', [SendEmailController::class, 'reloadCaptcha']);
 Route::group(['middleware' => ['auth']], function () {
     Route::get('logout', [LogoutController::class, 'logout'])->name('logout');
 
+    Route::get('editimg/{id}', [AdminController::class, 'editImg'])->name('editImg');
     Route::get('editcar/{id}', [AdminController::class, 'editCar']);
     Route::put('updatecar/{id}', [AdminController::class, 'updateCar']);
 

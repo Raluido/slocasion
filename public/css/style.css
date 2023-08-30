@@ -896,6 +896,23 @@ footer .innerFooterBottom>a>div div:nth-child(2) h3 {
     display: inline-block;
 }
 
-
-
 /* end edit car */
+
+/* edit img */
+
+.editImg .innerEditImg {
+    padding: 2em;
+}
+
+.editImg .innerEditImg .bottom {
+    margin-top: 2em;
+}
+
+.editImg .innerEditImg .thumbnailImg,
+.editImg .innerEditImg .thumbnailImg img {
+    width: 4em;
+    height: auto;
+}
+
+
+/* end edit img */
