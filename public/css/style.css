@@ -53,7 +53,6 @@ h5 {
 }
 
 .title {
-    margin: 0 1em;
     padding-bottom: .5em;
     border-bottom: 1px solid gray;
 }
@@ -898,21 +897,65 @@ footer .innerFooterBottom>a>div div:nth-child(2) h3 {
 
 /* end edit car */
 
-/* edit img */
+/* showImages */
 
-.editImg .innerEditImg {
+.showImages .innerShowImages {
     padding: 2em;
 }
 
-.editImg .innerEditImg .bottom {
+.showImages .innerShowImages .top .description {
     margin-top: 2em;
 }
 
-.editImg .innerEditImg .thumbnailImg,
-.editImg .innerEditImg .thumbnailImg img {
+.showImages .innerShowImages .bottom {
+    margin-top: 2em;
+}
+
+.showImages .innerShowImages .thumbnailImg,
+.showImages .innerShowImages .thumbnailImg img {
     width: 4em;
     height: auto;
+    margin-right: 1em;
 }
 
 
-/* end edit img */
+/* end showImages */
+
+/* edit images */
+
+.editImage {
+    padding: 2em;
+}
+
+.editImage .innerEditImage .bottom .innerBottom .imageCar .innerImageCar,
+.editImage .innerEditImage .bottom .innerBottom .imageCar .innerImageCar img {
+    width: 20em;
+    height: auto;
+}
+
+.editImage .innerEditImage .bottom .innerBottom .imageCar {
+    position: relative;
+}
+
+.editImage .innerEditImage .bottom .innerBottom .imageCar .canva {
+    position: absolute;
+    width: 20em;
+    height: auto;
+    top: 0;
+}
+
+.editImage .innerEditImage .bottom .innerBottom .cropOptions {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.editImage .innerEditImage .bottom .innerBottom .cropOptions div label,
+.editImage .innerEditImage .bottom .innerBottom .cropOptions div input {
+    display: block;
+}
+
+.editImage .innerEditImage .bottom .innerBottom .cropOptions div input {
+    margin-top: .3em;
+}
+
+/* end edit images */

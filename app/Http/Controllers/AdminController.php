@@ -213,13 +213,29 @@ class AdminController extends Controller
             ->back();
     }
 
-    public function editImg($id)
+    public function showimages($id)
     {
         $car = Car::find($id);
         $items = Item::where('car_id', $id)
             ->get();
 
-        return view('image.edit', compact('car', 'items'));
+        return view('image.showimages', compact('car', 'items'));
+    }
+
+    public function editimage($idorfilename)
+    {
+        if (intval($idorfilename) != 0) {
+            $item = Item::where('idItem', $idorfilename)
+                ->get();
+            $item = $item[0];
+            $car = "";
+        } else {
+            $car = Car::where('car_photo_main', $idorfilename)
+                ->get();
+            $car = $car[0];
+            $item = "";
+        }
+        return view('image.edit', compact('car', 'item'));
     }
 
     public function deleteCar($id)

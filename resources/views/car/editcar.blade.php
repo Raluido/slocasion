@@ -95,7 +95,7 @@
                     </div>
                 </div>
                 <div class="">
-                    <button class="blueButton"><a href="{{ route('editImg', $car->id) }}" class="text-white">Editar fotos</a></button>
+                    <button class="blueButton"><a href="{{ route('showimages', $car->id) }}" class="text-white">Editar fotos</a></button>
                 </div>
                 <div class="">
                     <div class="inputForm">
