@@ -927,35 +927,40 @@ footer .innerFooterBottom>a>div div:nth-child(2) h3 {
     padding: 2em;
 }
 
+.editImage .innerEditImage .bottom {
+    margin-top: 2em;
+}
+
 .editImage .innerEditImage .bottom .innerBottom .imageCar .innerImageCar,
 .editImage .innerEditImage .bottom .innerBottom .imageCar .innerImageCar img {
-    width: 20em;
+    width: 100%;
     height: auto;
+}
+
+.editImage .innerEditImage .bottom .innerBottom .imageCar .innerImageCar img {
+    display: block;
 }
 
 .editImage .innerEditImage .bottom .innerBottom .imageCar {
     position: relative;
 }
 
-.editImage .innerEditImage .bottom .innerBottom .imageCar .canva {
+.editImage .innerEditImage .bottom .innerBottom .imageCar #canvas {
     position: absolute;
-    width: 20em;
-    height: auto;
+    width: 100%;
+    height: 100%;
     top: 0;
+    left: 0;
 }
 
 .editImage .innerEditImage .bottom .innerBottom .cropOptions {
-    display: flex;
-    justify-content: space-evenly;
+    margin-top: 1em;
+    padding: 1.5em;
 }
 
-.editImage .innerEditImage .bottom .innerBottom .cropOptions div label,
-.editImage .innerEditImage .bottom .innerBottom .cropOptions div input {
-    display: block;
-}
-
-.editImage .innerEditImage .bottom .innerBottom .cropOptions div input {
-    margin-top: .3em;
+.editImage .innerEditImage .bottom .innerBottom .cropOptions input {
+    margin-top: 1.5em;
+    margin-right: 1em;
 }
 
 /* end edit images */

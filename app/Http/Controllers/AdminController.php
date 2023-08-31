@@ -219,12 +219,12 @@ class AdminController extends Controller
         $items = Item::where('car_id', $id)
             ->get();
 
-        return view('image.showimages', compact('car', 'items'));
+        return view('image.showImages', compact('car', 'items'));
     }
 
     public function editimage($idorfilename)
     {
-        if (intval($idorfilename) != 0) {
+        if (ctype_digit($idorfilename)) {
             $item = Item::where('idItem', $idorfilename)
                 ->get();
             $item = $item[0];
@@ -243,8 +243,8 @@ class AdminController extends Controller
         $oldFileMain = DB::Table('cars')
             ->where('id', $id)
             ->value('car_photo_main');
-        if (Storage::exists('media/' . $oldFileMain)) {
-            unlink(public_path('storage/media/' . $oldFileMain));
+        if (Storage::exists('storage/media/' . $oldFileMain)) {
+            Storage::delete('storage/media/' . $oldFileMain);
         }
 
         $oldFiles = DB::Table('items')
@@ -254,8 +254,8 @@ class AdminController extends Controller
         foreach ($oldFiles as $oldFile) {
             $search = 'public/media/';
             $oldFile = str_replace($search, '', $oldFile->filename);
-            if (Storage::exists('media/' . $oldFile)) {
-                unlink(public_path('storage/media/' . $oldFile));
+            if (Storage::exists('storage/media/' . $oldFile)) {
+                Storage::delete('storage/media/' . $oldFile);
             }
         }
 
