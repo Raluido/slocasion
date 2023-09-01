@@ -1,41 +1,41 @@
-const topHight = document.querySelector('input[name=topHight]');
-bottomHight = document.querySelector('input[name=bottomHight]');
-leftWidth = document.querySelector('input[name=leftWidth]');
-rightWidth = document.querySelector('input[name=rightWidth]');
-originalImg = document.querySelector('.innerImageCar img');
-originalWidth = originalImg.clientWidth;
-originalHeight = originalImg.clientHeight;
-canvas = document.getElementById('canvas');
-ctx = canvas.getContext("2d");
+const sizeX = document.querySelector('input[name=sizeX]');
+const sizeY = document.querySelector('input[name=sizeY]');
+const moveX = document.querySelector('input[name=moveX]');
+const moveY = document.querySelector('input[name=moveY]');
+const originalImg = document.querySelector('.innerImageCar img');
+const originalWidth = originalImg.clientWidth - 12;
+const originalHeight = originalImg.clientHeight - 114;
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext("2d");
 
-let canvaX = 0, canvaY = 0, canvaW = originalImg.clientWidth - 11, canvaH = originalImg.clientHeight - 99;
+let x = 0, y = 0, w = originalWidth, h = originalHeight;
+draw();
 
-function reset() {
-    ctx.fillRect(canvaX, canvaY, canvaW, canvaH);
-    ctx.clearRect(canvaX, canvaY, canvaW, canvaH);
-    ctx.strokeRect(canvaX, canvaY, canvaW, canvaH);
+function draw() {
+    console.log(x);
+    console.log(y);
+    console.log(w);
+    console.log(h);
+    ctx.clearRect(x, y, w, h);
+    h = (originalHeight / 100) * sizeX.value;
+    w = (originalWidth / 100) * sizeY.value;
+    y = moveY.value * (originalHeight / 100);
+    x = moveX.value * (originalWidth / 100);
+    ctx.strokeRect(x, y, w, h);
 }
 
-reset();
-
-
-topHight.addEventListener("change", () => {
-    canvaH = originalHeight - ((originalHeight / 100) * topHight.value);
-    canvaY = (originalHeight / 100) * topHight.value
-
-    ctx.fillRect(canvaX, canvaY, canvaW, canvaH);
-    ctx.clearRect(canvaX, canvaY, canvaW, canvaH);
-    ctx.strokeRect(canvaX, canvaY, canvaW, canvaH);
+sizeX.addEventListener("change", () => {
+    draw();
 })
 
-bottomHight.addEventListener("change", () => {
-
+sizeY.addEventListener("change", () => {
+    draw();
 })
 
-leftWidth.addEventListener("change", () => {
-
+moveX.addEventListener("change", () => {
+    draw();
 })
 
-rightWidth.addEventListener("change", () => {
-
+moveY.addEventListener("change", () => {
+    draw();
 })

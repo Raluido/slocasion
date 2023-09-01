@@ -20,14 +20,14 @@
                     <canvas id="canvas"></canvas>
                 </div>
                 <div class="cropOptions">
-                    <input type="range" name="topHight" value="0" min="0" max="100">
-                    <label for="topHight" class="">Alto superior</label>
-                    <input type="range" name="bottomHight" value="0" min="0" max="100">
-                    <label for="bottomHight" class="">Alto inferior</label>
-                    <input type="range" name="leftWidth" value="0" min="0" max="100">
-                    <label for="leftWidth" class="">Ancho derecho</label>
-                    <input type="range" name="rightWidth" value="0" min="0" max="100">
-                    <label for="rightWidth" class="">Ancho izquierdo</label>
+                    <input type="range" name="moveX" value="0" min="0" max="100">
+                    <label for="moveX" class="">Movimiento horizontal</label>
+                    <input type="range" name="moveY" value="0" min="0" max="100">
+                    <label for="moveY" class="">Movimiento vertical</label>
+                    <input type="range" name="sizeY" value="100" min="0" max="100">
+                    <label for="sizeY" class="">Tamaño Vertical</label>
+                    <input type="range" name="sizeX" value="100" min="0" max="100">
+                    <label for="sizeX" class="">Tamaño Horizontal</label>
                 </div>
             </div>
         </div>
