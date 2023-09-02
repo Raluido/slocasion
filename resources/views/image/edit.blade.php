@@ -17,13 +17,13 @@
                     @else
                     <div class="innerImageCar"><img src="{{ Storage::url('media/' . str_replace('public/media/', '', $item->filename)) }}" alt="" class=""></div>
                     @endif
-                    <canvas id="canvas"></canvas>
+                    <canvas id="canvas" width="311" height="264"></canvas>
                 </div>
                 <div class="cropOptions">
-                    <input type="range" name="moveX" value="0" min="0" max="100">
-                    <label for="moveX" class="">Movimiento horizontal</label>
-                    <input type="range" name="moveY" value="0" min="0" max="100">
-                    <label for="moveY" class="">Movimiento vertical</label>
+                    <input type="range" name="moveX" value="50" min="0" max="100">
+                    <label for="moveX" class="">Izq | Dcha</label>
+                    <input type="range" name="moveY" value="50" min="0" max="100">
+                    <label for="moveY" class="">Arr | abjo</label>
                     <input type="range" name="sizeY" value="100" min="0" max="100">
                     <label for="sizeY" class="">Tamaño Vertical</label>
                     <input type="range" name="sizeX" value="100" min="0" max="100">
