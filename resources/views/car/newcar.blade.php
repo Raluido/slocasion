@@ -88,14 +88,27 @@
                     </div>
                 </div>
                 <div class="">
-                    <div class="inputForm">
-                        <label for="car_photo">{{ Lang::get('car.car_photo_main') }}</label><br>
-                        <input type="file" class="form-control" name="photoMain"><br>
+                    <input type="file" name="addPhotosInput[]" class="addPhotosInput" id="addPhotosInput" multiple hidden>
+                    <div class="addPhotosBtn blueButton text-white d-inline">Añadir fotos</div>
+                </div>
+                <div class="imgPrev">
+                    <div class="">
+                        <img src="{{ Storage::url('img/image-placeholder.png') }}" alt="" class="">
                     </div>
-                    <div class="inputForm">
-                        <label for="car_photo">{{ Lang::get('car.car_addPhoto') }}</label><br>
-                        <input type="file" class="form-control" name="photos[]" multiple />
-                    </div>
+                </div>
+                <div class="cropOptions">
+                    <label for="axisy" class="">Eje vertical</label>
+                    <input type="range" id="axisy">
+                    <label for="axisx" class="">Eje horizontal</label>
+                    <input type="range" id="axisx">
+                    <label for="heightCanva" class="">Alto</label>
+                    <input type="range" id="heightCanva">
+                    <label for="widthCanva" class="">Ancho</label>
+                    <input type="range" id="widthCanva">
+                </div>
+                <div class="d-flex margin11">
+                    <div class="previousPhoto">Anterior</div>
+                    <div class="nextPhoto">Siguiente</div>
                 </div>
                 <div class="submitForm">
                     <button class="greenButton text-white">{{ Lang::get('car.newCar') }}</button>
@@ -104,4 +117,7 @@
         </div>
     </div>
 </div>
+@endsection
+@section('js')
+<script class="" src="{{ asset('js/editImages.js') }}" defer></script>
 @endsection

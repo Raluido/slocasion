@@ -23,8 +23,21 @@ h5 {
     display: none;
 }
 
+.d-flex {
+    display: flex;
+    justify-content: space-evenly;
+}
+
 .d-block {
     display: block;
+}
+
+.d-inline {
+    display: inline;
+}
+
+.margin11 {
+    margin: 1em 0;
 }
 
 .blueButton {
@@ -191,11 +204,14 @@ main .add {
     width: 100%;
     height: auto;
     border-radius: 1%;
+    position: relative;
 }
 
 .innerCars .state {
     position: absolute;
     top: 0;
+    right: 0;
+    left: 0;
 }
 
 .innerCars .bottomCars {
@@ -842,6 +858,20 @@ footer .innerFooterBottom>a>div div:nth-child(2) h3 {
 .newCar .innerNewCar .bottom {
     padding: 2em;
 }
+
+.newCar .innerNewCar .bottom .imgPrev div,
+.newCar .innerNewCar .bottom .imgPrev div img {
+    width: 100%;
+    height: auto;
+    margin-top: 1em;
+}
+
+.newCar .innerNewCar .bottom .cropOptions label,
+.newCar .innerNewCar .bottom .cropOptions input {
+    display: block;
+    margin: .5em 0;
+}
+
 
 /*end newcar */
 
