@@ -89,22 +89,28 @@
                 </div>
                 <div class="">
                     <input type="file" name="addPhotosInput[]" class="addPhotosInput" id="addPhotosInput" multiple hidden>
-                    <div class="addPhotosBtn blueButton text-white d-inline">Añadir fotos</div>
+                    <div class="addPhotosBtn grayButton text-white d-inline">Añadir fotos</div>
                 </div>
                 <div class="imgPrev">
                     <div class="innerImgPrev">
                         <img src="{{ Storage::url('img/image-placeholder.png') }}" alt="" class="">
                     </div>
                 </div>
-                <div class="cropOptions">
-                    <input type="range" value="0" min="0" max="100" class="cropTop">
-                    <input type="range" value="100" min="0" max="100" class="cropBottom">
-                    <input type="range" value="0" min="0" max="100" class="cropLeft">
-                    <input type="range" value="100" min="0" max="100" class="cropRight">
-                </div>
-                <div class="d-flex margin11">
+                <div class="changePhoto d-flex margin11">
                     <div class="previousPhoto">Anterior</div>
                     <div class="nextPhoto">Siguiente</div>
+                </div>
+                <div class="filters">
+                    <div class="cropOptions d-flex">
+                        <div class="axisx grayButton text-white d-inline active" id="axisx">Eje x</div>
+                        <div class="axisy grayButton text-white d-inline" id="axisy">Eje y</div>
+                        <div class="width grayButton text-white d-inline" id="width">Largo</div>
+                        <div class="height grayButton text-white d-inline" id="height">Alto</div>
+                    </div>
+                    <div class="cropRange">
+                        <input type="range" class="">
+                        <div class="name"></div>
+                    </div>
                 </div>
                 <div class="submitForm">
                     <button class="greenButton text-white">{{ Lang::get('car.newCar') }}</button>

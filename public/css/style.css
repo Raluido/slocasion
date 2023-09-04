@@ -61,6 +61,13 @@ h5 {
     background-color: #2e6d21;
 }
 
+.grayButton {
+    padding: .5em;
+    border-radius: 10%;
+    border: unset;
+    background-color: gray;
+}
+
 .text-white {
     color: white;
 }
@@ -866,10 +873,29 @@ footer .innerFooterBottom>a>div div:nth-child(2) h3 {
     margin-top: 1em;
 }
 
-.newCar .innerNewCar .bottom .cropOptions label,
-.newCar .innerNewCar .bottom .cropOptions input {
-    display: block;
+.newCar .innerNewCar .bottom .changePhoto div {
+    border: 1px solid greenyellow;
+    padding: .2em;
+    color: gray;
+}
+
+.newCar .innerNewCar .bottom .filters {
+    border: 1px solid lightgray;
+    padding: 1.5em;
+}
+
+.newCar .innerNewCar .bottom .cropOptions {
     margin: .5em 0;
+}
+
+.newCar .innerNewCar .bottom .cropRange {
+    display: flex;
+    justify-content: center;
+    margin: 2em 0;
+}
+
+.newCar .innerNewCar .bottom .cropRange input {
+    width: 60%;
 }
 
 
