@@ -92,19 +92,15 @@
                     <div class="addPhotosBtn blueButton text-white d-inline">Añadir fotos</div>
                 </div>
                 <div class="imgPrev">
-                    <div class="">
+                    <div class="innerImgPrev">
                         <img src="{{ Storage::url('img/image-placeholder.png') }}" alt="" class="">
                     </div>
                 </div>
                 <div class="cropOptions">
-                    <label for="axisy" class="">Eje vertical</label>
-                    <input type="range" id="axisy">
-                    <label for="axisx" class="">Eje horizontal</label>
-                    <input type="range" id="axisx">
-                    <label for="heightCanva" class="">Alto</label>
-                    <input type="range" id="heightCanva">
-                    <label for="widthCanva" class="">Ancho</label>
-                    <input type="range" id="widthCanva">
+                    <input type="range" value="0" min="0" max="100" class="cropTop">
+                    <input type="range" value="100" min="0" max="100" class="cropBottom">
+                    <input type="range" value="0" min="0" max="100" class="cropLeft">
+                    <input type="range" value="100" min="0" max="100" class="cropRight">
                 </div>
                 <div class="d-flex margin11">
                     <div class="previousPhoto">Anterior</div>
