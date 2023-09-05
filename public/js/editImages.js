@@ -7,7 +7,7 @@ const cropOptions = document.querySelectorAll('.cropOptions div');
 const cropRange = document.querySelector('.cropRange input');
 const cropName = document.querySelector('.cropRange div');
 
-let imgHeight = imgPrev.naturalHeight, imgWidth = imgPrev.naturalWidth;
+let imgHeight = imgPrev.clientHeight, imgWidth = imgPrev.clientWidth;
 
 const addPrevImg = () => {
     let file = addPhotosInput.files[i];
@@ -54,17 +54,39 @@ const updateOptions = () => {
     cropArea();
 }
 
+let cropMeasures = [];
+
 const cropArea = () => {
-    let y0 = (imgHeight / 100) * cropTop;
-    console.log(imgHeight);
-    console.log(cropTop);
-    console.log(y0);
-    imgHeight = imgHeight - y0;
-    let y1 = (imgHeight / 100) * cropBottom;
-    let x0 = (imgWidth / 100) * cropLeft;
-    imgHeight = imgWidth - x0;
-    let x1 = (imgWidth / 100) * cropRight;
+    let y0 = (imgPrev.clientHeight / 100) * cropTop;
+    let y1 = (imgPrev.clientHeight / 100) * cropBottom;
+    let x0 = (imgPrev.clientWidth / 100) * cropLeft;
+    let x1 = (imgPrev.clientWidth / 100) * cropRight;
+    if (y0 + y1 > imgPrev.clientHeight || x0 + x1 > imgPrev.clientWidth) {
+        x0 = x1 = y0 = y1 = 0;
+    }
     imgPrev.style.clipPath = `inset(${y0}px ${x1}px ${y1}px ${x0}px)`;
+    let data = {
+        'id': i,
+        'top': y0,
+        'bottom': y1,
+        'left': x0,
+        'right': x1
+    };
+    if (cropMeasures.length > 0) {
+        imageId = cropMeasures.findIndex(obj => obj.id == i);
+        console.log(i);
+        console.log(imageId);
+        if (imageId >= 0) {
+            cropMeasures[imageId].top = y0;
+            cropMeasures[imageId].bottom = y1;
+            cropMeasures[imageId].left = x0;
+            cropMeasures[imageId].right = x1;
+        } else {
+            cropMeasures.push(data);
+        }
+    } else {
+        cropMeasures.push(data);
+    }
 }
 
 let i = 0;
