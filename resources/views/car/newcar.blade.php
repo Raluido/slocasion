@@ -102,10 +102,10 @@
                 </div>
                 <div class="filters">
                     <div class="cropOptions d-flex">
-                        <div class="axisx grayButton text-white d-inline active" id="axisx">Eje x</div>
-                        <div class="axisy grayButton text-white d-inline" id="axisy">Eje y</div>
-                        <div class="width grayButton text-white d-inline" id="width">Largo</div>
-                        <div class="height grayButton text-white d-inline" id="height">Alto</div>
+                        <div class="cropTop grayButton text-white d-inline active" id="cropTop">Superior</div>
+                        <div class="cropBottom grayButton text-white d-inline" id="cropBottom">Inferior</div>
+                        <div class="cropLeft grayButton text-white d-inline" id="cropLeft">Izquierdo</div>
+                        <div class="cropRight grayButton text-white d-inline" id="cropRight">Derecho</div>
                     </div>
                     <div class="cropRange">
                         <input type="range" class="">
