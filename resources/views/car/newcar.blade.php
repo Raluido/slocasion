@@ -111,6 +111,7 @@
                         <input type="range" class="">
                         <div class="name"></div>
                     </div>
+                    <input type="hidden" id="cropMeasures" value="" class="">
                 </div>
                 <div class="submitForm">
                     <button class="greenButton text-white">{{ Lang::get('car.newCar') }}</button>
