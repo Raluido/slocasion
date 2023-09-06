@@ -6,19 +6,72 @@ const next = document.querySelector('.nextPhoto');
 const cropOptions = document.querySelectorAll('.cropOptions div');
 const cropRange = document.querySelector('.cropRange input');
 const cropName = document.querySelector('.cropRange div');
+const imgHeight = imgPrev.clientHeight, imgWidth = imgPrev.clientWidth;
 
-let imgHeight = imgPrev.clientHeight, imgWidth = imgPrev.clientWidth;
+let cropMeasuresId = document.getElementById('cropMeasures').value;
+let isMain = document.getElementById('isMain');
 let cropTop = 0, cropBottom = 0, cropLeft = 0, cropRight = 0;
 let cropMeasures = [];
 let i = 0;
 let y0 = 0, y1 = 0, x0 = 0, x1 = 0;
-let cropMeasuresId = document.getElementById('cropMeasures').value;
+
+addPhotosInput.addEventListener('change', function () {
+    if (i == 0) {
+        noCrop();
+        addPrevImgZero();
+        isMainFunc();
+    }
+})
+
+previous.addEventListener('click', function () {
+    if (i > 0) {
+        i--;
+        addPrevImg();
+        isMainFunc();
+    }
+})
+
+next.addEventListener('click', function () {
+    if (i < addPhotosInput.files.length - 1) {
+        i++;
+        addPrevImg();
+        isMainFunc();
+    }
+})
+
+const noCrop = () => {
+    for (let i = 0; i < addPhotosInput.files.length; i++) {
+        let data = {
+            'id': i,
+            'main': i == 0 ? true : false,
+            'top': 0,
+            'bottom': 0,
+            'left': 0,
+            'right': 0
+        }
+        cropMeasures.push(data);
+    }
+}
+
+const addPrevImgZero = () => {
+    let file = addPhotosInput.files[0];
+    if (!file) return;
+    imgPrev.src = URL.createObjectURL(file);
+}
 
 const addPrevImg = () => {
     let file = addPhotosInput.files[i];
     if (!file) return;
     imgPrev.src = URL.createObjectURL(file);
     updateValues();
+}
+
+const isMainFunc = () => {
+    if (cropMeasures[i].main == true) {
+        isMain.checked = true;
+    } else {
+        isMain.checked = false;
+    }
 }
 
 const updateValues = () => {
@@ -77,22 +130,6 @@ const updateOptions = () => {
     cropArea();
 }
 
-const noCrop = () => {
-    const allPhotos = addPhotosInput.files.length;
-    for (let index = 0; index < allPhotos; index++) {
-        let data = {
-            'id': i,
-            'main': i == 0 ? true : false,
-            'top': 0,
-            'bottom': 0,
-            'left': 0,
-            'right': 0
-        }
-        cropMeasures.push(data);
-    }
-    cropMeasuresId = cropMeasures;
-}
-
 const cropArea = () => {
     let y0 = (imgPrev.clientHeight / 100) * cropTop;
     let y1 = (imgPrev.clientHeight / 100) * cropBottom;
@@ -125,25 +162,21 @@ const cropArea = () => {
     }
 }
 
-addPhotosInput.addEventListener('change', function () {
-    const allPhotos = addPhotosInput.files.length;
-    previous.addEventListener('click', function () {
-        if (i > 0) {
-            i--;
-            addPrevImg();
-        }
-    })
-    next.addEventListener('click', function () {
-        if (i < allPhotos - 1) {
-            i++;
-            addPrevImg();
-        }
-    })
-    if (i == 0) {
-        noCrop();
-        addPrevImg();
-    }
-})
-
 addPhotosBtn.addEventListener('click', () => addPhotosInput.click());
 cropRange.addEventListener('input', updateOptions);
+
+isMain.addEventListener('change', () => {
+    if (isMain.checked == true) {
+        index = cropMeasures.findIndex(obj => obj.main == true);
+        if (index >= 0) {
+            cropMeasures[index].main = false;
+            cropMeasures[i].main = true;
+        }
+    } else {
+        index = cropMeasures.findIndex(obj => obj.main == false);
+        if (index >= 0) {
+            cropMeasures[index].main = false;
+            cropMeasures[0].main = true;
+        }
+    }
+})

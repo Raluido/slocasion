@@ -96,6 +96,10 @@
                         <img src="{{ Storage::url('img/image-placeholder.png') }}" alt="" class="">
                     </div>
                 </div>
+                <div class="">
+                    <label for="isMain" class="">Principal</label>
+                    <input type="checkbox" class="" id="isMain">
+                </div>
                 <div class="changePhoto d-flex margin11">
                     <div class="previousPhoto">Anterior</div>
                     <div class="nextPhoto">Siguiente</div>
