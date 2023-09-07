@@ -29,6 +29,14 @@ class AdminController extends Controller
 
     public function createNewCar(Request $request)
     {
+        $cropMeasures = $request->input('cropMeasures');
+        $cropMeasures = json_decode($cropMeasures);
+        foreach ($cropMeasures as $index) {
+            log::info($index);
+        }
+
+
+        die();
         $car = new Car();
         $car->user_id = auth()->user()->id;
         $car->car_brand = $request->input('car_brand');

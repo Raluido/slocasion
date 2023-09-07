@@ -8,7 +8,6 @@ const cropRange = document.querySelector('.cropRange input');
 const cropName = document.querySelector('.cropRange div');
 const imgHeight = imgPrev.clientHeight, imgWidth = imgPrev.clientWidth;
 
-let cropMeasuresId = document.getElementById('cropMeasures').value;
 let isMain = document.getElementById('isMain');
 let cropTop = 0, cropBottom = 0, cropLeft = 0, cropRight = 0;
 let cropMeasures = [];
@@ -40,6 +39,7 @@ next.addEventListener('click', function () {
 })
 
 const noCrop = () => {
+    cropMeasures = [];
     for (let i = 0; i < addPhotosInput.files.length; i++) {
         let data = {
             'id': i,
@@ -51,11 +51,13 @@ const noCrop = () => {
         }
         cropMeasures.push(data);
     }
+    document.getElementById('cropMeasures').value = JSON.stringify(cropMeasures);
 }
 
 const addPrevImgZero = () => {
     let file = addPhotosInput.files[0];
     if (!file) return;
+    imgPrev.src = "";
     imgPrev.src = URL.createObjectURL(file);
 }
 
@@ -160,6 +162,7 @@ const cropArea = () => {
     } else {
         cropMeasures.push(data);
     }
+    document.getElementById('cropMeasures').value = JSON.stringify(cropMeasures);
 }
 
 addPhotosBtn.addEventListener('click', () => addPhotosInput.click());
