@@ -14,6 +14,8 @@ let cropMeasures = [];
 let i = 0;
 let y0 = 0, y1 = 0, x0 = 0, x1 = 0;
 
+// change between the img added
+
 addPhotosInput.addEventListener('change', function () {
     if (i == 0) {
         noCrop();
@@ -37,6 +39,8 @@ next.addEventListener('click', function () {
         isMainFunc();
     }
 })
+
+//
 
 const noCrop = () => {
     cropMeasures = [];
@@ -168,6 +172,8 @@ const cropArea = () => {
 addPhotosBtn.addEventListener('click', () => addPhotosInput.click());
 cropRange.addEventListener('input', updateOptions);
 
+// manage how to change the main checkbox when the user wants
+
 isMain.addEventListener('change', () => {
     if (isMain.checked == true) {
         index = cropMeasures.findIndex(obj => obj.main == true);
@@ -184,3 +190,13 @@ isMain.addEventListener('change', () => {
     }
 })
 
+// manage the template
+
+const template = document.querySelector('.template');
+
+template.addEventListener('pointerdown', function () {
+
+    template.addEventListener('mousemove', () => {
+
+    })
+})
