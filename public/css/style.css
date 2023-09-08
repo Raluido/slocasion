@@ -866,11 +866,22 @@ footer .innerFooterBottom>a>div div:nth-child(2) h3 {
     padding: 2em;
 }
 
+.newCar .innerNewCar .bottom .imgPrev {
+    position: relative;
+    margin-top: 1em;
+}
+
 .newCar .innerNewCar .bottom .imgPrev div,
 .newCar .innerNewCar .bottom .imgPrev div img {
     width: 100%;
     height: auto;
-    margin-top: 1em;
+}
+
+.newCar .innerNewCar .bottom .imgPrev .template {
+    border: 1px solid red;
+    position: absolute;
+    width: 311px;
+    height: 180px;
 }
 
 .newCar .innerNewCar .bottom .changePhoto div {

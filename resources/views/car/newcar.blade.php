@@ -95,6 +95,7 @@
                     <div class="innerImgPrev">
                         <img src="{{ Storage::url('img/image-placeholder.png') }}" alt="" class="">
                     </div>
+                    <div class="template"></div>
                 </div>
                 <div class="">
                     <label for="isMain" class="">Principal</label>

@@ -30,11 +30,7 @@ class AdminController extends Controller
     public function createNewCar(Request $request)
     {
         $cropMeasures = $request->input('cropMeasures');
-        $cropMeasures = json_decode($cropMeasures);
-        foreach ($cropMeasures as $index) {
-            log::info($index);
-        }
-
+        log::info($cropMeasures);
 
         die();
         $car = new Car();
