@@ -877,7 +877,7 @@ footer .innerFooterBottom>a>div div:nth-child(2) h3 {
     height: auto;
 }
 
-.newCar .innerNewCar .bottom .imgPrev .template {
+.newCar .innerNewCar .bottom .imgPrev .squareTemplate {
     border: 1px solid red;
     position: absolute;
     top: 50%;
@@ -886,6 +886,41 @@ footer .innerFooterBottom>a>div div:nth-child(2) h3 {
     width: 100%;
     height: 90%;
     z-index: 9999;
+}
+
+.newCar .innerNewCar .bottom .imgPrev .topTemplate {
+    position: absolute;
+    border: 1px solid yellow;
+    width: 100%;
+    height: 0%;
+    cursor: grab;
+}
+
+.newCar .innerNewCar .bottom .imgPrev .bottomTemplate {
+    position: absolute;
+    border: 1px solid yellow;
+    bottom: 0;
+    width: 100%;
+    height: 0%;
+    cursor: grab;
+}
+
+.newCar .innerNewCar .bottom .imgPrev .leftTemplate {
+    position: absolute;
+    left: 0;
+    border: 1px solid yellow;
+    width: 0%;
+    height: 100%;
+    cursor: grab;
+}
+
+.newCar .innerNewCar .bottom .imgPrev .rightTemplate {
+    position: absolute;
+    right: 0;
+    border: 1px solid yellow;
+    width: 0%;
+    height: 100%;
+    cursor: grab;
 }
 
 .newCar .innerNewCar .bottom .changePhoto div {

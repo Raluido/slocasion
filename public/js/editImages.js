@@ -192,11 +192,23 @@ isMain.addEventListener('change', () => {
 
 // manage the template
 
-const template = document.querySelector('.template');
+const topTemplate = document.querySelector('.topTemplate');
+const bottomTemplate = document.querySelector('.bottomTemplate');
+const rightTemplate = document.querySelector('.rightTemplate');
+const leftTemplate = document.querySelector('.leftTemplate');
 
-template.addEventListener('pointerdown', function () {
+topTemplate.addEventListener('pointerdown', function () {
+    console.log("clickTop");
+})
 
-    template.addEventListener('mousemove', () => {
+bottomTemplate.addEventListener('pointerdown', function () {
+    console.log("clickBottom");
+})
 
-    })
+rightTemplate.addEventListener('pointerdown', function () {
+    console.log("clickRight");
+})
+
+leftTemplate.addEventListener('pointerdown', function () {
+    console.log("clickLeft");
 })
