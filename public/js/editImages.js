@@ -196,9 +196,24 @@ const topTemplate = document.querySelector('.topTemplate');
 const bottomTemplate = document.querySelector('.bottomTemplate');
 const rightTemplate = document.querySelector('.rightTemplate');
 const leftTemplate = document.querySelector('.leftTemplate');
+const squareTemplate = document.getElementById('squareTemplateId');
+let clickDown = false;
 
 topTemplate.addEventListener('pointerdown', function () {
     console.log("clickTop");
+    clickDown = true;
+})
+
+topTemplate.addEventListener('pointerup', function () {
+    console.log("unclickTop");
+    clickDown = false;
+})
+
+topTemplate.addEventListener('mousemove', function (event) {
+    if (clickDown) {
+        console.log(event.movementY);
+        squareTemplate.style.height = (100 - event.movementY) + '%';
+    }
 })
 
 bottomTemplate.addEventListener('pointerdown', function () {
@@ -206,8 +221,24 @@ bottomTemplate.addEventListener('pointerdown', function () {
 })
 
 rightTemplate.addEventListener('pointerdown', function () {
-    console.log("clickRight");
+    console.log('clickright');
+    clickDown = true;
 })
+
+rightTemplate.addEventListener('pointerup', function () {
+    clickDown = false;
+})
+
+addEventListener('pointermove', function (event) {
+    if (clickDown) {
+        console.log(event.offsetX);
+        console.log(imgWidth);
+        squareTemplate.style.width = (event.offsetX * 2 + imgWidth) + 'px';
+    } else {
+        return;
+    }
+})
+
 
 leftTemplate.addEventListener('pointerdown', function () {
     console.log("clickLeft");

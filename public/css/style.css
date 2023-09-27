@@ -884,7 +884,7 @@ footer .innerFooterBottom>a>div div:nth-child(2) h3 {
     left: 50%;
     transform: translate(-50%, -50%);
     width: 100%;
-    height: 90%;
+    height: 100%;
     z-index: 9999;
 }
 
@@ -894,6 +894,7 @@ footer .innerFooterBottom>a>div div:nth-child(2) h3 {
     width: 100%;
     height: 0%;
     cursor: grab;
+    touch-action: none;
 }
 
 .newCar .innerNewCar .bottom .imgPrev .bottomTemplate {
@@ -903,6 +904,7 @@ footer .innerFooterBottom>a>div div:nth-child(2) h3 {
     width: 100%;
     height: 0%;
     cursor: grab;
+    touch-action: none;
 }
 
 .newCar .innerNewCar .bottom .imgPrev .leftTemplate {
@@ -912,6 +914,7 @@ footer .innerFooterBottom>a>div div:nth-child(2) h3 {
     width: 0%;
     height: 100%;
     cursor: grab;
+    touch-action: none;
 }
 
 .newCar .innerNewCar .bottom .imgPrev .rightTemplate {
@@ -921,6 +924,7 @@ footer .innerFooterBottom>a>div div:nth-child(2) h3 {
     width: 0%;
     height: 100%;
     cursor: grab;
+    touch-action: none;
 }
 
 .newCar .innerNewCar .bottom .changePhoto div {
