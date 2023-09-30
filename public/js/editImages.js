@@ -201,13 +201,26 @@ const bottomTemplate = document.querySelector('.bottomTemplate');
 const rightTemplate = document.querySelector('.rightTemplate');
 const leftTemplate = document.querySelector('.leftTemplate');
 const squareTemplate = document.getElementById('squareTemplateId');
+let currentBottom = window.getComputedStyle(squareTemplate).getPropertyValue('bottom');
+let currentTop = window.getComputedStyle(squareTemplate).getPropertyValue('top');
+let currentHeight = window.getComputedStyle(squareTemplate).getPropertyValue('height');
+let currentWidth = window.getComputedStyle(squareTemplate).getPropertyValue('width');
+let currentRight = window.getComputedStyle(squareTemplate).getPropertyValue('right');
+let currentLeft = window.getComputedStyle(squareTemplate).getPropertyValue('left');
+let clickDownTop = false;
+let clickDownBottom = false;
+let clickDownLeft = false;
+let clickDownRight = false;
+
 let clickDown = false;
 
-// function getPercentaje(proportion, total) {
-//     let clearedType = proportion.replace('px', '');
-//     let percentaje = (clearedType / total) * 100;
-//     return percentaje;
-// }
+squareTemplate.addEventListener('pointerdown', function () {
+    clickDown = true;
+})
+
+squareTemplate.addEventListener('pointerup', function () {
+    clickDown = false;
+})
 
 function castNumb(numb) {
     let casted = Number(numb.replace('px', ''));
@@ -215,67 +228,116 @@ function castNumb(numb) {
 }
 
 topTemplate.addEventListener('pointerdown', function () {
-    clickDown = true;
+    clickDownTop = true;
 })
 
 topTemplate.addEventListener('pointerup', function () {
-    clickDown = false;
+    clickDownTop = false;
+})
+
+bottomTemplate.addEventListener('pointerdown', function () {
+    clickDownBottom = true;
+})
+
+bottomTemplate.addEventListener('pointerup', function () {
+    clickDownBottom = false;
+})
+
+rightTemplate.addEventListener('pointerdown', function () {
+    clickDownRight = true;
+})
+
+rightTemplate.addEventListener('pointerup', function () {
+    clickDownRight = false;
+})
+
+
+leftTemplate.addEventListener('pointerdown', function () {
+    clickDownLeft = true;
+})
+
+leftTemplate.addEventListener('pointerup', function () {
+    clickDownLeft = false;
 })
 
 addEventListener('pointermove', function (event) {
-    if (clickDown) {
-        let currentTop = window.getComputedStyle(squareTemplate).getPropertyValue('top');
-        let reduceFromTop = castNumb(currentTop) + event.movementY + 'px';
-        squareTemplate.style.top = reduceFromTop;
-        let height = window.getComputedStyle(squareTemplate).getPropertyValue('height');
-        if (castNumb(reduceFromTop) + castNumb(height) > imgHeight) {
-            squareTemplate.style.height = (castNumb(height) - (castNumb(height) + castNumb(reduceFromTop) - imgHeight)) + 'px';
+    if (clickDownTop) {
+        currentTop = window.getComputedStyle(squareTemplate).getPropertyValue('top');
+        currentHeight = window.getComputedStyle(squareTemplate).getPropertyValue('height');
+        let changeTop = event.movementY;
+        squareTemplate.style.top = castNumb(currentTop) + changeTop + 'px';
+        if (castNumb(currentTop) + changeTop < imgHeight) {
+            squareTemplate.style.height = (castNumb(currentHeight) - ((castNumb(currentHeight) + castNumb(currentTop) + changeTop + castNumb(currentBottom)) - imgHeight)) + 'px';
         } else {
-            let currentBottom = this.window.getComputedStyle(squareTemplate).getPropertyValue('bottom');
-            squareTemplate.style.height = (castNumb(height) + castNumb(currentBottom)) + 'px';
+            squareTemplate.style.top = imgHeight + 'px';
+        }
+
+        if ((castNumb(currentHeight) - ((castNumb(currentHeight) + castNumb(currentTop) + changeTop + castNumb(currentBottom)) - imgHeight)) < imgHeight) {
+            squareTemplate.style.height = (castNumb(currentHeight) - ((castNumb(currentHeight) + castNumb(currentTop) + changeTop + castNumb(currentBottom)) - imgHeight)) + 'px';
+        } else {
+            squareTemplate.style.top = 0 + 'px';
         }
     }
+
+    if (clickDownBottom) {
+        currentBottom = window.getComputedStyle(squareTemplate).getPropertyValue('bottom');
+        currentHeight = window.getComputedStyle(squareTemplate).getPropertyValue('height');
+        let changeBottom = - 1 * event.movementY;
+        squareTemplate.style.bottom = castNumb(currentBottom) + changeBottom + 'px';
+        if (castNumb(currentBottom) + changeBottom < imgHeight) {
+            squareTemplate.style.height = (castNumb(currentHeight) - ((castNumb(currentHeight) + castNumb(currentBottom) + changeBottom + castNumb(currentTop)) - imgHeight)) + 'px';
+        } else {
+            squareTemplate.style.bottom = imgHeight + 'px';
+        }
+
+        if ((castNumb(currentHeight) - ((castNumb(currentHeight) + castNumb(currentBottom) + changeBottom + castNumb(currentTop)) - imgHeight)) < imgHeight) {
+            squareTemplate.style.height = (castNumb(currentHeight) - ((castNumb(currentHeight) + castNumb(currentBottom) + changeBottom + castNumb(currentTop)) - imgHeight)) + 'px';
+        } else {
+            squareTemplate.style.bottom = 0 + 'px';
+        }
+    }
+
+    if (clickDownRight) {
+        currentRight = window.getComputedStyle(squareTemplate).getPropertyValue('right');
+        currentWidth = window.getComputedStyle(squareTemplate).getPropertyValue('width');
+        let changeRight = - 1 * event.movementX;
+        squareTemplate.style.right = castNumb(currentRight) + changeRight + 'px';
+        if (castNumb(currentRight) + changeRight < imgWidth) {
+            squareTemplate.style.width = (castNumb(currentWidth) - ((castNumb(currentWidth) + castNumb(currentRight) + changeRight + castNumb(currentLeft)) - imgWidth)) + 'px';
+        } else {
+            squareTemplate.style.right = imgWidth + 'px';
+        }
+
+        if ((castNumb(currentWidth) - ((castNumb(currentWidth) + castNumb(currentRight) + changeRight + castNumb(currentLeft)) - imgWidth)) < imgWidth) {
+            squareTemplate.style.width = (castNumb(currentWidth) - ((castNumb(currentWidth) + castNumb(currentRight) + changeRight + castNumb(currentLeft)) - imgWidth)) + 'px';
+        } else {
+            squareTemplate.style.right = 0 + 'px';
+        }
+    }
+
+    if (clickDownLeft) {
+        currentLeft = window.getComputedStyle(squareTemplate).getPropertyValue('left');
+        currentWidth = window.getComputedStyle(squareTemplate).getPropertyValue('width');
+        let changeLeft = event.movementX;
+        squareTemplate.style.left = castNumb(currentLeft) + changeLeft + 'px';
+        if (castNumb(currentLeft) + changeLeft < imgWidth) {
+            squareTemplate.style.width = (castNumb(currentWidth) - ((castNumb(currentWidth) + castNumb(currentLeft) + changeLeft + castNumb(currentRight)) - imgWidth)) + 'px';
+        } else {
+            squareTemplate.style.left = imgWidth + 'px';
+        }
+
+        if ((castNumb(currentWidth) - ((castNumb(currentWidth) + castNumb(currentLeft) + changeLeft + castNumb(currentLeft)) - imgWidth)) < imgWidth) {
+            squareTemplate.style.width = (castNumb(currentWidth) - ((castNumb(currentWidth) + castNumb(currentLeft) + changeLeft + castNumb(currentRight)) - imgWidth)) + 'px';
+        } else {
+            squareTemplate.style.left = 0 + 'px';
+        }
+    }
+
+    if (clickDown) {
+        // currentRight = window.getComputedStyle(squareTemplate).getPropertyValue('right');
+        // if (castNumb(currentRight) > 0) {
+        //     changeRight = event.movementX;
+        //     squareTemplate.style.right = changeRight + 'px';
+        // }
+    }
 })
-
-
-
-
-
-
-// bottomTemplate.addEventListener('pointerdown', function () {
-//     console.log("clickBottom");
-// })
-
-// bottomTemplate.addEventListener('pointerup', function () {
-//     clickDown = false;
-// })
-
-// rightTemplate.addEventListener('pointerdown', function () {
-//     console.log('clickright');
-//     clickDown = true;
-// })
-
-// rightTemplate.addEventListener('pointerup', function () {
-//     clickDown = false;
-//     console.log('clickup');
-// })
-
-
-// leftTemplate.addEventListener('pointerdown', function () {
-//     console.log("clickLeft");
-// })
-
-// leftTemplate.addEventListener('pointerup', function () {
-//     clickDown = false;
-// })
-
-// addEventListener('pointermove', function (event) {
-//     if (clickDown) {
-//         console.log(event.offsetX);
-//         console.log(imgWidth);
-//         squareTemplate.style.width = (event.offsetX * 2 + imgWidth) + 'px';
-//         squareTemplate.style.height = (event.offsetY * 2 + imgHeight) + 'px';
-//     } else {
-//         return;
-//     }
-// })
