@@ -46,7 +46,6 @@ previous.addEventListener('click', function () {
 })
 
 next.addEventListener('click', function () {
-    console.log();
     if (i < addPhotosInput.files.length - 1) {
         i++;
         addPrevImg();
@@ -95,6 +94,7 @@ const isMainFunc = () => {
 }
 
 const updateValues = () => {
+    console.log(cropMeasures);
     if (cropMeasures.length > 0) {
         id = cropMeasures.findIndex(obj => obj.id == i);
         if (id >= 0) {
@@ -295,19 +295,18 @@ addEventListener('pointermove', function (event) {
                 squareTemplate.style.bottom = (innerImgPrev.clientHeight - castNumb(currentHeight)) + 'px';
             }
         }
-        data = {
-            'id': i,
-            'main': i == 0 ? true : false,
-            'top': currentTop,
-            'bottom': currentBottom,
-            'left': currentLeft,
-            'right': currentRight,
-            'width': currentWidth,
-            'height': currentHeight,
-        }
-        saveTemplate(data);
-        console.log(cropMeasures);
     }
+    data = {
+        'id': i,
+        'main': i == 0 ? true : false,
+        'top': currentTop,
+        'bottom': currentBottom,
+        'left': currentLeft,
+        'right': currentRight,
+        'width': currentWidth,
+        'height': currentHeight,
+    }
+    saveTemplate(data);
 })
 
 function saveTemplate(data) {
