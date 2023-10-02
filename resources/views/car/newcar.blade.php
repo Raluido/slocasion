@@ -96,6 +96,7 @@
                         <img src="{{ Storage::url('img/image-placeholder.png') }}" alt="" class="">
                     </div>
                     <div class="squareTemplate" id="squareTemplateId">
+                        <div class="grabSquare" id="grabSquare"></div>
                         <div class="topTemplate"></div>
                         <div class="bottomTemplate"></div>
                         <div class="leftTemplate"></div>

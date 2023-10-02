@@ -1,16 +1,12 @@
-
-// const { replace } = require("lodash");
-// const { toNumber } = require("lodash");
-
 const addPhotosBtn = document.querySelector('.addPhotosBtn');
 const addPhotosInput = document.querySelector('.addPhotosInput');
-const imgPrev = document.querySelector('.imgPrev .innerImgPrev');
+const imgPrev = document.querySelector('.imgPrev .innerImgPrev img');
 const previous = document.querySelector('.previousPhoto');
 const next = document.querySelector('.nextPhoto');
 const cropOptions = document.querySelectorAll('.cropOptions div');
 const cropRange = document.querySelector('.cropRange input');
 const cropName = document.querySelector('.cropRange div');
-const imgHeight = imgPrev.clientHeight, imgWidth = imgPrev.clientWidth;
+
 
 let isMain = document.getElementById('isMain');
 let cropTop = 0, cropBottom = 0, cropLeft = 0, cropRight = 0;
@@ -43,8 +39,6 @@ next.addEventListener('click', function () {
         isMainFunc();
     }
 })
-
-//
 
 const noCrop = () => {
     cropMeasures = [];
@@ -201,6 +195,7 @@ const bottomTemplate = document.querySelector('.bottomTemplate');
 const rightTemplate = document.querySelector('.rightTemplate');
 const leftTemplate = document.querySelector('.leftTemplate');
 const squareTemplate = document.getElementById('squareTemplateId');
+const grabSquare = document.getElementById('grabSquare');
 let currentBottom = window.getComputedStyle(squareTemplate).getPropertyValue('bottom');
 let currentTop = window.getComputedStyle(squareTemplate).getPropertyValue('top');
 let currentHeight = window.getComputedStyle(squareTemplate).getPropertyValue('height');
@@ -214,11 +209,11 @@ let clickDownRight = false;
 
 let clickDown = false;
 
-squareTemplate.addEventListener('pointerdown', function () {
+grabSquare.addEventListener('pointerdown', function () {
     clickDown = true;
 })
 
-squareTemplate.addEventListener('pointerup', function () {
+grabSquare.addEventListener('pointerup', function () {
     clickDown = false;
 })
 
@@ -266,14 +261,14 @@ addEventListener('pointermove', function (event) {
         currentHeight = window.getComputedStyle(squareTemplate).getPropertyValue('height');
         let changeTop = event.movementY;
         squareTemplate.style.top = castNumb(currentTop) + changeTop + 'px';
-        if (castNumb(currentTop) + changeTop < imgHeight) {
-            squareTemplate.style.height = (castNumb(currentHeight) - ((castNumb(currentHeight) + castNumb(currentTop) + changeTop + castNumb(currentBottom)) - imgHeight)) + 'px';
+        if (castNumb(currentTop) + changeTop < imgPrev.clientHeight) {
+            squareTemplate.style.height = (castNumb(currentHeight) - ((castNumb(currentHeight) + castNumb(currentTop) + changeTop + castNumb(currentBottom)) - imgPrev.clientHeight)) + 'px';
         } else {
-            squareTemplate.style.top = imgHeight + 'px';
+            squareTemplate.style.top = imgPrev.clientHeight + 'px';
         }
 
-        if ((castNumb(currentHeight) - ((castNumb(currentHeight) + castNumb(currentTop) + changeTop + castNumb(currentBottom)) - imgHeight)) < imgHeight) {
-            squareTemplate.style.height = (castNumb(currentHeight) - ((castNumb(currentHeight) + castNumb(currentTop) + changeTop + castNumb(currentBottom)) - imgHeight)) + 'px';
+        if ((castNumb(currentHeight) - ((castNumb(currentHeight) + castNumb(currentTop) + changeTop + castNumb(currentBottom)) - imgPrev.clientHeight)) < imgPrev.clientHeight) {
+            squareTemplate.style.height = (castNumb(currentHeight) - ((castNumb(currentHeight) + castNumb(currentTop) + changeTop + castNumb(currentBottom)) - imgPrev.clientHeight)) + 'px';
         } else {
             squareTemplate.style.top = 0 + 'px';
         }
@@ -284,14 +279,14 @@ addEventListener('pointermove', function (event) {
         currentHeight = window.getComputedStyle(squareTemplate).getPropertyValue('height');
         let changeBottom = - 1 * event.movementY;
         squareTemplate.style.bottom = castNumb(currentBottom) + changeBottom + 'px';
-        if (castNumb(currentBottom) + changeBottom < imgHeight) {
-            squareTemplate.style.height = (castNumb(currentHeight) - ((castNumb(currentHeight) + castNumb(currentBottom) + changeBottom + castNumb(currentTop)) - imgHeight)) + 'px';
+        if (castNumb(currentBottom) + changeBottom < imgPrev.clientHeight) {
+            squareTemplate.style.height = (castNumb(currentHeight) - ((castNumb(currentHeight) + castNumb(currentBottom) + changeBottom + castNumb(currentTop)) - imgPrev.clientHeight)) + 'px';
         } else {
-            squareTemplate.style.bottom = imgHeight + 'px';
+            squareTemplate.style.bottom = imgPrev.clientHeight + 'px';
         }
 
-        if ((castNumb(currentHeight) - ((castNumb(currentHeight) + castNumb(currentBottom) + changeBottom + castNumb(currentTop)) - imgHeight)) < imgHeight) {
-            squareTemplate.style.height = (castNumb(currentHeight) - ((castNumb(currentHeight) + castNumb(currentBottom) + changeBottom + castNumb(currentTop)) - imgHeight)) + 'px';
+        if ((castNumb(currentHeight) - ((castNumb(currentHeight) + castNumb(currentBottom) + changeBottom + castNumb(currentTop)) - imgPrev.clientHeight)) < imgPrev.clientHeight) {
+            squareTemplate.style.height = (castNumb(currentHeight) - ((castNumb(currentHeight) + castNumb(currentBottom) + changeBottom + castNumb(currentTop)) - imgPrev.clientHeight)) + 'px';
         } else {
             squareTemplate.style.bottom = 0 + 'px';
         }
@@ -302,14 +297,14 @@ addEventListener('pointermove', function (event) {
         currentWidth = window.getComputedStyle(squareTemplate).getPropertyValue('width');
         let changeRight = - 1 * event.movementX;
         squareTemplate.style.right = castNumb(currentRight) + changeRight + 'px';
-        if (castNumb(currentRight) + changeRight < imgWidth) {
-            squareTemplate.style.width = (castNumb(currentWidth) - ((castNumb(currentWidth) + castNumb(currentRight) + changeRight + castNumb(currentLeft)) - imgWidth)) + 'px';
+        if (castNumb(currentRight) + changeRight < imgPrev.clientWidth) {
+            squareTemplate.style.width = (castNumb(currentWidth) - ((castNumb(currentWidth) + castNumb(currentRight) + changeRight + castNumb(currentLeft)) - imgPrev.clientWidth)) + 'px';
         } else {
-            squareTemplate.style.right = imgWidth + 'px';
+            squareTemplate.style.right = imgPrev.clientWidth + 'px';
         }
 
-        if ((castNumb(currentWidth) - ((castNumb(currentWidth) + castNumb(currentRight) + changeRight + castNumb(currentLeft)) - imgWidth)) < imgWidth) {
-            squareTemplate.style.width = (castNumb(currentWidth) - ((castNumb(currentWidth) + castNumb(currentRight) + changeRight + castNumb(currentLeft)) - imgWidth)) + 'px';
+        if ((castNumb(currentWidth) - ((castNumb(currentWidth) + castNumb(currentRight) + changeRight + castNumb(currentLeft)) - imgPrev.clientWidth)) < imgPrev.clientWidth) {
+            squareTemplate.style.width = (castNumb(currentWidth) - ((castNumb(currentWidth) + castNumb(currentRight) + changeRight + castNumb(currentLeft)) - imgPrev.clientWidth)) + 'px';
         } else {
             squareTemplate.style.right = 0 + 'px';
         }
@@ -320,24 +315,67 @@ addEventListener('pointermove', function (event) {
         currentWidth = window.getComputedStyle(squareTemplate).getPropertyValue('width');
         let changeLeft = event.movementX;
         squareTemplate.style.left = castNumb(currentLeft) + changeLeft + 'px';
-        if (castNumb(currentLeft) + changeLeft < imgWidth) {
-            squareTemplate.style.width = (castNumb(currentWidth) - ((castNumb(currentWidth) + castNumb(currentLeft) + changeLeft + castNumb(currentRight)) - imgWidth)) + 'px';
+        if (castNumb(currentLeft) + changeLeft < imgPrev.clientWidth) {
+            squareTemplate.style.width = (castNumb(currentWidth) - ((castNumb(currentWidth) + castNumb(currentLeft) + changeLeft + castNumb(currentRight)) - imgPrev.clientWidth)) + 'px';
         } else {
-            squareTemplate.style.left = imgWidth + 'px';
+            squareTemplate.style.left = imgPrev.clientWidth + 'px';
         }
 
-        if ((castNumb(currentWidth) - ((castNumb(currentWidth) + castNumb(currentLeft) + changeLeft + castNumb(currentLeft)) - imgWidth)) < imgWidth) {
-            squareTemplate.style.width = (castNumb(currentWidth) - ((castNumb(currentWidth) + castNumb(currentLeft) + changeLeft + castNumb(currentRight)) - imgWidth)) + 'px';
+        if ((castNumb(currentWidth) - ((castNumb(currentWidth) + castNumb(currentLeft) + changeLeft + castNumb(currentLeft)) - imgPrev.clientWidth)) < imgPrev.clientWidth) {
+            squareTemplate.style.width = (castNumb(currentWidth) - ((castNumb(currentWidth) + castNumb(currentLeft) + changeLeft + castNumb(currentRight)) - imgPrev.clientWidth)) + 'px';
         } else {
             squareTemplate.style.left = 0 + 'px';
         }
     }
 
     if (clickDown) {
-        // currentRight = window.getComputedStyle(squareTemplate).getPropertyValue('right');
-        // if (castNumb(currentRight) > 0) {
-        //     changeRight = event.movementX;
-        //     squareTemplate.style.right = changeRight + 'px';
-        // }
+        currentRight = window.getComputedStyle(squareTemplate).getPropertyValue('right');
+        currentWidth = window.getComputedStyle(squareTemplate).getPropertyValue('width');
+        currentHeight = window.getComputedStyle(squareTemplate).getPropertyValue('height');
+        currentLeft = window.getComputedStyle(squareTemplate).getPropertyValue('left');
+        currentTop = window.getComputedStyle(squareTemplate).getPropertyValue('top');
+        currentBottom = window.getComputedStyle(squareTemplate).getPropertyValue('bottom');
+        if (castNumb(currentRight) > 0) {
+            changeRight = -1 * event.movementX;
+            squareTemplate.style.left = "unset";
+            squareTemplate.style.right = castNumb(currentRight) + changeRight + 'px';
+            if (castNumb(currentRight) + castNumb(currentWidth) > imgPrev.clientWidth) {
+                squareTemplate.style.right = (imgPrev.clientWidth - castNumb(currentWidth)) + 'px';
+            }
+        }
+        if (castNumb(currentLeft) > 0) {
+            changeLeft = event.movementX;
+            squareTemplate.style.right = "unset";
+            squareTemplate.style.left = castNumb(currentLeft) + changeLeft + 'px';
+            if (castNumb(currentLeft) + castNumb(currentWidth) > imgPrev.clientWidth) {
+                squareTemplate.style.left = (imgPrev.clientWidth - castNumb(currentWidth)) + 'px';
+            }
+        }
+        if (castNumb(currentTop) > 0) {
+            changeTop = event.movementY;
+            squareTemplate.style.bottom = "unset";
+            squareTemplate.style.top = castNumb(currentTop) + changeTop + 'px';
+            if (castNumb(currentTop) + castNumb(currentHeight) > imgPrev.clientHeight) {
+                squareTemplate.style.top = (imgPrev.clientHeight - castNumb(currentHeight)) + 'px';
+            }
+        }
+        if (castNumb(currentBottom) > 0) {
+            changeBottom = -1 * event.movementY;
+            squareTemplate.style.top = "unset";
+            squareTemplate.style.bottom = castNumb(currentBottom) + changeBottom + 'px';
+            if (castNumb(currentBottom) + castNumb(currentHeight) > imgPrev.clientHeight) {
+                squareTemplate.style.bottom = (imgPrev.clientHeight - castNumb(currentHeight)) + 'px';
+            }
+        }
+        let imageMeasurements = {
+            'id': i,
+            'top': currentTop,
+            'bottom': currentBottom,
+            'left': currentLeft,
+            'right': currentRight,
+            'width': currentWidth,
+            'height': currentHeight,
+        }
+        console.log(imageMeasurements);
     }
 })
