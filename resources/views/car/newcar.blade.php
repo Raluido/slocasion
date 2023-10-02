@@ -87,43 +87,33 @@
                         <textarea name="car_observations" id="car_observations" rows="7" cols="100" required></textarea> <br>
                     </div>
                 </div>
-                <div class="">
+                <div class="inputForm">
                     <input type="file" name="addPhotosInput[]" class="addPhotosInput" id="addPhotosInput" multiple hidden>
                     <div class="addPhotosBtn grayButton text-white d-inline">Añadir fotos</div>
                 </div>
                 <div class="imgPrev">
                     <div class="innerImgPrev">
-                        <img src="{{ Storage::url('img/image-placeholder.png') }}" alt="" class="">
+                        <div class="innerImgPrev">
+                            <img src="{{ Storage::url('img/image-placeholder.png') }}" alt="" class="">
+                        </div>
+                        <div class="squareTemplate" id="squareTemplateId">
+                            <div class="grabSquare" id="grabSquare"></div>
+                            <div class="topTemplate"></div>
+                            <div class="bottomTemplate"></div>
+                            <div class="leftTemplate"></div>
+                            <div class="rightTemplate"></div>
+                        </div>
                     </div>
-                    <div class="squareTemplate" id="squareTemplateId">
-                        <div class="grabSquare" id="grabSquare"></div>
-                        <div class="topTemplate"></div>
-                        <div class="bottomTemplate"></div>
-                        <div class="leftTemplate"></div>
-                        <div class="rightTemplate"></div>
+                    <div class="mainCheckbox">
+                        <label for="isMain" class="">Principal</label>
+                        <input type="checkbox" class="" id="isMain">
+                    </div>
+                    <div class="changePhoto d-flex margin11">
+                        <div class="previousPhoto">Anterior</div>
+                        <div class="nextPhoto">Siguiente</div>
                     </div>
                 </div>
-                <div class="">
-                    <label for="isMain" class="">Principal</label>
-                    <input type="checkbox" class="" id="isMain">
-                </div>
-                <div class="changePhoto d-flex margin11">
-                    <div class="previousPhoto">Anterior</div>
-                    <div class="nextPhoto">Siguiente</div>
-                </div>
-                <div class="filters">
-                    <div class="cropOptions d-flex">
-                        <div class="cropTop grayButton text-white d-inline active" id="cropTop">Superior</div>
-                        <div class="cropBottom grayButton text-white d-inline" id="cropBottom">Inferior</div>
-                        <div class="cropLeft grayButton text-white d-inline" id="cropLeft">Izquierdo</div>
-                        <div class="cropRight grayButton text-white d-inline" id="cropRight">Derecho</div>
-                    </div>
-                    <div class="cropRange">
-                        <input type="range" class="">
-                        <div class="name"></div>
-                    </div>
-                    <input type="hidden" id="cropMeasures" name="cropMeasures" value="" class="">
-                </div>
+                <input type="hidden" id="cropMeasures" name="cropMeasures" value="" class="">
                 <div class="submitForm">
                     <button class="greenButton text-white">{{ Lang::get('car.newCar') }}</button>
                 </div>

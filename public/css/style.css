@@ -867,17 +867,21 @@ footer .innerFooterBottom>a>div div:nth-child(2) h3 {
 }
 
 .newCar .innerNewCar .bottom .imgPrev {
-    position: relative;
-    margin-top: 1em;
+    border: 1px solid black;
+    padding-bottom: 1em;
 }
 
-.newCar .innerNewCar .bottom .imgPrev div,
-.newCar .innerNewCar .bottom .imgPrev div img {
+.newCar .innerNewCar .bottom .innerImgPrev {
+    position: relative;
+}
+
+.newCar .innerNewCar .bottom .innerImgPrev div,
+.newCar .innerNewCar .bottom .innerImgPrev div img {
     width: 100%;
     height: auto;
 }
 
-.newCar .innerNewCar .bottom .imgPrev .squareTemplate {
+.newCar .innerNewCar .bottom .innerImgPrev .squareTemplate {
     /* border: 1px solid red; */
     position: absolute;
     top: 0%;
@@ -886,7 +890,7 @@ footer .innerFooterBottom>a>div div:nth-child(2) h3 {
     z-index: 9000;
 }
 
-.newCar .innerNewCar .bottom .imgPrev .topTemplate {
+.newCar .innerNewCar .bottom .innerImgPrev .topTemplate {
     position: absolute;
     border: 2px solid green;
     width: 100%;
@@ -896,7 +900,7 @@ footer .innerFooterBottom>a>div div:nth-child(2) h3 {
     z-index: 9999;
 }
 
-.newCar .innerNewCar .bottom .imgPrev .bottomTemplate {
+.newCar .innerNewCar .bottom .innerImgPrev .bottomTemplate {
     position: absolute;
     border: 2px solid green;
     bottom: 0;
@@ -907,7 +911,7 @@ footer .innerFooterBottom>a>div div:nth-child(2) h3 {
     z-index: 9999;
 }
 
-.newCar .innerNewCar .bottom .imgPrev .leftTemplate {
+.newCar .innerNewCar .bottom .innerImgPrev .leftTemplate {
     position: absolute;
     left: 0;
     border: 2px solid green;
@@ -918,7 +922,7 @@ footer .innerFooterBottom>a>div div:nth-child(2) h3 {
     z-index: 9999;
 }
 
-.newCar .innerNewCar .bottom .imgPrev .rightTemplate {
+.newCar .innerNewCar .bottom .innerImgPrev .rightTemplate {
     position: absolute;
     right: 0;
     border: 2px solid green;
@@ -929,7 +933,7 @@ footer .innerFooterBottom>a>div div:nth-child(2) h3 {
     z-index: 9999;
 }
 
-.newCar .innerNewCar .bottom .imgPrev .grabSquare {
+.newCar .innerNewCar .bottom .innerImgPrev .grabSquare {
     position: absolute;
     height: 80%;
     width: 80%;
@@ -937,6 +941,10 @@ footer .innerFooterBottom>a>div div:nth-child(2) h3 {
     top: 10%;
     left: 10%;
     touch-action: none;
+}
+
+.newCar .innerNewCar .bottom .imgPrev .mainCheckbox {
+    margin: .5em 0 0 .5em;
 }
 
 .newCar .innerNewCar .bottom .changePhoto div {

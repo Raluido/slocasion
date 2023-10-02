@@ -1,18 +1,31 @@
 const addPhotosBtn = document.querySelector('.addPhotosBtn');
 const addPhotosInput = document.querySelector('.addPhotosInput');
-const imgPrev = document.querySelector('.imgPrev .innerImgPrev img');
+const innerImgPrev = document.querySelector('.imgPrev .innerImgPrev img');
 const previous = document.querySelector('.previousPhoto');
 const next = document.querySelector('.nextPhoto');
-const cropOptions = document.querySelectorAll('.cropOptions div');
-const cropRange = document.querySelector('.cropRange input');
-const cropName = document.querySelector('.cropRange div');
+const squareTemplate = document.getElementById('squareTemplateId');
 
+const topTemplate = document.querySelector('.topTemplate');
+const bottomTemplate = document.querySelector('.bottomTemplate');
+const rightTemplate = document.querySelector('.rightTemplate');
+const leftTemplate = document.querySelector('.leftTemplate');
+const grabSquare = document.getElementById('grabSquare');
+
+let currentBottom = window.getComputedStyle(squareTemplate).getPropertyValue('bottom');
+let currentTop = window.getComputedStyle(squareTemplate).getPropertyValue('top');
+let currentHeight = window.getComputedStyle(squareTemplate).getPropertyValue('height');
+let currentWidth = window.getComputedStyle(squareTemplate).getPropertyValue('width');
+let currentRight = window.getComputedStyle(squareTemplate).getPropertyValue('right');
+let currentLeft = window.getComputedStyle(squareTemplate).getPropertyValue('left');
+let clickDownTop = false;
+let clickDownBottom = false;
+let clickDownLeft = false;
+let clickDownRight = false;
+let clickDown = false;
 
 let isMain = document.getElementById('isMain');
-let cropTop = 0, cropBottom = 0, cropLeft = 0, cropRight = 0;
 let cropMeasures = [];
 let i = 0;
-let y0 = 0, y1 = 0, x0 = 0, x1 = 0;
 
 // change between the img added
 
@@ -33,12 +46,27 @@ previous.addEventListener('click', function () {
 })
 
 next.addEventListener('click', function () {
+    console.log();
     if (i < addPhotosInput.files.length - 1) {
         i++;
         addPrevImg();
         isMainFunc();
     }
 })
+
+const addPrevImgZero = () => {
+    let file = addPhotosInput.files[0];
+    if (!file) return;
+    innerImgPrev.src = "";
+    innerImgPrev.src = URL.createObjectURL(file);
+}
+
+const addPrevImg = () => {
+    let file = addPhotosInput.files[i];
+    if (!file) return;
+    innerImgPrev.src = URL.createObjectURL(file);
+    updateValues();
+}
 
 const noCrop = () => {
     cropMeasures = [];
@@ -49,25 +77,13 @@ const noCrop = () => {
             'top': 0,
             'bottom': 0,
             'left': 0,
-            'right': 0
+            'right': 0,
+            'width': innerImgPrev.clientWidth,
+            'height': innerImgPrev.clientHeight,
         }
         cropMeasures.push(data);
     }
     document.getElementById('cropMeasures').value = JSON.stringify(cropMeasures);
-}
-
-const addPrevImgZero = () => {
-    let file = addPhotosInput.files[0];
-    if (!file) return;
-    imgPrev.src = "";
-    imgPrev.src = URL.createObjectURL(file);
-}
-
-const addPrevImg = () => {
-    let file = addPhotosInput.files[i];
-    if (!file) return;
-    imgPrev.src = URL.createObjectURL(file);
-    updateValues();
 }
 
 const isMainFunc = () => {
@@ -82,93 +98,24 @@ const updateValues = () => {
     if (cropMeasures.length > 0) {
         id = cropMeasures.findIndex(obj => obj.id == i);
         if (id >= 0) {
-            cropTop = cropMeasures[id].top * (100 / imgPrev.clientHeight);
-            cropBottom = cropMeasures[id].bottom * (100 / imgPrev.clientHeight);
-            cropLeft = cropMeasures[id].left * (100 / imgPrev.clientWidth);
-            cropRight = cropMeasures[id].right * (100 / imgPrev.clientWidth);
+            squareTemplate.style.top = cropMeasures[id].top;
+            squareTemplate.style.bottom = cropMeasures[id].bottom;
+            squareTemplate.style.left = cropMeasures[id].left;
+            squareTemplate.style.right = cropMeasures[id].right;
+            squareTemplate.style.height = innerImgPrev.clientHeight;
+            squareTemplate.style.width = innerImgPrev.clientWidth;
         } else {
-            cropTop = 0;
-            cropBottom = 0;
-            cropLeft = 0;
-            cropRight = 0;
+            squareTemplate.style.top = 0 + 'px';
+            squareTemplate.style.bottom = 0 + 'px';
+            squareTemplate.style.left = 0 + 'px';
+            squareTemplate.style.right = 0 + 'px';
+            squareTemplate.style.height = innerImgPrev.clientHeight;
+            squareTemplate.style.width = innerImgPrev.clientWidth;
         }
     }
-    cropArea();
-}
-
-cropOptions.forEach(cropOption => {
-    cropOption.addEventListener('click', () => {
-        document.querySelector(".active").classList.remove("active");
-        cropOption.classList.add("active");
-        if (cropOption.id == 'cropTop') {
-            cropRange.value = cropTop;
-            cropRange.min = 0;
-            cropName.innerText = 'Superior';
-        } else if (cropOption.id == 'cropBottom') {
-            cropRange.value = cropBottom;
-            cropRange.min = 0;
-            cropName.innerText = 'Inferior';
-        } else if (cropOption.id == 'cropLeft') {
-            cropRange.value = cropLeft;
-            cropRange.min = 0;
-            cropName.innerText = 'Izquierdo';
-        } else if (cropOption.id == 'cropRight') {
-            cropRange.value = cropRight;
-            cropRange.min = 0;
-            cropName.innerText = 'Derecho';
-        }
-    })
-})
-
-const updateOptions = () => {
-    const activeFilter = document.querySelector('.active');
-    if (activeFilter.id === 'cropTop') {
-        cropTop = cropRange.value;
-    } else if (activeFilter.id === 'cropBottom') {
-        cropBottom = cropRange.value;
-    } else if (activeFilter.id === 'cropLeft') {
-        cropLeft = cropRange.value;
-    } else if (activeFilter.id === 'cropRight') {
-        cropRight = cropRange.value;
-    }
-    cropArea();
-}
-
-const cropArea = () => {
-    let y0 = (imgPrev.clientHeight / 100) * cropTop;
-    let y1 = (imgPrev.clientHeight / 100) * cropBottom;
-    let x0 = (imgPrev.clientWidth / 100) * cropLeft;
-    let x1 = (imgPrev.clientWidth / 100) * cropRight;
-    if (y0 + y1 > imgPrev.clientHeight || x0 + x1 > imgPrev.clientWidth) {
-        x0 = x1 = y0 = y1 = 0;
-    }
-    imgPrev.style.clipPath = `inset(${y0}px ${x1}px ${y1}px ${x0}px)`;
-    let data = {
-        'id': i,
-        'main': i == 0 ? true : false,
-        'top': y0,
-        'bottom': y1,
-        'left': x0,
-        'right': x1
-    };
-    if (cropMeasures.length > 0) {
-        imageId = cropMeasures.findIndex(obj => obj.id == i);
-        if (imageId >= 0) {
-            cropMeasures[imageId].top = y0;
-            cropMeasures[imageId].bottom = y1;
-            cropMeasures[imageId].left = x0;
-            cropMeasures[imageId].right = x1;
-        } else {
-            cropMeasures.push(data);
-        }
-    } else {
-        cropMeasures.push(data);
-    }
-    document.getElementById('cropMeasures').value = JSON.stringify(cropMeasures);
 }
 
 addPhotosBtn.addEventListener('click', () => addPhotosInput.click());
-cropRange.addEventListener('input', updateOptions);
 
 // manage how to change the main checkbox when the user wants
 
@@ -189,25 +136,6 @@ isMain.addEventListener('change', () => {
 })
 
 // manage the template
-
-const topTemplate = document.querySelector('.topTemplate');
-const bottomTemplate = document.querySelector('.bottomTemplate');
-const rightTemplate = document.querySelector('.rightTemplate');
-const leftTemplate = document.querySelector('.leftTemplate');
-const squareTemplate = document.getElementById('squareTemplateId');
-const grabSquare = document.getElementById('grabSquare');
-let currentBottom = window.getComputedStyle(squareTemplate).getPropertyValue('bottom');
-let currentTop = window.getComputedStyle(squareTemplate).getPropertyValue('top');
-let currentHeight = window.getComputedStyle(squareTemplate).getPropertyValue('height');
-let currentWidth = window.getComputedStyle(squareTemplate).getPropertyValue('width');
-let currentRight = window.getComputedStyle(squareTemplate).getPropertyValue('right');
-let currentLeft = window.getComputedStyle(squareTemplate).getPropertyValue('left');
-let clickDownTop = false;
-let clickDownBottom = false;
-let clickDownLeft = false;
-let clickDownRight = false;
-
-let clickDown = false;
 
 grabSquare.addEventListener('pointerdown', function () {
     clickDown = true;
@@ -261,14 +189,14 @@ addEventListener('pointermove', function (event) {
         currentHeight = window.getComputedStyle(squareTemplate).getPropertyValue('height');
         let changeTop = event.movementY;
         squareTemplate.style.top = castNumb(currentTop) + changeTop + 'px';
-        if (castNumb(currentTop) + changeTop < imgPrev.clientHeight) {
-            squareTemplate.style.height = (castNumb(currentHeight) - ((castNumb(currentHeight) + castNumb(currentTop) + changeTop + castNumb(currentBottom)) - imgPrev.clientHeight)) + 'px';
+        if (castNumb(currentTop) + changeTop < innerImgPrev.clientHeight) {
+            squareTemplate.style.height = (castNumb(currentHeight) - ((castNumb(currentHeight) + castNumb(currentTop) + changeTop + castNumb(currentBottom)) - innerImgPrev.clientHeight)) + 'px';
         } else {
-            squareTemplate.style.top = imgPrev.clientHeight + 'px';
+            squareTemplate.style.top = innerImgPrev.clientHeight + 'px';
         }
 
-        if ((castNumb(currentHeight) - ((castNumb(currentHeight) + castNumb(currentTop) + changeTop + castNumb(currentBottom)) - imgPrev.clientHeight)) < imgPrev.clientHeight) {
-            squareTemplate.style.height = (castNumb(currentHeight) - ((castNumb(currentHeight) + castNumb(currentTop) + changeTop + castNumb(currentBottom)) - imgPrev.clientHeight)) + 'px';
+        if ((castNumb(currentHeight) - ((castNumb(currentHeight) + castNumb(currentTop) + changeTop + castNumb(currentBottom)) - innerImgPrev.clientHeight)) < innerImgPrev.clientHeight) {
+            squareTemplate.style.height = (castNumb(currentHeight) - ((castNumb(currentHeight) + castNumb(currentTop) + changeTop + castNumb(currentBottom)) - innerImgPrev.clientHeight)) + 'px';
         } else {
             squareTemplate.style.top = 0 + 'px';
         }
@@ -279,14 +207,14 @@ addEventListener('pointermove', function (event) {
         currentHeight = window.getComputedStyle(squareTemplate).getPropertyValue('height');
         let changeBottom = - 1 * event.movementY;
         squareTemplate.style.bottom = castNumb(currentBottom) + changeBottom + 'px';
-        if (castNumb(currentBottom) + changeBottom < imgPrev.clientHeight) {
-            squareTemplate.style.height = (castNumb(currentHeight) - ((castNumb(currentHeight) + castNumb(currentBottom) + changeBottom + castNumb(currentTop)) - imgPrev.clientHeight)) + 'px';
+        if (castNumb(currentBottom) + changeBottom < innerImgPrev.clientHeight) {
+            squareTemplate.style.height = (castNumb(currentHeight) - ((castNumb(currentHeight) + castNumb(currentBottom) + changeBottom + castNumb(currentTop)) - innerImgPrev.clientHeight)) + 'px';
         } else {
-            squareTemplate.style.bottom = imgPrev.clientHeight + 'px';
+            squareTemplate.style.bottom = innerImgPrev.clientHeight + 'px';
         }
 
-        if ((castNumb(currentHeight) - ((castNumb(currentHeight) + castNumb(currentBottom) + changeBottom + castNumb(currentTop)) - imgPrev.clientHeight)) < imgPrev.clientHeight) {
-            squareTemplate.style.height = (castNumb(currentHeight) - ((castNumb(currentHeight) + castNumb(currentBottom) + changeBottom + castNumb(currentTop)) - imgPrev.clientHeight)) + 'px';
+        if ((castNumb(currentHeight) - ((castNumb(currentHeight) + castNumb(currentBottom) + changeBottom + castNumb(currentTop)) - innerImgPrev.clientHeight)) < innerImgPrev.clientHeight) {
+            squareTemplate.style.height = (castNumb(currentHeight) - ((castNumb(currentHeight) + castNumb(currentBottom) + changeBottom + castNumb(currentTop)) - innerImgPrev.clientHeight)) + 'px';
         } else {
             squareTemplate.style.bottom = 0 + 'px';
         }
@@ -297,14 +225,14 @@ addEventListener('pointermove', function (event) {
         currentWidth = window.getComputedStyle(squareTemplate).getPropertyValue('width');
         let changeRight = - 1 * event.movementX;
         squareTemplate.style.right = castNumb(currentRight) + changeRight + 'px';
-        if (castNumb(currentRight) + changeRight < imgPrev.clientWidth) {
-            squareTemplate.style.width = (castNumb(currentWidth) - ((castNumb(currentWidth) + castNumb(currentRight) + changeRight + castNumb(currentLeft)) - imgPrev.clientWidth)) + 'px';
+        if (castNumb(currentRight) + changeRight < innerImgPrev.clientWidth) {
+            squareTemplate.style.width = (castNumb(currentWidth) - ((castNumb(currentWidth) + castNumb(currentRight) + changeRight + castNumb(currentLeft)) - innerImgPrev.clientWidth)) + 'px';
         } else {
-            squareTemplate.style.right = imgPrev.clientWidth + 'px';
+            squareTemplate.style.right = innerImgPrev.clientWidth + 'px';
         }
 
-        if ((castNumb(currentWidth) - ((castNumb(currentWidth) + castNumb(currentRight) + changeRight + castNumb(currentLeft)) - imgPrev.clientWidth)) < imgPrev.clientWidth) {
-            squareTemplate.style.width = (castNumb(currentWidth) - ((castNumb(currentWidth) + castNumb(currentRight) + changeRight + castNumb(currentLeft)) - imgPrev.clientWidth)) + 'px';
+        if ((castNumb(currentWidth) - ((castNumb(currentWidth) + castNumb(currentRight) + changeRight + castNumb(currentLeft)) - innerImgPrev.clientWidth)) < innerImgPrev.clientWidth) {
+            squareTemplate.style.width = (castNumb(currentWidth) - ((castNumb(currentWidth) + castNumb(currentRight) + changeRight + castNumb(currentLeft)) - innerImgPrev.clientWidth)) + 'px';
         } else {
             squareTemplate.style.right = 0 + 'px';
         }
@@ -315,14 +243,14 @@ addEventListener('pointermove', function (event) {
         currentWidth = window.getComputedStyle(squareTemplate).getPropertyValue('width');
         let changeLeft = event.movementX;
         squareTemplate.style.left = castNumb(currentLeft) + changeLeft + 'px';
-        if (castNumb(currentLeft) + changeLeft < imgPrev.clientWidth) {
-            squareTemplate.style.width = (castNumb(currentWidth) - ((castNumb(currentWidth) + castNumb(currentLeft) + changeLeft + castNumb(currentRight)) - imgPrev.clientWidth)) + 'px';
+        if (castNumb(currentLeft) + changeLeft < innerImgPrev.clientWidth) {
+            squareTemplate.style.width = (castNumb(currentWidth) - ((castNumb(currentWidth) + castNumb(currentLeft) + changeLeft + castNumb(currentRight)) - innerImgPrev.clientWidth)) + 'px';
         } else {
-            squareTemplate.style.left = imgPrev.clientWidth + 'px';
+            squareTemplate.style.left = innerImgPrev.clientWidth + 'px';
         }
 
-        if ((castNumb(currentWidth) - ((castNumb(currentWidth) + castNumb(currentLeft) + changeLeft + castNumb(currentLeft)) - imgPrev.clientWidth)) < imgPrev.clientWidth) {
-            squareTemplate.style.width = (castNumb(currentWidth) - ((castNumb(currentWidth) + castNumb(currentLeft) + changeLeft + castNumb(currentRight)) - imgPrev.clientWidth)) + 'px';
+        if ((castNumb(currentWidth) - ((castNumb(currentWidth) + castNumb(currentLeft) + changeLeft + castNumb(currentLeft)) - innerImgPrev.clientWidth)) < innerImgPrev.clientWidth) {
+            squareTemplate.style.width = (castNumb(currentWidth) - ((castNumb(currentWidth) + castNumb(currentLeft) + changeLeft + castNumb(currentRight)) - innerImgPrev.clientWidth)) + 'px';
         } else {
             squareTemplate.style.left = 0 + 'px';
         }
@@ -339,36 +267,37 @@ addEventListener('pointermove', function (event) {
             changeRight = -1 * event.movementX;
             squareTemplate.style.left = "unset";
             squareTemplate.style.right = castNumb(currentRight) + changeRight + 'px';
-            if (castNumb(currentRight) + castNumb(currentWidth) > imgPrev.clientWidth) {
-                squareTemplate.style.right = (imgPrev.clientWidth - castNumb(currentWidth)) + 'px';
+            if (castNumb(currentRight) + castNumb(currentWidth) > innerImgPrev.clientWidth) {
+                squareTemplate.style.right = (innerImgPrev.clientWidth - castNumb(currentWidth)) + 'px';
             }
         }
         if (castNumb(currentLeft) > 0) {
             changeLeft = event.movementX;
             squareTemplate.style.right = "unset";
             squareTemplate.style.left = castNumb(currentLeft) + changeLeft + 'px';
-            if (castNumb(currentLeft) + castNumb(currentWidth) > imgPrev.clientWidth) {
-                squareTemplate.style.left = (imgPrev.clientWidth - castNumb(currentWidth)) + 'px';
+            if (castNumb(currentLeft) + castNumb(currentWidth) > innerImgPrev.clientWidth) {
+                squareTemplate.style.left = (innerImgPrev.clientWidth - castNumb(currentWidth)) + 'px';
             }
         }
         if (castNumb(currentTop) > 0) {
             changeTop = event.movementY;
             squareTemplate.style.bottom = "unset";
             squareTemplate.style.top = castNumb(currentTop) + changeTop + 'px';
-            if (castNumb(currentTop) + castNumb(currentHeight) > imgPrev.clientHeight) {
-                squareTemplate.style.top = (imgPrev.clientHeight - castNumb(currentHeight)) + 'px';
+            if (castNumb(currentTop) + castNumb(currentHeight) > innerImgPrev.clientHeight) {
+                squareTemplate.style.top = (innerImgPrev.clientHeight - castNumb(currentHeight)) + 'px';
             }
         }
         if (castNumb(currentBottom) > 0) {
             changeBottom = -1 * event.movementY;
             squareTemplate.style.top = "unset";
             squareTemplate.style.bottom = castNumb(currentBottom) + changeBottom + 'px';
-            if (castNumb(currentBottom) + castNumb(currentHeight) > imgPrev.clientHeight) {
-                squareTemplate.style.bottom = (imgPrev.clientHeight - castNumb(currentHeight)) + 'px';
+            if (castNumb(currentBottom) + castNumb(currentHeight) > innerImgPrev.clientHeight) {
+                squareTemplate.style.bottom = (innerImgPrev.clientHeight - castNumb(currentHeight)) + 'px';
             }
         }
-        let imageMeasurements = {
+        data = {
             'id': i,
+            'main': i == 0 ? true : false,
             'top': currentTop,
             'bottom': currentBottom,
             'left': currentLeft,
@@ -376,6 +305,23 @@ addEventListener('pointermove', function (event) {
             'width': currentWidth,
             'height': currentHeight,
         }
-        console.log(imageMeasurements);
+        saveTemplate(data);
+        console.log(cropMeasures);
     }
 })
+
+function saveTemplate(data) {
+
+    id = cropMeasures.findIndex(obj => obj.id == i);
+    if (id >= 0) {
+        cropMeasures[id].top = data.top;
+        cropMeasures[id].bottom = data.bottom;
+        cropMeasures[id].left = data.left;
+        cropMeasures[id].right = data.right;
+        cropMeasures[id].width = data.width;
+        cropMeasures[id].height = data.height;
+    } else {
+        cropMeasures.push(data);
+    }
+    document.getElementById('cropMeasures').value = JSON.stringify(cropMeasures);
+}
