@@ -32,7 +32,8 @@ class AdminController extends Controller
         $cropMeasures = $request->input('cropMeasures');
         log::info($cropMeasures);
 
-        die();
+
+
         $car = new Car();
         $car->user_id = auth()->user()->id;
         $car->car_brand = $request->input('car_brand');
@@ -52,7 +53,7 @@ class AdminController extends Controller
         $car->car_registration_date = $request->input('car_registration_date');
         $car->car_gear = $request->input('car_gear');
         $car->car_soldOrBooked = $request->input('car_soldOrBooked');
-        if ($request->hasFile('photoMain')) {
+        if ($request->hasFile('addPhotosInput')) {
             $extension = $request->file('photoMain')->getClientOriginalExtension();
             $request->photoMain->storeAs('public/media', $numberPlate . '0.' . $extension);
             $car->car_photo_main = $numberPlate . '0' . 'sm.' . $extension;

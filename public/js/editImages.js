@@ -1,6 +1,7 @@
 const addPhotosBtn = document.querySelector('.addPhotosBtn');
 const addPhotosInput = document.querySelector('.addPhotosInput');
 const innerImgPrev = document.querySelector('.imgPrev .innerImgPrev img');
+const imgSize = document.querySelector('.imgPrev .innerImgPrev');
 const previous = document.querySelector('.previousPhoto');
 const next = document.querySelector('.nextPhoto');
 const squareTemplate = document.getElementById('squareTemplateId');
@@ -149,12 +150,6 @@ addEventListener('pointermove', function (event) {
     }
 
     if (clickDown) {
-        currentRight = window.getComputedStyle(squareTemplate).getPropertyValue('right');
-        currentWidth = window.getComputedStyle(squareTemplate).getPropertyValue('width');
-        currentHeight = window.getComputedStyle(squareTemplate).getPropertyValue('height');
-        currentLeft = window.getComputedStyle(squareTemplate).getPropertyValue('left');
-        currentTop = window.getComputedStyle(squareTemplate).getPropertyValue('top');
-        currentBottom = window.getComputedStyle(squareTemplate).getPropertyValue('bottom');
         if (castNumb(currentRight) > 0) {
             changeRight = -1 * event.movementX;
             squareTemplate.style.left = "unset";
@@ -188,6 +183,12 @@ addEventListener('pointermove', function (event) {
             }
         }
     }
+    currentRight = window.getComputedStyle(squareTemplate).getPropertyValue('right');
+    currentWidth = window.getComputedStyle(squareTemplate).getPropertyValue('width');
+    currentHeight = window.getComputedStyle(squareTemplate).getPropertyValue('height');
+    currentLeft = window.getComputedStyle(squareTemplate).getPropertyValue('left');
+    currentTop = window.getComputedStyle(squareTemplate).getPropertyValue('top');
+    currentBottom = window.getComputedStyle(squareTemplate).getPropertyValue('bottom');
     data = {
         'id': i,
         'main': i == 0 ? true : false,
@@ -198,7 +199,9 @@ addEventListener('pointermove', function (event) {
         'width': currentWidth,
         'height': currentHeight,
     }
-    saveTemplate(data);
+    if (clickDownTop || clickDownBottom || clickDownLeft || clickDownRight || clickDown) {
+        saveTemplate(data);
+    }
 })
 
 function saveTemplate(data) {
@@ -225,6 +228,8 @@ addPhotosInput.addEventListener('change', function () {
         addPrevImgZero();
         isMainFunc();
     }
+    console.log("saveAtStart");
+    console.log(cropMeasures);
 })
 
 previous.addEventListener('click', function () {
@@ -240,6 +245,9 @@ next.addEventListener('click', function () {
         i++;
         addPrevImg();
         isMainFunc();
+        console.log("next");
+        console.log(cropMeasures);
+
     }
 })
 
@@ -267,8 +275,8 @@ const noCrop = () => {
             'bottom': '0px',
             'left': '0px',
             'right': '0px',
-            'width': innerImgPrev.width,
-            'height': innerImgPrev.height,
+            'width': null,
+            'height': null,
         }
         cropMeasures.push(data);
     }
@@ -298,8 +306,8 @@ const updateValues = () => {
             squareTemplate.style.bottom = 0 + 'px';
             squareTemplate.style.left = 0 + 'px';
             squareTemplate.style.right = 0 + 'px';
-            squareTemplate.style.height = innerImgPrev.width;
-            squareTemplate.style.width = innerImgPrev.height;
+            squareTemplate.style.height = null;
+            squareTemplate.style.width = null;
         }
     }
 }
