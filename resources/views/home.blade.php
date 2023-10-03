@@ -16,8 +16,8 @@
             </div>
             @endauth
         </div>
-        @foreach ($cars as $car)
         <div class="bottom">
+            @foreach ($cars as $car)
             <div class="cars">
                 <a class="innerCars" href="{{ url('showcar/' . $car->id) }}" style="position:relative">
                     <div class="innerCarsTop">
@@ -56,32 +56,32 @@
                         </div>
                     </div>
                 </a>
-            </div>
-            @auth('web')
-            <div class="edition">
-                <form method="POST" action="/updatestatus/{{ $car->id }}" enctype="multipart/form-data">
-                    @csrf
-                    @method('PUT')
-                    <select name="car_soldOrBooked" id="car_soldOrBooked">
-                        <option value="En venta" @if ($car->car_soldOrBooked == 'En venta') selected="selected" @endif>En venta
-                        </option>
-                        <option value="Vendido" @if ($car->car_soldOrBooked == 'Vendido') selected="selected" @endif>Vendido
-                        </option>
-                        <option value="Reservado" @if ($car->car_soldOrBooked == 'Reservado') selected="selected" @endif>Reservado
-                        </option>
-                    </select><br>
-                    <button class="blueButton text-white" type="submit">{{ Lang::get('car.car_changeStatus') }}</button>
-                </form>
-                <div class="editDelete">
-                    <div class="edit"><button class="greenButton"><a class="text-white" href="{{ url('editcar/' . $car->id) }}">{{ Lang::get('car.editCar') }}</a></button>
-                    </div>
-                    <div class="delete"><button class="redButton"><a class="text-white" href="{{ url('deletecar/' . $car->id) }}">Eliminar</a></button>
+                @auth('web')
+                <div class="edition">
+                    <form method="POST" action="/updatestatus/{{ $car->id }}" enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT')
+                        <select name="car_soldOrBooked" id="car_soldOrBooked">
+                            <option value="En venta" @if ($car->car_soldOrBooked == 'En venta') selected="selected" @endif>En venta
+                            </option>
+                            <option value="Vendido" @if ($car->car_soldOrBooked == 'Vendido') selected="selected" @endif>Vendido
+                            </option>
+                            <option value="Reservado" @if ($car->car_soldOrBooked == 'Reservado') selected="selected" @endif>Reservado
+                            </option>
+                        </select><br>
+                        <button class="blueButton text-white" type="submit">{{ Lang::get('car.car_changeStatus') }}</button>
+                    </form>
+                    <div class="editDelete">
+                        <div class="edit"><button class="greenButton"><a class="text-white" href="{{ url('editcar/' . $car->id) }}">{{ Lang::get('car.editCar') }}</a></button>
+                        </div>
+                        <div class="delete"><button class="redButton"><a class="text-white" href="{{ url('deletecar/' . $car->id) }}">Eliminar</a></button>
+                        </div>
                     </div>
                 </div>
+                @endauth
             </div>
+            @endforeach
         </div>
-        @endauth
-        @endforeach
     </div>
 </div>
 @endsection

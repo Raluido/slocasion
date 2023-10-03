@@ -27,114 +27,6 @@ let isMain = document.getElementById('isMain');
 let cropMeasures = [];
 let i = 0;
 
-// change between the img added
-
-addPhotosInput.addEventListener('change', function () {
-    if (i == 0) {
-        noCrop();
-        addPrevImgZero();
-        isMainFunc();
-    }
-})
-
-previous.addEventListener('click', function () {
-    if (i > 0) {
-        i--;
-        addPrevImg();
-        isMainFunc();
-    }
-})
-
-next.addEventListener('click', function () {
-    if (i < addPhotosInput.files.length - 1) {
-        i++;
-        addPrevImg();
-        isMainFunc();
-    }
-})
-
-const addPrevImgZero = () => {
-    let file = addPhotosInput.files[0];
-    if (!file) return;
-    innerImgPrev.src = "";
-    innerImgPrev.src = URL.createObjectURL(file);
-}
-
-const addPrevImg = () => {
-    let file = addPhotosInput.files[i];
-    if (!file) return;
-    innerImgPrev.src = URL.createObjectURL(file);
-    updateValues();
-}
-
-const noCrop = () => {
-    cropMeasures = [];
-    for (let i = 0; i < addPhotosInput.files.length; i++) {
-        let data = {
-            'id': i,
-            'main': i == 0 ? true : false,
-            'top': 0,
-            'bottom': 0,
-            'left': 0,
-            'right': 0,
-            'width': innerImgPrev.clientWidth,
-            'height': innerImgPrev.clientHeight,
-        }
-        cropMeasures.push(data);
-    }
-    document.getElementById('cropMeasures').value = JSON.stringify(cropMeasures);
-}
-
-const isMainFunc = () => {
-    if (cropMeasures[i].main == true) {
-        isMain.checked = true;
-    } else {
-        isMain.checked = false;
-    }
-}
-
-const updateValues = () => {
-    console.log(cropMeasures);
-    if (cropMeasures.length > 0) {
-        id = cropMeasures.findIndex(obj => obj.id == i);
-        if (id >= 0) {
-            squareTemplate.style.top = cropMeasures[id].top;
-            squareTemplate.style.bottom = cropMeasures[id].bottom;
-            squareTemplate.style.left = cropMeasures[id].left;
-            squareTemplate.style.right = cropMeasures[id].right;
-            squareTemplate.style.height = innerImgPrev.clientHeight;
-            squareTemplate.style.width = innerImgPrev.clientWidth;
-        } else {
-            squareTemplate.style.top = 0 + 'px';
-            squareTemplate.style.bottom = 0 + 'px';
-            squareTemplate.style.left = 0 + 'px';
-            squareTemplate.style.right = 0 + 'px';
-            squareTemplate.style.height = innerImgPrev.clientHeight;
-            squareTemplate.style.width = innerImgPrev.clientWidth;
-        }
-    }
-}
-
-addPhotosBtn.addEventListener('click', () => addPhotosInput.click());
-
-// manage how to change the main checkbox when the user wants
-
-isMain.addEventListener('change', () => {
-    if (isMain.checked == true) {
-        index = cropMeasures.findIndex(obj => obj.main == true);
-        if (index >= 0) {
-            cropMeasures[index].main = false;
-            cropMeasures[i].main = true;
-        }
-    } else {
-        index = cropMeasures.findIndex(obj => obj.main == false);
-        if (index >= 0) {
-            cropMeasures[index].main = false;
-            cropMeasures[0].main = true;
-        }
-    }
-})
-
 // manage the template
 
 grabSquare.addEventListener('pointerdown', function () {
@@ -324,3 +216,110 @@ function saveTemplate(data) {
     }
     document.getElementById('cropMeasures').value = JSON.stringify(cropMeasures);
 }
+
+// change between the img added
+
+addPhotosInput.addEventListener('change', function () {
+    if (i == 0) {
+        noCrop();
+        addPrevImgZero();
+        isMainFunc();
+    }
+})
+
+previous.addEventListener('click', function () {
+    if (i > 0) {
+        i--;
+        addPrevImg();
+        isMainFunc();
+    }
+})
+
+next.addEventListener('click', function () {
+    if (i < addPhotosInput.files.length - 1) {
+        i++;
+        addPrevImg();
+        isMainFunc();
+    }
+})
+
+const addPrevImgZero = () => {
+    let file = addPhotosInput.files[0];
+    if (!file) return;
+    innerImgPrev.src = "";
+    innerImgPrev.src = URL.createObjectURL(file);
+}
+
+const addPrevImg = () => {
+    let file = addPhotosInput.files[i];
+    if (!file) return;
+    innerImgPrev.src = URL.createObjectURL(file);
+    updateValues();
+}
+
+const noCrop = () => {
+    cropMeasures = [];
+    for (let i = 0; i < addPhotosInput.files.length; i++) {
+        let data = {
+            'id': i,
+            'main': i == 0 ? true : false,
+            'top': '0px',
+            'bottom': '0px',
+            'left': '0px',
+            'right': '0px',
+            'width': innerImgPrev.width,
+            'height': innerImgPrev.height,
+        }
+        cropMeasures.push(data);
+    }
+    document.getElementById('cropMeasures').value = JSON.stringify(cropMeasures);
+}
+
+const isMainFunc = () => {
+    if (cropMeasures[i].main == true) {
+        isMain.checked = true;
+    } else {
+        isMain.checked = false;
+    }
+}
+
+const updateValues = () => {
+    if (cropMeasures.length > 0) {
+        id = cropMeasures.findIndex(obj => obj.id == i);
+        if (id >= 0) {
+            squareTemplate.style.top = cropMeasures[id].top;
+            squareTemplate.style.bottom = cropMeasures[id].bottom;
+            squareTemplate.style.left = cropMeasures[id].left;
+            squareTemplate.style.right = cropMeasures[id].right;
+            squareTemplate.style.height = cropMeasures[id].height;
+            squareTemplate.style.width = cropMeasures[id].width;
+        } else {
+            squareTemplate.style.top = 0 + 'px';
+            squareTemplate.style.bottom = 0 + 'px';
+            squareTemplate.style.left = 0 + 'px';
+            squareTemplate.style.right = 0 + 'px';
+            squareTemplate.style.height = innerImgPrev.width;
+            squareTemplate.style.width = innerImgPrev.height;
+        }
+    }
+}
+
+addPhotosBtn.addEventListener('click', () => addPhotosInput.click());
+
+// manage how to change the main checkbox when the user wants
+
+isMain.addEventListener('change', () => {
+    if (isMain.checked == true) {
+        index = cropMeasures.findIndex(obj => obj.main == true);
+        if (index >= 0) {
+            cropMeasures[index].main = false;
+            cropMeasures[i].main = true;
+        }
+    } else {
+        index = cropMeasures.findIndex(obj => obj.main == false);
+        if (index >= 0) {
+            cropMeasures[index].main = false;
+            cropMeasures[0].main = true;
+        }
+    }
+})
