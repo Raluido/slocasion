@@ -9,7 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.0",
-        "gregwar/image": "^2.1",
+        "gregwar/image": "2.*",
         "guzzlehttp/guzzle": "^7.0.1",
         "intervention/image": "^2.7",
         "laravel/framework": "^10.0",

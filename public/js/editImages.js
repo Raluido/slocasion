@@ -79,20 +79,24 @@ leftTemplate.addEventListener('pointerup', function () {
 addEventListener('pointermove', function (event) {
     if (clickDownTop) {
         currentTop = window.getComputedStyle(squareTemplate).getPropertyValue('top');
+        currentBottom = window.getComputedStyle(squareTemplate).getPropertyValue('bottom');
         currentHeight = window.getComputedStyle(squareTemplate).getPropertyValue('height');
         let changeTop = event.movementY;
-        squareTemplate.style.top = castNumb(currentTop) + changeTop + 'px';
-        if (castNumb(currentTop) + changeTop < innerImgPrev.clientHeight) {
-            squareTemplate.style.height = (castNumb(currentHeight) - ((castNumb(currentHeight) + castNumb(currentTop) + changeTop + castNumb(currentBottom)) - innerImgPrev.clientHeight)) + 'px';
+        console.log(castNumb(currentTop) + changeTop + castNumb(currentHeight) + castNumb(currentBottom));
+        console.log(innerImgPrev.clientHeight);
+        if (castNumb(currentTop) + changeTop + castNumb(currentHeight) + castNumb(currentBottom) <= innerImgPrev.clientHeight) {
+            squareTemplate.style.top = castNumb(currentTop) + changeTop + 'px';
+            // squareTemplate.style.height = castNumb(currentHeight) - castNumb(currentTop) - changeTop + 'px';
         } else {
-            squareTemplate.style.top = innerImgPrev.clientHeight + 'px';
+            squareTemplate.style.top = '0px';
+            squareTemplate.style.height = innerImgPrev.clientHeight + 'px';
         }
 
-        if ((castNumb(currentHeight) - ((castNumb(currentHeight) + castNumb(currentTop) + changeTop + castNumb(currentBottom)) - innerImgPrev.clientHeight)) < innerImgPrev.clientHeight) {
-            squareTemplate.style.height = (castNumb(currentHeight) - ((castNumb(currentHeight) + castNumb(currentTop) + changeTop + castNumb(currentBottom)) - innerImgPrev.clientHeight)) + 'px';
-        } else {
-            squareTemplate.style.top = 0 + 'px';
-        }
+        // if ((castNumb(currentHeight) - ((castNumb(currentHeight) + castNumb(currentTop) + changeTop + castNumb(currentBottom)) - innerImgPrev.clientHeight)) < innerImgPrev.clientHeight) {
+        //     squareTemplate.style.height = (castNumb(currentHeight) - ((castNumb(currentHeight) + castNumb(currentTop) + changeTop + castNumb(currentBottom)) - innerImgPrev.clientHeight)) + 'px';
+        // } else {
+        //     squareTemplate.style.top = 0 + 'px';
+        // }
     }
 
     if (clickDownBottom) {

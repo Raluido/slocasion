@@ -10,6 +10,7 @@ use Gregwar\Image\Image;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use NumberFormatter;
 
 class AdminController extends Controller
 {
@@ -30,9 +31,7 @@ class AdminController extends Controller
     public function createNewCar(Request $request)
     {
         $cropMeasures = $request->input('cropMeasures');
-        log::info($cropMeasures);
-
-
+        $cropMeasures = json_decode($cropMeasures);
 
         $car = new Car();
         $car->user_id = auth()->user()->id;
@@ -54,6 +53,25 @@ class AdminController extends Controller
         $car->car_gear = $request->input('car_gear');
         $car->car_soldOrBooked = $request->input('car_soldOrBooked');
         if ($request->hasFile('addPhotosInput')) {
+            $images = $request->addPhotosInput;
+            foreach ($images as $key => $image) {
+                $extension = $image->getClientOriginalExtension();
+                $extensionsallowed = ['jpg', 'png', 'jpeg'];
+                if (in_array($extension, $extensionsallowed)) {
+                    $tempName = 'temp_' . time() . '.' . $extension;
+                    $image->storeAs('images', $tempName);
+                    Image::open('images/' . $tempName)
+                        ->zoomCrop((int)str_replace('px', '', $cropMeasures[$key]->width), (int)str_replace('px', '', $cropMeasures[$key]->height), '0xffffff', (int)str_replace('px', '', $cropMeasures[$key]->left), (int)str_replace('px', '', $cropMeasures[$key]->top))
+                        ->scaleResize(1000, 850)
+                        ->save('images' . $numberPlate . $key . 'sm.' . $extension);
+                } else {
+                    return redirect()
+                        ->back()
+                        ->withErrors('La imagen ' . $image->getClientOriginalName . 'no tiene una extensión permitida.');
+                }
+            }
+
+            die();
             $extension = $request->file('photoMain')->getClientOriginalExtension();
             $request->photoMain->storeAs('public/media', $numberPlate . '0.' . $extension);
             $car->car_photo_main = $numberPlate . '0' . 'sm.' . $extension;
