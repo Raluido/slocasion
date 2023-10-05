@@ -881,10 +881,15 @@ footer .innerFooterBottom>a>div div:nth-child(2) h3 {
     height: auto;
 }
 
+.newCar .innerNewCar .bottom .innerImgPrev div img {
+    display: block;
+}
+
 .newCar .innerNewCar .bottom .innerImgPrev .squareTemplate {
     /* border: 1px solid red; */
     position: absolute;
     top: 0%;
+    bottom: 0%;
     width: 100%;
     height: 100%;
     z-index: 9000;

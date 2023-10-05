@@ -76,21 +76,29 @@ leftTemplate.addEventListener('pointerup', function () {
     clickDownLeft = false;
 })
 
+console.log(currentHeight);
+
 addEventListener('pointermove', function (event) {
+    currentBottom = window.getComputedStyle(squareTemplate).getPropertyValue('bottom');
+    currentTop = window.getComputedStyle(squareTemplate).getPropertyValue('top');
     if (clickDownTop) {
-        currentTop = window.getComputedStyle(squareTemplate).getPropertyValue('top');
-        currentBottom = window.getComputedStyle(squareTemplate).getPropertyValue('bottom');
-        currentHeight = window.getComputedStyle(squareTemplate).getPropertyValue('height');
+        squareTemplate.style.bottom = currentBottom;
         let changeTop = event.movementY;
-        console.log(castNumb(currentTop) + changeTop + castNumb(currentHeight) + castNumb(currentBottom));
-        console.log(innerImgPrev.clientHeight);
-        if (castNumb(currentTop) + changeTop + castNumb(currentHeight) + castNumb(currentBottom) <= innerImgPrev.clientHeight) {
-            squareTemplate.style.top = castNumb(currentTop) + changeTop + 'px';
-            // squareTemplate.style.height = castNumb(currentHeight) - castNumb(currentTop) - changeTop + 'px';
-        } else {
-            squareTemplate.style.top = '0px';
-            squareTemplate.style.height = innerImgPrev.clientHeight + 'px';
-        }
+        squareTemplate.style.top = castNumb(currentTop) + changeTop + 'px';
+        console.log('top:' + castNumb(currentTop) + changeTop);
+        squareTemplate.style.height = castNumb(currentHeight) - (castNumb(currentTop) + changeTop) + 'px';
+        currentHeight = window.getComputedStyle(squareTemplate).getPropertyValue('height');
+        console.log('currentheight:' + castNumb(currentHeight));
+        console.log('newHeight:' + (castNumb(currentHeight) - (castNumb(currentTop) + changeTop)) + 'px');
+
+
+        // if (castNumb(currentTop) + changeTop + castNumb(currentHeight) + castNumb(currentBottom) <= innerImgPrev.clientHeight) {
+        //     squareTemplate.style.top = castNumb(currentTop) + changeTop + 'px';
+        //     // squareTemplate.style.height = castNumb(currentHeight) - castNumb(currentTop) - changeTop + 'px';
+        // } else {
+        //     squareTemplate.style.top = '0px';
+        //     squareTemplate.style.height = innerImgPrev.clientHeight + 'px';
+        // }
 
         // if ((castNumb(currentHeight) - ((castNumb(currentHeight) + castNumb(currentTop) + changeTop + castNumb(currentBottom)) - innerImgPrev.clientHeight)) < innerImgPrev.clientHeight) {
         //     squareTemplate.style.height = (castNumb(currentHeight) - ((castNumb(currentHeight) + castNumb(currentTop) + changeTop + castNumb(currentBottom)) - innerImgPrev.clientHeight)) + 'px';
@@ -99,113 +107,113 @@ addEventListener('pointermove', function (event) {
         // }
     }
 
-    if (clickDownBottom) {
-        currentBottom = window.getComputedStyle(squareTemplate).getPropertyValue('bottom');
-        currentHeight = window.getComputedStyle(squareTemplate).getPropertyValue('height');
-        let changeBottom = - 1 * event.movementY;
-        squareTemplate.style.bottom = castNumb(currentBottom) + changeBottom + 'px';
-        if (castNumb(currentBottom) + changeBottom < innerImgPrev.clientHeight) {
-            squareTemplate.style.height = (castNumb(currentHeight) - ((castNumb(currentHeight) + castNumb(currentBottom) + changeBottom + castNumb(currentTop)) - innerImgPrev.clientHeight)) + 'px';
-        } else {
-            squareTemplate.style.bottom = innerImgPrev.clientHeight + 'px';
-        }
+    // if (clickDownBottom) {
+    //     currentBottom = window.getComputedStyle(squareTemplate).getPropertyValue('bottom');
+    //     currentHeight = window.getComputedStyle(squareTemplate).getPropertyValue('height');
+    //     let changeBottom = - 1 * event.movementY;
+    //     squareTemplate.style.bottom = castNumb(currentBottom) + changeBottom + 'px';
+    //     if (castNumb(currentBottom) + changeBottom < innerImgPrev.clientHeight) {
+    //         squareTemplate.style.height = (castNumb(currentHeight) - ((castNumb(currentHeight) + castNumb(currentBottom) + changeBottom + castNumb(currentTop)) - innerImgPrev.clientHeight)) + 'px';
+    //     } else {
+    //         squareTemplate.style.bottom = innerImgPrev.clientHeight + 'px';
+    //     }
 
-        if ((castNumb(currentHeight) - ((castNumb(currentHeight) + castNumb(currentBottom) + changeBottom + castNumb(currentTop)) - innerImgPrev.clientHeight)) < innerImgPrev.clientHeight) {
-            squareTemplate.style.height = (castNumb(currentHeight) - ((castNumb(currentHeight) + castNumb(currentBottom) + changeBottom + castNumb(currentTop)) - innerImgPrev.clientHeight)) + 'px';
-        } else {
-            squareTemplate.style.bottom = 0 + 'px';
-        }
-    }
+    //     if ((castNumb(currentHeight) - ((castNumb(currentHeight) + castNumb(currentBottom) + changeBottom + castNumb(currentTop)) - innerImgPrev.clientHeight)) < innerImgPrev.clientHeight) {
+    //         squareTemplate.style.height = (castNumb(currentHeight) - ((castNumb(currentHeight) + castNumb(currentBottom) + changeBottom + castNumb(currentTop)) - innerImgPrev.clientHeight)) + 'px';
+    //     } else {
+    //         squareTemplate.style.bottom = 0 + 'px';
+    //     }
+    // }
 
-    if (clickDownRight) {
-        currentRight = window.getComputedStyle(squareTemplate).getPropertyValue('right');
-        currentWidth = window.getComputedStyle(squareTemplate).getPropertyValue('width');
-        let changeRight = - 1 * event.movementX;
-        squareTemplate.style.right = castNumb(currentRight) + changeRight + 'px';
-        if (castNumb(currentRight) + changeRight < innerImgPrev.clientWidth) {
-            squareTemplate.style.width = (castNumb(currentWidth) - ((castNumb(currentWidth) + castNumb(currentRight) + changeRight + castNumb(currentLeft)) - innerImgPrev.clientWidth)) + 'px';
-        } else {
-            squareTemplate.style.right = innerImgPrev.clientWidth + 'px';
-        }
+    // if (clickDownRight) {
+    //     currentRight = window.getComputedStyle(squareTemplate).getPropertyValue('right');
+    //     currentWidth = window.getComputedStyle(squareTemplate).getPropertyValue('width');
+    //     let changeRight = - 1 * event.movementX;
+    //     squareTemplate.style.right = castNumb(currentRight) + changeRight + 'px';
+    //     if (castNumb(currentRight) + changeRight < innerImgPrev.clientWidth) {
+    //         squareTemplate.style.width = (castNumb(currentWidth) - ((castNumb(currentWidth) + castNumb(currentRight) + changeRight + castNumb(currentLeft)) - innerImgPrev.clientWidth)) + 'px';
+    //     } else {
+    //         squareTemplate.style.right = innerImgPrev.clientWidth + 'px';
+    //     }
 
-        if ((castNumb(currentWidth) - ((castNumb(currentWidth) + castNumb(currentRight) + changeRight + castNumb(currentLeft)) - innerImgPrev.clientWidth)) < innerImgPrev.clientWidth) {
-            squareTemplate.style.width = (castNumb(currentWidth) - ((castNumb(currentWidth) + castNumb(currentRight) + changeRight + castNumb(currentLeft)) - innerImgPrev.clientWidth)) + 'px';
-        } else {
-            squareTemplate.style.right = 0 + 'px';
-        }
-    }
+    //     if ((castNumb(currentWidth) - ((castNumb(currentWidth) + castNumb(currentRight) + changeRight + castNumb(currentLeft)) - innerImgPrev.clientWidth)) < innerImgPrev.clientWidth) {
+    //         squareTemplate.style.width = (castNumb(currentWidth) - ((castNumb(currentWidth) + castNumb(currentRight) + changeRight + castNumb(currentLeft)) - innerImgPrev.clientWidth)) + 'px';
+    //     } else {
+    //         squareTemplate.style.right = 0 + 'px';
+    //     }
+    // }
 
-    if (clickDownLeft) {
-        currentLeft = window.getComputedStyle(squareTemplate).getPropertyValue('left');
-        currentWidth = window.getComputedStyle(squareTemplate).getPropertyValue('width');
-        let changeLeft = event.movementX;
-        squareTemplate.style.left = castNumb(currentLeft) + changeLeft + 'px';
-        if (castNumb(currentLeft) + changeLeft < innerImgPrev.clientWidth) {
-            squareTemplate.style.width = (castNumb(currentWidth) - ((castNumb(currentWidth) + castNumb(currentLeft) + changeLeft + castNumb(currentRight)) - innerImgPrev.clientWidth)) + 'px';
-        } else {
-            squareTemplate.style.left = innerImgPrev.clientWidth + 'px';
-        }
+    // if (clickDownLeft) {
+    //     currentLeft = window.getComputedStyle(squareTemplate).getPropertyValue('left');
+    //     currentWidth = window.getComputedStyle(squareTemplate).getPropertyValue('width');
+    //     let changeLeft = event.movementX;
+    //     squareTemplate.style.left = castNumb(currentLeft) + changeLeft + 'px';
+    //     if (castNumb(currentLeft) + changeLeft < innerImgPrev.clientWidth) {
+    //         squareTemplate.style.width = (castNumb(currentWidth) - ((castNumb(currentWidth) + castNumb(currentLeft) + changeLeft + castNumb(currentRight)) - innerImgPrev.clientWidth)) + 'px';
+    //     } else {
+    //         squareTemplate.style.left = innerImgPrev.clientWidth + 'px';
+    //     }
 
-        if ((castNumb(currentWidth) - ((castNumb(currentWidth) + castNumb(currentLeft) + changeLeft + castNumb(currentLeft)) - innerImgPrev.clientWidth)) < innerImgPrev.clientWidth) {
-            squareTemplate.style.width = (castNumb(currentWidth) - ((castNumb(currentWidth) + castNumb(currentLeft) + changeLeft + castNumb(currentRight)) - innerImgPrev.clientWidth)) + 'px';
-        } else {
-            squareTemplate.style.left = 0 + 'px';
-        }
-    }
+    //     if ((castNumb(currentWidth) - ((castNumb(currentWidth) + castNumb(currentLeft) + changeLeft + castNumb(currentLeft)) - innerImgPrev.clientWidth)) < innerImgPrev.clientWidth) {
+    //         squareTemplate.style.width = (castNumb(currentWidth) - ((castNumb(currentWidth) + castNumb(currentLeft) + changeLeft + castNumb(currentRight)) - innerImgPrev.clientWidth)) + 'px';
+    //     } else {
+    //         squareTemplate.style.left = 0 + 'px';
+    //     }
+    // }
 
-    if (clickDown) {
-        if (castNumb(currentRight) > 0) {
-            changeRight = -1 * event.movementX;
-            squareTemplate.style.left = "unset";
-            squareTemplate.style.right = castNumb(currentRight) + changeRight + 'px';
-            if (castNumb(currentRight) + castNumb(currentWidth) > innerImgPrev.clientWidth) {
-                squareTemplate.style.right = (innerImgPrev.clientWidth - castNumb(currentWidth)) + 'px';
-            }
-        }
-        if (castNumb(currentLeft) > 0) {
-            changeLeft = event.movementX;
-            squareTemplate.style.right = "unset";
-            squareTemplate.style.left = castNumb(currentLeft) + changeLeft + 'px';
-            if (castNumb(currentLeft) + castNumb(currentWidth) > innerImgPrev.clientWidth) {
-                squareTemplate.style.left = (innerImgPrev.clientWidth - castNumb(currentWidth)) + 'px';
-            }
-        }
-        if (castNumb(currentTop) > 0) {
-            changeTop = event.movementY;
-            squareTemplate.style.bottom = "unset";
-            squareTemplate.style.top = castNumb(currentTop) + changeTop + 'px';
-            if (castNumb(currentTop) + castNumb(currentHeight) > innerImgPrev.clientHeight) {
-                squareTemplate.style.top = (innerImgPrev.clientHeight - castNumb(currentHeight)) + 'px';
-            }
-        }
-        if (castNumb(currentBottom) > 0) {
-            changeBottom = -1 * event.movementY;
-            squareTemplate.style.top = "unset";
-            squareTemplate.style.bottom = castNumb(currentBottom) + changeBottom + 'px';
-            if (castNumb(currentBottom) + castNumb(currentHeight) > innerImgPrev.clientHeight) {
-                squareTemplate.style.bottom = (innerImgPrev.clientHeight - castNumb(currentHeight)) + 'px';
-            }
-        }
-    }
-    currentRight = window.getComputedStyle(squareTemplate).getPropertyValue('right');
-    currentWidth = window.getComputedStyle(squareTemplate).getPropertyValue('width');
-    currentHeight = window.getComputedStyle(squareTemplate).getPropertyValue('height');
-    currentLeft = window.getComputedStyle(squareTemplate).getPropertyValue('left');
-    currentTop = window.getComputedStyle(squareTemplate).getPropertyValue('top');
-    currentBottom = window.getComputedStyle(squareTemplate).getPropertyValue('bottom');
-    data = {
-        'id': i,
-        'main': i == 0 ? true : false,
-        'top': currentTop,
-        'bottom': currentBottom,
-        'left': currentLeft,
-        'right': currentRight,
-        'width': currentWidth,
-        'height': currentHeight,
-    }
-    if (clickDownTop || clickDownBottom || clickDownLeft || clickDownRight || clickDown) {
-        saveTemplate(data);
-    }
+    // if (clickDown) {
+    //     if (castNumb(currentRight) > 0) {
+    //         changeRight = -1 * event.movementX;
+    //         squareTemplate.style.left = "unset";
+    //         squareTemplate.style.right = castNumb(currentRight) + changeRight + 'px';
+    //         if (castNumb(currentRight) + castNumb(currentWidth) > innerImgPrev.clientWidth) {
+    //             squareTemplate.style.right = (innerImgPrev.clientWidth - castNumb(currentWidth)) + 'px';
+    //         }
+    //     }
+    //     if (castNumb(currentLeft) > 0) {
+    //         changeLeft = event.movementX;
+    //         squareTemplate.style.right = "unset";
+    //         squareTemplate.style.left = castNumb(currentLeft) + changeLeft + 'px';
+    //         if (castNumb(currentLeft) + castNumb(currentWidth) > innerImgPrev.clientWidth) {
+    //             squareTemplate.style.left = (innerImgPrev.clientWidth - castNumb(currentWidth)) + 'px';
+    //         }
+    //     }
+    //     if (castNumb(currentTop) > 0) {
+    //         changeTop = event.movementY;
+    //         squareTemplate.style.bottom = "unset";
+    //         squareTemplate.style.top = castNumb(currentTop) + changeTop + 'px';
+    //         if (castNumb(currentTop) + castNumb(currentHeight) > innerImgPrev.clientHeight) {
+    //             squareTemplate.style.top = (innerImgPrev.clientHeight - castNumb(currentHeight)) + 'px';
+    //         }
+    //     }
+    //     if (castNumb(currentBottom) > 0) {
+    //         changeBottom = -1 * event.movementY;
+    //         squareTemplate.style.top = "unset";
+    //         squareTemplate.style.bottom = castNumb(currentBottom) + changeBottom + 'px';
+    //         if (castNumb(currentBottom) + castNumb(currentHeight) > innerImgPrev.clientHeight) {
+    //             squareTemplate.style.bottom = (innerImgPrev.clientHeight - castNumb(currentHeight)) + 'px';
+    //         }
+    //     }
+    // }
+    // currentRight = window.getComputedStyle(squareTemplate).getPropertyValue('right');
+    // currentWidth = window.getComputedStyle(squareTemplate).getPropertyValue('width');
+    // currentHeight = window.getComputedStyle(squareTemplate).getPropertyValue('height');
+    // currentLeft = window.getComputedStyle(squareTemplate).getPropertyValue('left');
+    // currentTop = window.getComputedStyle(squareTemplate).getPropertyValue('top');
+    // currentBottom = window.getComputedStyle(squareTemplate).getPropertyValue('bottom');
+    // data = {
+    //     'id': i,
+    //     'main': i == 0 ? true : false,
+    //     'top': currentTop,
+    //     'bottom': currentBottom,
+    //     'left': currentLeft,
+    //     'right': currentRight,
+    //     'width': currentWidth,
+    //     'height': currentHeight,
+    // }
+    // if (clickDownTop || clickDownBottom || clickDownLeft || clickDownRight || clickDown) {
+    //     saveTemplate(data);
+    // }
 })
 
 function saveTemplate(data) {
