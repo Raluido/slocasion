@@ -891,6 +891,8 @@ footer .innerFooterBottom>a>div div:nth-child(2) h3 {
     top: 0%;
     bottom: 0%;
     width: 100%;
+    left: 0%;
+    right: 0%;
     height: 100%;
     z-index: 9000;
 }
