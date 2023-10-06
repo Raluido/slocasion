@@ -28,6 +28,11 @@ let isMain = document.getElementById('isMain');
 let cropMeasures = [];
 let i = 0;
 
+console.log(innerImgPrev.height);
+console.log(innerImgPrev.width);
+console.log(innerImgPrev.naturalHeight);
+console.log(innerImgPrev.naturalWidth);
+
 // manage the template
 
 grabSquare.addEventListener('pointerdown', function () {
@@ -175,32 +180,32 @@ addEventListener('pointermove', function (event) {
             changeRight = -1 * event.movementX;
             squareTemplate.style.left = "unset";
             squareTemplate.style.right = castNumb(currentRight) + changeRight + 'px';
-            if (castNumb(currentRight) + castNumb(currentWidth) > innerImgPrev.clientWidth) {
-                squareTemplate.style.right = (innerImgPrev.clientWidth - castNumb(currentWidth)) + 'px';
+            if (castNumb(currentRight) + castNumb(currentWidth) > innerImgPrev.width) {
+                squareTemplate.style.right = (innerImgPrev.width - castNumb(currentWidth)) + 'px';
             }
         }
         if (castNumb(currentLeft) > 0) {
             changeLeft = event.movementX;
             squareTemplate.style.right = "unset";
             squareTemplate.style.left = castNumb(currentLeft) + changeLeft + 'px';
-            if (castNumb(currentLeft) + castNumb(currentWidth) > innerImgPrev.clientWidth) {
-                squareTemplate.style.left = (innerImgPrev.clientWidth - castNumb(currentWidth)) + 'px';
+            if (castNumb(currentLeft) + castNumb(currentWidth) > innerImgPrev.width) {
+                squareTemplate.style.left = (innerImgPrev.width - castNumb(currentWidth)) + 'px';
             }
         }
         if (castNumb(currentTop) > 0) {
             changeTop = event.movementY;
             squareTemplate.style.bottom = "unset";
             squareTemplate.style.top = castNumb(currentTop) + changeTop + 'px';
-            if (castNumb(currentTop) + castNumb(currentHeight) > innerImgPrev.clientHeight) {
-                squareTemplate.style.top = (innerImgPrev.clientHeight - castNumb(currentHeight)) + 'px';
+            if (castNumb(currentTop) + castNumb(currentHeight) > innerImgPrev.height) {
+                squareTemplate.style.top = (innerImgPrev.height - castNumb(currentHeight)) + 'px';
             }
         }
         if (castNumb(currentBottom) > 0) {
             changeBottom = -1 * event.movementY;
             squareTemplate.style.top = "unset";
             squareTemplate.style.bottom = castNumb(currentBottom) + changeBottom + 'px';
-            if (castNumb(currentBottom) + castNumb(currentHeight) > innerImgPrev.clientHeight) {
-                squareTemplate.style.bottom = (innerImgPrev.clientHeight - castNumb(currentHeight)) + 'px';
+            if (castNumb(currentBottom) + castNumb(currentHeight) > innerImgPrev.height) {
+                squareTemplate.style.bottom = (innerImgPrev.height - castNumb(currentHeight)) + 'px';
             }
         }
     }
@@ -210,6 +215,8 @@ addEventListener('pointermove', function (event) {
     currentLeft = window.getComputedStyle(squareTemplate).getPropertyValue('left');
     currentTop = window.getComputedStyle(squareTemplate).getPropertyValue('top');
     currentBottom = window.getComputedStyle(squareTemplate).getPropertyValue('bottom');
+    console.log(currentLeft);
+    console.log(currentRight);
     data = {
         'id': i,
         'main': i == 0 ? true : false,
@@ -219,6 +226,10 @@ addEventListener('pointermove', function (event) {
         'right': currentRight,
         'width': currentWidth,
         'height': currentHeight,
+        'naturalHeight': innerImgPrev.naturalHeight,
+        'naturalWidth': innerImgPrev.naturalWidth,
+        'webHeight': innerImgPrev.height,
+        'webWidth': innerImgPrev.width,
     }
     if (clickDownTop || clickDownBottom || clickDownLeft || clickDownRight || clickDown) {
         saveTemplate(data);
@@ -249,8 +260,6 @@ addPhotosInput.addEventListener('change', function () {
         addPrevImgZero();
         isMainFunc();
     }
-    console.log("saveAtStart");
-    console.log(cropMeasures);
 })
 
 previous.addEventListener('click', function () {
@@ -266,9 +275,6 @@ next.addEventListener('click', function () {
         i++;
         addPrevImg();
         isMainFunc();
-        console.log("next");
-        console.log(cropMeasures);
-
     }
 })
 
@@ -298,6 +304,10 @@ const noCrop = () => {
             'right': '0px',
             'width': null,
             'height': null,
+            'naturalHeight': innerImgPrev.naturalHeight,
+            'naturalWidth': innerImgPrev.naturalWidth,
+            'webHeight': innerImgPrev.height,
+            'webWidth': innerImgPrev.width,
         }
         cropMeasures.push(data);
     }

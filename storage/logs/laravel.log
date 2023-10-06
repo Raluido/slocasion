@@ -1,0 +1,17 @@
+[2023-10-06 18:19:55] local.INFO: array (
+  0 => 
+  (object) array(
+     'id' => 0,
+     'main' => true,
+     'top' => '0px',
+     'bottom' => '0px',
+     'left' => '153.75px',
+     'right' => '0px',
+     'width' => '140.25px',
+     'height' => '220.844px',
+     'naturalHeight' => 800,
+     'naturalWidth' => 1280,
+     'webHeight' => 184,
+     'webWidth' => 294,
+  ),
+)  
