@@ -28,11 +28,6 @@ let isMain = document.getElementById('isMain');
 let cropMeasures = [];
 let i = 0;
 
-console.log(innerImgPrev.height);
-console.log(innerImgPrev.width);
-console.log(innerImgPrev.naturalHeight);
-console.log(innerImgPrev.naturalWidth);
-
 // manage the template
 
 grabSquare.addEventListener('pointerdown', function () {
@@ -215,8 +210,6 @@ addEventListener('pointermove', function (event) {
     currentLeft = window.getComputedStyle(squareTemplate).getPropertyValue('left');
     currentTop = window.getComputedStyle(squareTemplate).getPropertyValue('top');
     currentBottom = window.getComputedStyle(squareTemplate).getPropertyValue('bottom');
-    console.log(currentLeft);
-    console.log(currentRight);
     data = {
         'id': i,
         'main': i == 0 ? true : false,
@@ -226,8 +219,6 @@ addEventListener('pointermove', function (event) {
         'right': currentRight,
         'width': currentWidth,
         'height': currentHeight,
-        'naturalHeight': innerImgPrev.naturalHeight,
-        'naturalWidth': innerImgPrev.naturalWidth,
         'webHeight': innerImgPrev.height,
         'webWidth': innerImgPrev.width,
     }
@@ -302,12 +293,10 @@ const noCrop = () => {
             'bottom': '0px',
             'left': '0px',
             'right': '0px',
-            'width': null,
-            'height': null,
-            'naturalHeight': innerImgPrev.naturalHeight,
-            'naturalWidth': innerImgPrev.naturalWidth,
-            'webHeight': innerImgPrev.height,
-            'webWidth': innerImgPrev.width,
+            // 'width': 0.8 * originalWidth,
+            // 'height': originalHeight,
+            // 'webHeight': originalHeight,
+            // 'webWidth': originalWidth,
         }
         cropMeasures.push(data);
     }
@@ -337,8 +326,8 @@ const updateValues = () => {
             squareTemplate.style.bottom = 0 + 'px';
             squareTemplate.style.left = 0 + 'px';
             squareTemplate.style.right = 0 + 'px';
-            squareTemplate.style.height = null;
-            squareTemplate.style.width = null;
+            squareTemplate.style.height = innerImgPrev.height;
+            squareTemplate.style.width = innerImgPrev.width;
         }
     }
 }

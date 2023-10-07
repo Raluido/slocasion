@@ -35,8 +35,6 @@ class AdminController extends Controller
 
         log::info($cropMeasures);
 
-        die();
-
         $car = new Car();
         $car->user_id = auth()->user()->id;
         $car->car_brand = $request->input('car_brand');
@@ -59,15 +57,16 @@ class AdminController extends Controller
         if ($request->hasFile('addPhotosInput')) {
             $images = $request->addPhotosInput;
             foreach ($images as $key => $image) {
-                $x = (((int)str_replace('px', '', $cropMeasures[$key]->left)) / $cropMeasures[$key]->webWidth) * $cropMeasures[$key]->naturalWidth;
-                $y = (((int)str_replace('px', '', $cropMeasures[$key]->top)) / $cropMeasures[$key]->webHeight) * $cropMeasures[$key]->naturalHeight;
-                $w = (((int)str_replace('px', '', $cropMeasures[$key]->width)) / $cropMeasures[$key]->webWidth) * $cropMeasures[$key]->naturalWidth;
-                $h = (((int)str_replace('px', '', $cropMeasures[$key]->height)) / $cropMeasures[$key]->webHeight) * $cropMeasures[$key]->naturalHeight;
                 $extension = $image->getClientOriginalExtension();
                 $extensionsallowed = ['jpg', 'png', 'jpeg'];
                 if (in_array($extension, $extensionsallowed)) {
                     $tempName = 'temp_' . time() . '.' . $extension;
                     $image->storeAs('images', $tempName);
+                    $imgSize = getimagesize('images/' . $tempName);
+                    $x = (((int)str_replace('px', '', $cropMeasures[$key]->left)) / $cropMeasures[$key]->webWidth) * $imgSize[0];
+                    $y = (((int)str_replace('px', '', $cropMeasures[$key]->top)) / $cropMeasures[$key]->webHeight) * $imgSize[1];
+                    $w = (((int)str_replace('px', '', $cropMeasures[$key]->width)) / $cropMeasures[$key]->webWidth) * $imgSize[0];
+                    $h = (((int)str_replace('px', '', $cropMeasures[$key]->height)) / $cropMeasures[$key]->webHeight) * $imgSize[1];
                     Image::open('images/' . $tempName)
                         ->crop($x, $y, $w, $h)
                         ->save('images/' . $numberPlate . $key . 'sm.' . $extension, 'guess', 80);
@@ -78,7 +77,6 @@ class AdminController extends Controller
                 }
             }
 
-            die();
             $extension = $request->file('photoMain')->getClientOriginalExtension();
             $request->photoMain->storeAs('public/media', $numberPlate . '0.' . $extension);
             $car->car_photo_main = $numberPlate . '0' . 'sm.' . $extension;
