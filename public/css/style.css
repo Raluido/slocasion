@@ -951,13 +951,28 @@ footer .innerFooterBottom>a>div div:nth-child(2) h3 {
 }
 
 .newCar .innerNewCar .bottom .imgPrev .mainCheckbox {
-    margin: .5em 0 0 .5em;
+    display: flex;
+    align-items: center;
 }
 
 .newCar .innerNewCar .bottom .changePhoto div {
     border: 1px solid greenyellow;
     padding: .2em;
     color: gray;
+}
+
+
+.newCar .innerNewCar .bottom .imgPrev .mainCheckbox:first,
+.newCar .innerNewCar .bottom .imgPrev .cropDefaultReset:first {
+    margin-right: 1em;
+}
+
+.newCar .innerNewCar .bottom .cropDefaultReset {
+    display: flex;
+}
+
+.newCar .innerNewCar .bottom .cropDefaultReset>div {
+    color: crimson;
 }
 
 .newCar .innerNewCar .bottom .filters {

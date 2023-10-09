@@ -21,9 +21,13 @@
             <div class="cars">
                 <a class="innerCars" href="{{ url('showcar/' . $car->id) }}" style="position:relative">
                     <div class="innerCarsTop">
+                        @foreach ($car->$items as $item)
+                        @if($item->main == true)
                         <div class="img">
                             <img class="" src="{{ Storage::url('media/' . $car->car_numberPlate . '0sm.' . pathinfo($car->car_photo_main, PATHINFO_EXTENSION)) }}" />
                         </div>
+                        @endif
+                        @endforeach
                         @if ($car->car_soldOrBooked == 'Vendido')
                         <div class="state"><img class="" src="{{ Storage::url('img/sold.png') }}"></div>
                         @elseif ($car->car_soldOrBooked == 'Reservado')

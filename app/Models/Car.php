@@ -9,7 +9,8 @@ class Car extends Model
 {
     protected $fillable = ['user_id'];
 
-    public function items() {
-        return $this->hasMany(Item::class, 'car_id', 'id');
+    public function items()
+    {
+        return $this->hasMany(Item::class, 'car_id', 'idItem');
     }
 }

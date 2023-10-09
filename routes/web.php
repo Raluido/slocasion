@@ -28,7 +28,6 @@ Route::get('contact', [SendEmailController::class, 'contact']);
 Route::post('contact', [SendEmailController::class, 'sendEmail']);
 Route::get('reload-captcha', [SendEmailController::class, 'reloadCaptcha']);
 
-
 // admin
 
 Route::group(['middleware' => ['auth']], function () {
@@ -40,7 +39,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::put('updatecar/{id}', [AdminController::class, 'updateCar']);
 
     Route::get('newcar', [AdminController::class, 'showNewCar']);
-    Route::post('/newcar', [AdminController::class, 'createNewCar']);
+    Route::post('newcar', [AdminController::class, 'createNewCar']);
 
     Route::put('updatestatus/{id}', [AdminController::class, 'updateStatus']);
 

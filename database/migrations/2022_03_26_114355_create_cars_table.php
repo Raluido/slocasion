@@ -47,27 +47,3 @@ class CreateCarsTable extends Migration
         Schema::dropIfExists('cars');
     }
 }
-
-
-
-
-            // $table->string("car_photo1")->nullable();
-            // $table->string("car_photo2")->nullable();
-            // $table->string("car_photo3")->nullable();
-            // $table->string("car_photo4")->nullable();
-            // $table->string("car_photo5")->nullable();
-            // $table->string("car_photo6")->nullable();
-            // $table->string("car_photo7")->nullable();
-            // $table->string("car_photo8")->nullable();
-            // $table->string("car_photo9")->nullable();
-            // $table->string("car_photo10")->nullable();
-            // $table->string("car_brand11")->nullable();
-            // $table->string("car_photo12")->nullable();
-            // $table->string("car_photo13")->nullable();
-            // $table->string("car_photo14")->nullable();
-            // $table->string("car_photo15")->nullable();
-            // $table->string("car_photo16")->nullable();
-            // $table->string("car_photo17")->nullable();
-            // $table->string("car_photo18")->nullable();
-            // $table->string("car_photo19")->nullable();
-            // $table->string("car_photo20")->nullable();

@@ -27,8 +27,12 @@ class HomeController extends Controller
      */
     public function showHome()
     {
-        $cars = Car::select()->orderBy('car_SoldOrBooked')->orderBy('created_at', 'DESC')->get();
-        return view('home')->with('cars', $cars);
+        $cars = Car::select()
+            ->orderBy('car_SoldOrBooked')
+            ->orderBy('created_at', 'DESC')
+            ->get();
+
+        return view('home', $cars);
     }
 
     public function showCar($id)

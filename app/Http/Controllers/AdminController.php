@@ -33,8 +33,6 @@ class AdminController extends Controller
         $cropMeasures = $request->input('cropMeasures');
         $cropMeasures = json_decode($cropMeasures);
 
-        log::info($cropMeasures);
-
         $car = new Car();
         $car->user_id = auth()->user()->id;
         $car->car_brand = $request->input('car_brand');
@@ -54,6 +52,7 @@ class AdminController extends Controller
         $car->car_registration_date = $request->input('car_registration_date');
         $car->car_gear = $request->input('car_gear');
         $car->car_soldOrBooked = $request->input('car_soldOrBooked');
+        $car->save();
         if ($request->hasFile('addPhotosInput')) {
             $images = $request->addPhotosInput;
             foreach ($images as $key => $image) {
@@ -63,67 +62,32 @@ class AdminController extends Controller
                     $tempName = 'temp_' . time() . '.' . $extension;
                     $image->storeAs('images', $tempName);
                     $imgSize = getimagesize('images/' . $tempName);
-                    $x = (((int)str_replace('px', '', $cropMeasures[$key]->left)) / $cropMeasures[$key]->webWidth) * $imgSize[0];
-                    $y = (((int)str_replace('px', '', $cropMeasures[$key]->top)) / $cropMeasures[$key]->webHeight) * $imgSize[1];
-                    $w = (((int)str_replace('px', '', $cropMeasures[$key]->width)) / $cropMeasures[$key]->webWidth) * $imgSize[0];
-                    $h = (((int)str_replace('px', '', $cropMeasures[$key]->height)) / $cropMeasures[$key]->webHeight) * $imgSize[1];
-                    Image::open('images/' . $tempName)
-                        ->crop($x, $y, $w, $h)
-                        ->save('images/' . $numberPlate . $key . 'sm.' . $extension, 'guess', 80);
+                    $path = $numberPlate . $key . 'sm.' . $extension;
+                    if ($cropMeasures[$key]->height == '100%' || $cropMeasures[$key]->width == '100%') {
+                        Image::open('images/' . $tempName)
+                            ->save('images/' . $path, 'guess', 80);
+                    } else {
+                        $x = (((int)str_replace('px', '', $cropMeasures[$key]->left)) / $cropMeasures[$key]->webWidth) * $imgSize[0];
+                        $y = (((int)str_replace('px', '', $cropMeasures[$key]->top)) / $cropMeasures[$key]->webHeight) * $imgSize[1];
+                        $w = (((int)str_replace('px', '', $cropMeasures[$key]->width)) / $cropMeasures[$key]->webWidth) * $imgSize[0];
+                        $h = (((int)str_replace('px', '', $cropMeasures[$key]->height)) / $cropMeasures[$key]->webHeight) * $imgSize[1];
+                        Image::open('images/' . $tempName)
+                            ->crop($x, $y, $w, $h)
+                            ->save('images/' . $path, 'guess', 80);
+                    }
+                    $images[] = new Item([
+                        'filename' => $path,
+                        'main' => $cropMeasures[$key]->main
+                    ]);
+                    $car->items()->saveMany($images);
+                    return redirect('admin');
                 } else {
                     return redirect()
                         ->back()
                         ->withErrors('La imagen ' . $image->getClientOriginalName . 'no tiene una extensión permitida.');
                 }
             }
-
-            $extension = $request->file('photoMain')->getClientOriginalExtension();
-            $request->photoMain->storeAs('public/media', $numberPlate . '0.' . $extension);
-            $car->car_photo_main = $numberPlate . '0' . 'sm.' . $extension;
-
-            Image::open('storage/media/' . $numberPlate . '0.' . $extension)
-                ->scaleResize(1000, 850)
-                ->save('storage/media/' . $numberPlate . '0' . 'sm.' . $extension);
-
-            Storage::disk('public')->delete('/media/' . $numberPlate . '0.' . $extension);
         }
-        $car->save();
-
-        $this->validate($request, [
-            'photos' => 'nullable',
-        ]);
-
-        if ($request->hasFile('photos')) {
-
-            $images = [];
-            $files = $request->file('photos');
-
-            foreach ($files as $key => $file) {
-                $allowedfileExtension = ['jpg', 'png', 'jpeg'];
-                $extension = $file->getClientOriginalExtension();
-                $check = in_array($extension, $allowedfileExtension);
-
-                if ($check) {
-                    $addOne = $key + 1;
-                    $file->storeAs('public/media', $numberPlate . $addOne . '.' . $extension);
-                    $path = 'public/media/' . $numberPlate . $addOne . 'sm.' . $extension;
-                    $images[] = new Item([
-                        'filename' => $path,
-                    ]);
-
-                    Image::open('storage/media/' . $numberPlate . $addOne . '.' . $extension)
-                        ->scaleResize(1000, 850)
-                        ->save('storage/media/' . $numberPlate . $addOne . 'sm.' . $extension);
-
-                    Storage::disk('public')->delete('/media/' . $numberPlate . $addOne . '.' . $extension);
-                } else {
-                    echo '<div class="alert alert-warning"><strong>Warning!</strong> Sólo se admiten éstas extensiones png , jpg , jpeg</div>';
-                }
-            }
-            $car->items()->saveMany($images);
-        }
-
-        return redirect('admin');
     }
 
     public function editCar($id)

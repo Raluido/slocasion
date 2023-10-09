@@ -12,6 +12,9 @@ const rightTemplate = document.querySelector('.rightTemplate');
 const leftTemplate = document.querySelector('.leftTemplate');
 const grabSquare = document.getElementById('grabSquare');
 
+const defaultCrop = document.querySelector('.defaultCrop');
+const resetCrop = document.querySelector('.resetCrop');
+
 let currentBottom = window.getComputedStyle(squareTemplate).getPropertyValue('bottom');
 let currentTop = window.getComputedStyle(squareTemplate).getPropertyValue('top');
 let currentHeight = window.getComputedStyle(squareTemplate).getPropertyValue('height');
@@ -23,6 +26,8 @@ let clickDownBottom = false;
 let clickDownLeft = false;
 let clickDownRight = false;
 let clickDown = false;
+
+let clickDefault = false;
 
 let isMain = document.getElementById('isMain');
 let cropMeasures = [];
@@ -212,7 +217,7 @@ addEventListener('pointermove', function (event) {
     currentBottom = window.getComputedStyle(squareTemplate).getPropertyValue('bottom');
     data = {
         'id': i,
-        'main': i == 0 ? true : false,
+        // 'main': i == 0 ? true : false,
         'top': currentTop,
         'bottom': currentBottom,
         'left': currentLeft,
@@ -227,18 +232,50 @@ addEventListener('pointermove', function (event) {
     }
 })
 
-function saveTemplate(data) {
+defaultCrop.addEventListener('click', function () {
+    clickDefault = true;
+    data = {
+        'width': innerImgPrev.width + 'px',
+        'height': 0.8 * innerImgPrev.height + 'px',
+        'top': 0.1 * innerImgPrev.height + 'px',
+        'webHeight': innerImgPrev.height,
+        'webWidth': innerImgPrev.width,
+    }
+    saveTemplate(data, clickDefault);
+})
 
+resetCrop.addEventListener('click', function () {
+    clickReset = true;
+    data = {
+        'width': '100%',
+        'height': '100%',
+        'top': '0%',
+        'webHeight': innerImgPrev.height,
+        'webWidth': innerImgPrev.width,
+    }
+    saveTemplate(data, clickReset);
+})
+
+function saveTemplate(data, clickDefault, clickReset) {
     id = cropMeasures.findIndex(obj => obj.id == i);
     if (id >= 0) {
-        cropMeasures[id].top = data.top;
-        cropMeasures[id].bottom = data.bottom;
-        cropMeasures[id].left = data.left;
-        cropMeasures[id].right = data.right;
-        cropMeasures[id].width = data.width;
-        cropMeasures[id].height = data.height;
-    } else {
-        cropMeasures.push(data);
+        if (clickDefault || clickReset) {
+            cropMeasures[id].width = data.width;
+            cropMeasures[id].height = data.height;
+            cropMeasures[id].top = data.top;
+            squareTemplate.style.width = data.width;
+            squareTemplate.style.height = data.height;
+            squareTemplate.style.top = data.top;
+            clickDefault = false;
+            clickReset = false;
+        } else {
+            cropMeasures[id].top = data.top;
+            cropMeasures[id].bottom = data.bottom;
+            cropMeasures[id].left = data.left;
+            cropMeasures[id].right = data.right;
+            cropMeasures[id].width = data.width;
+            cropMeasures[id].height = data.height;
+        }
     }
     document.getElementById('cropMeasures').value = JSON.stringify(cropMeasures);
 }
@@ -293,10 +330,8 @@ const noCrop = () => {
             'bottom': '0px',
             'left': '0px',
             'right': '0px',
-            // 'width': 0.8 * originalWidth,
-            // 'height': originalHeight,
-            // 'webHeight': originalHeight,
-            // 'webWidth': originalWidth,
+            'width': '100%',
+            'height': '100%',
         }
         cropMeasures.push(data);
     }
@@ -322,12 +357,12 @@ const updateValues = () => {
             squareTemplate.style.height = cropMeasures[id].height;
             squareTemplate.style.width = cropMeasures[id].width;
         } else {
-            squareTemplate.style.top = 0 + 'px';
-            squareTemplate.style.bottom = 0 + 'px';
-            squareTemplate.style.left = 0 + 'px';
-            squareTemplate.style.right = 0 + 'px';
-            squareTemplate.style.height = innerImgPrev.height;
-            squareTemplate.style.width = innerImgPrev.width;
+            squareTemplate.style.top = '0px';
+            squareTemplate.style.bottom = '0px';
+            squareTemplate.style.left = '0px';
+            squareTemplate.style.right = '0px';
+            squareTemplate.style.height = '100%';
+            squareTemplate.style.width = '100%';
         }
     }
 }
