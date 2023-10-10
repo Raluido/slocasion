@@ -17,14 +17,17 @@
             @endauth
         </div>
         <div class="bottom">
+            @if(is_string($cars))
+            <p class="emptyPosts">{{ $cars }}</p>
+            @else
             @foreach ($cars as $car)
             <div class="cars">
                 <a class="innerCars" href="{{ url('showcar/' . $car->id) }}" style="position:relative">
                     <div class="innerCarsTop">
-                        @foreach ($car->$items as $item)
+                        @foreach ($car->items as $item)
                         @if($item->main == true)
                         <div class="img">
-                            <img class="" src="{{ Storage::url('media/' . $car->car_numberPlate . '0sm.' . pathinfo($car->car_photo_main, PATHINFO_EXTENSION)) }}" />
+                            <img class="" src="{{ Storage::url($item->path) }}" />
                         </div>
                         @endif
                         @endforeach
@@ -85,6 +88,7 @@
                 @endauth
             </div>
             @endforeach
+            @endif
         </div>
     </div>
 </div>

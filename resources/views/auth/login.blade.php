@@ -29,7 +29,7 @@
                 @enderror
             </div>
 
-            <div class="inputForm">
+            <div class="margin11">
                 <input class="" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
 
                 <label class="" for="remember">
@@ -38,7 +38,7 @@
             </div>
 
             <div class="submitForm">
-                <button type="submit" class="">
+                <button type="submit" class="greenButton text-white">
                     {{ __('Login') }}
                 </button>
                 @if (Route::has('password.request'))

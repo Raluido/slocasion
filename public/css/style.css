@@ -25,7 +25,10 @@ h5 {
 
 .d-flex {
     display: flex;
-    justify-content: space-evenly;
+}
+
+.justify-center {
+    justify-content: center;
 }
 
 .d-block {
@@ -81,15 +84,30 @@ h5 {
     color: gray;
 }
 
-.bottom form .inputForm input,
-.bottom form .inputForm select,
-.bottom form .inputForm textarea {
-    margin-top: .5em;
-}
-
 .messages {
     background-color: antiquewhite;
     margin: 1em;
+}
+
+form {
+    margin: 2em 0;
+}
+
+/* .inputForm input,
+.inputForm select,
+.inputForm textarea {
+    margin-top: .5em;
+} */
+
+.inputForm {
+    margin: 1em 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.submitForm {
+    margin: 2em 0;
+    text-align: center;
 }
 
 /* end general */
@@ -774,19 +792,6 @@ textarea {
     padding: 1em;
 }
 
-.innerContact form {
-    margin: 2em 0;
-}
-
-.inputForm {
-    margin: 1em 0;
-}
-
-.submitForm {
-    margin: 2em 0;
-    text-align: center;
-}
-
 /* end contact */
 
 /* login */
@@ -863,6 +868,10 @@ footer .innerFooterBottom>a>div div:nth-child(2) h3 {
 /* newcar */
 
 .newCar .innerNewCar .bottom {
+    padding: 2em;
+}
+
+.newCar .innerNewCar .bottom .emptyPosts {
     padding: 2em;
 }
 

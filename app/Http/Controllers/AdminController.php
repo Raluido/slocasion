@@ -33,6 +33,8 @@ class AdminController extends Controller
         $cropMeasures = $request->input('cropMeasures');
         $cropMeasures = json_decode($cropMeasures);
 
+        log::info($cropMeasures);
+
         $car = new Car();
         $car->user_id = auth()->user()->id;
         $car->car_brand = $request->input('car_brand');
@@ -63,8 +65,9 @@ class AdminController extends Controller
                     $image->storeAs('images', $tempName);
                     $imgSize = getimagesize('images/' . $tempName);
                     $path = $numberPlate . $key . 'sm.' . $extension;
-                    if ($cropMeasures[$key]->height == '100%' || $cropMeasures[$key]->width == '100%') {
+                    if ($cropMeasures[$key]->height == '100%' && $cropMeasures[$key]->width == '100%') {
                         Image::open('images/' . $tempName)
+                            ->resize()
                             ->save('images/' . $path, 'guess', 80);
                     } else {
                         $x = (((int)str_replace('px', '', $cropMeasures[$key]->left)) / $cropMeasures[$key]->webWidth) * $imgSize[0];
@@ -75,12 +78,13 @@ class AdminController extends Controller
                             ->crop($x, $y, $w, $h)
                             ->save('images/' . $path, 'guess', 80);
                     }
-                    $images[] = new Item([
+                    $items[] = new Item([
                         'filename' => $path,
                         'main' => $cropMeasures[$key]->main
                     ]);
-                    $car->items()->saveMany($images);
-                    return redirect('admin');
+                    $car->items()->saveMany($items);
+                    return redirect()
+                        ->route('home');
                 } else {
                     return redirect()
                         ->back()
