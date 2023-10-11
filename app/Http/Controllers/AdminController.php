@@ -57,6 +57,8 @@ class AdminController extends Controller
         $car->save();
         if ($request->hasFile('addPhotosInput')) {
             $images = $request->addPhotosInput;
+            $extensionErrors = array();
+            $items = array();
             foreach ($images as $key => $image) {
                 $extension = $image->getClientOriginalExtension();
                 $extensionsallowed = ['jpg', 'png', 'jpeg'];
@@ -64,11 +66,10 @@ class AdminController extends Controller
                     $tempName = 'temp_' . time() . '.' . $extension;
                     $image->storeAs('images', $tempName);
                     $imgSize = getimagesize('images/' . $tempName);
-                    $path = $numberPlate . $key . 'sm.' . $extension;
+                    $path = $numberPlate . '_' . $key . 'sm.' . $extension;
                     if ($cropMeasures[$key]->height == '100%' && $cropMeasures[$key]->width == '100%') {
                         Image::open('images/' . $tempName)
-                            ->resize()
-                            ->save('images/' . $path, 'guess', 80);
+                            ->save('images/' . $path, 'guess', 50);
                     } else {
                         $x = (((int)str_replace('px', '', $cropMeasures[$key]->left)) / $cropMeasures[$key]->webWidth) * $imgSize[0];
                         $y = (((int)str_replace('px', '', $cropMeasures[$key]->top)) / $cropMeasures[$key]->webHeight) * $imgSize[1];
@@ -76,20 +77,24 @@ class AdminController extends Controller
                         $h = (((int)str_replace('px', '', $cropMeasures[$key]->height)) / $cropMeasures[$key]->webHeight) * $imgSize[1];
                         Image::open('images/' . $tempName)
                             ->crop($x, $y, $w, $h)
-                            ->save('images/' . $path, 'guess', 80);
+                            ->save('images/' . $path, 'guess', 50);
                     }
                     $items[] = new Item([
                         'filename' => $path,
                         'main' => $cropMeasures[$key]->main
                     ]);
-                    $car->items()->saveMany($items);
-                    return redirect()
-                        ->route('home');
                 } else {
-                    return redirect()
-                        ->back()
-                        ->withErrors('La imagen ' . $image->getClientOriginalName . 'no tiene una extensión permitida.');
+                    $extensionErrors[] = 'La imagen ' . $image->getClientOriginalName() . 'no tiene una extensión permitida.';
                 }
+            }
+            if (empty($items)) {
+                return redirect()
+                    ->route('home', $extensionErrors);
+            } else {
+                $car->items()->saveMany($items);
+                return redirect()
+                    ->route('home')
+                    ->with('extensionErrors', $extensionErrors);
             }
         }
     }

@@ -17,6 +17,13 @@
             @endauth
         </div>
         <div class="bottom">
+            @auth('web')
+            @if(Session::get('extensionErrors') && !empty($extensionErrors))
+            @foreach($extensionErrors as $extensionError)
+            <p class="">{{ $extensionError }}</p>
+            @endforeach
+            @endif
+            @endauth
             @if(is_string($cars))
             <p class="emptyPosts">{{ $cars }}</p>
             @else
