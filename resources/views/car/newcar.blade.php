@@ -109,12 +109,12 @@
                             <label for="isMain" class="">Principal</label>
                             <input type="checkbox" class="" id="isMain">
                         </div>
-                        <div class="cropDefaultReset margin11">
+                        <div class="cropDefaultReset margin10">
                             <div class="resetCrop">100 x 100</div>
                             <div class="defaultCrop">100 x 80</div>
                         </div>
                     </div>
-                    <div class="changePhoto d-flex justify-center margin11">
+                    <div class="changePhoto d-flex justify-center margin10">
                         <div class="previousPhoto">Anterior</div>
                         <div class="nextPhoto">Siguiente</div>
                     </div>

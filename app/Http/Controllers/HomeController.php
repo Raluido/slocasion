@@ -33,7 +33,7 @@ class HomeController extends Controller
             ->get();
 
         if ($cars->isEmpty()) {
-            $cars = "No has añadido ninguna publicación por ahora.";
+            $cars = "No hay ninguna publicación por ahora.";
         }
 
         return view('home', ['cars' => $cars]);

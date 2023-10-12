@@ -47,8 +47,12 @@ h5 {
     display: inline;
 }
 
-.margin11 {
+.margin10 {
     margin: 1em 0;
+}
+
+.margin01 {
+    margin: 0 1em;
 }
 
 .blueButton {
@@ -208,6 +212,27 @@ header nav .desktopMenu {
 
 /* home */
 
+main .home .innerHome .bottom .emptyPosts {
+    margin: 1em;
+}
+
+main .home .innerHome .bottom .emptyPosts .top {
+    margin: 0 0 2em .5em;
+}
+
+
+main .home .innerHome .bottom .emptyPosts .bottom {
+    width: 100%;
+    height: auto;
+}
+
+main .home .innerHome .bottom .emptyPosts .bottom img {
+    width: 50%;
+    height: auto;
+}
+
+
+
 main .wall {
     margin-bottom: 2em;
 }
@@ -219,7 +244,7 @@ main .wall img {
 }
 
 main .add {
-    margin-left: 1em;
+    margin: 2em 0 2em 1em;
 }
 
 .cars {
@@ -877,10 +902,6 @@ footer .innerFooterBottom>a>div div:nth-child(2) h3 {
 /* newcar */
 
 .newCar .innerNewCar .bottom {
-    padding: 2em;
-}
-
-.newCar .innerNewCar .bottom .emptyPosts {
     padding: 2em;
 }
 

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Item extends Model
 {
-    protected $fillable = ['filename'];
+    protected $fillable = ['filename', 'main'];
 
     public function car(): BelongsTo
     {

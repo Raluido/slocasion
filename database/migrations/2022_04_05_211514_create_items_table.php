@@ -17,7 +17,7 @@ class CreateItemsTable extends Migration
             $table->id('idItem')->unsigned();
             $table->foreignId('car_id')->constrained('cars');
             $table->string('filename');
-            $table->boolean('main')->default(false);
+            $table->boolean('main');
             $table->timestamps();
         });
     }

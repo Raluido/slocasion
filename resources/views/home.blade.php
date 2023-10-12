@@ -17,27 +17,29 @@
             @endauth
         </div>
         <div class="bottom">
-            @auth('web')
-            @if(Session::get('extensionErrors') && !empty($extensionErrors))
-            @foreach($extensionErrors as $extensionError)
-            <p class="">{{ $extensionError }}</p>
-            @endforeach
-            @endif
-            @endauth
             @if(is_string($cars))
-            <p class="emptyPosts">{{ $cars }}</p>
+            <div class="emptyPosts">
+                <div class="top">
+                    <p class="">{{ $cars }}</p>
+                </div>
+                <div class="bottom d-flex justify-center">
+                    <img src="{{ Storage::url('img/carImage-nobg.jpg') }}" alt="" class="">
+                </div>
+            </div>
             @else
             @foreach ($cars as $car)
             <div class="cars">
                 <a class="innerCars" href="{{ url('showcar/' . $car->id) }}" style="position:relative">
                     <div class="innerCarsTop">
+                        @if (!empty($car->items))
                         @foreach ($car->items as $item)
-                        @if($item->main == true)
+                        @if($item->main == 1)
                         <div class="img">
-                            <img class="" src="{{ Storage::url($item->path) }}" />
+                            <img class="" src="{{ Storage::disk('images')->url($item->filename) }}" />
                         </div>
                         @endif
                         @endforeach
+                        @endif
                         @if ($car->car_soldOrBooked == 'Vendido')
                         <div class="state"><img class="" src="{{ Storage::url('img/sold.png') }}"></div>
                         @elseif ($car->car_soldOrBooked == 'Reservado')

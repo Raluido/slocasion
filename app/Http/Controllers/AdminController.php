@@ -33,8 +33,6 @@ class AdminController extends Controller
         $cropMeasures = $request->input('cropMeasures');
         $cropMeasures = json_decode($cropMeasures);
 
-        log::info($cropMeasures);
-
         $car = new Car();
         $car->user_id = auth()->user()->id;
         $car->car_brand = $request->input('car_brand');
@@ -81,22 +79,19 @@ class AdminController extends Controller
                     }
                     $items[] = new Item([
                         'filename' => $path,
-                        'main' => $cropMeasures[$key]->main
+                        'main' => $cropMeasures[$key]->main == true ? 1 : 0
                     ]);
                 } else {
-                    $extensionErrors[] = 'La imagen ' . $image->getClientOriginalName() . 'no tiene una extensión permitida.';
+                    $extensionErrors[] = 'La imagen ' . $image->getClientOriginalName() . ' no tiene una extensión permitida.';
                 }
             }
-            if (empty($items)) {
-                return redirect()
-                    ->route('home', $extensionErrors);
-            } else {
-                $car->items()->saveMany($items);
-                return redirect()
-                    ->route('home')
-                    ->with('extensionErrors', $extensionErrors);
-            }
         }
+        if (!empty($items)) {
+            $car->items()->saveMany($items);
+        }
+        return redirect()
+            ->route('home')
+            ->withErrors($extensionErrors);
     }
 
     public function editCar($id)

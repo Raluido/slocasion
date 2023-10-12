@@ -41,7 +41,7 @@
                     </li>
                     @if(auth()->id())
                     <li class="">
-                        <a class="" href="/logout">Logout</a>
+                        <a class="" href="{{ route('logout') }}">Logout</a>
                     </li>
                     @else
                     <li class="">
