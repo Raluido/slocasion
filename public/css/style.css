@@ -39,6 +39,14 @@ h5 {
     justify-content: space-evenly;
 }
 
+.flex-col {
+    flex-direction: column;
+}
+
+.align-center {
+    align-items: center;
+}
+
 .d-block {
     display: block;
 }
@@ -583,6 +591,10 @@ textarea {
     user-select: none;
 }
 
+.csslider>.navigation img {
+    width: 100%;
+    height: auto;
+}
 
 .csslider>.navigation label {
     position: relative;
@@ -592,6 +604,8 @@ textarea {
     margin: 0 4px;
     padding: 4px;
     background: transparent none repeat scroll 0 0;
+    width: 100px;
+    height: auto;
 }
 
 .csslider>.navigation label:hover:after {
@@ -666,7 +680,7 @@ textarea {
     position: absolute;
     width: 98%;
     left: 1%;
-    top: 15%;
+    top: 20%;
     height: auto;
     z-index: 10;
     -moz-box-sizing: content-box;

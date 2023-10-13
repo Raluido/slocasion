@@ -1,4 +1,4 @@
-@extends('layouts.appAboutUs')
+@extends('layouts.appNoAuth')
 
 @section('content')
 <div class="car">
@@ -29,21 +29,21 @@
             <div class="csslider infinity" id="slider1">
                 <input type="radio" name="slides" checked="checked" id="slides_1" />
                 @for ($i = 2; $i
-                <= $result + 1; $i++) <input type="radio" name="slides" id="slides_{{ $i }}" />
+                <= count($items) + 1; $i++) <input type="radio" name="slides" id="slides_{{ $i }}" />
                 @endfor
                 <ul class="obgaleria" id="galeria1">
-                    @for ($j = 0; $j <= $result; $j++) <li><img class="galleryImg" src="{{ Storage::url('media/' . $car->car_numberPlate . $j . 'sm.' . pathinfo($car->car_photo_main, PATHINFO_EXTENSION)) }}"></li>
+                    @for ($j = 0; $j < count($items); $j++) <li><img class="galleryImg" src="{{ Storage::disk('images')->url($items[$j]->filename) }}"></li>
                         @endfor
                 </ul>
                 <div class="arrows">
-                    @for ($w = 1; $w <= $result + 1; $w++) <label for="slides_{{ $w }}"></label>
+                    @for ($w = 1; $w <= count($items); $w++) <label for="slides_{{ $w }}"></label>
                         @endfor
                         <label class="goto-first" for="slides_1"></label>
-                        <label class="goto-last" for="slides_{{ $result + 1 }}"></label>
+                        <label class="goto-last" for="slides_{{ count($items) }}"></label>
                 </div>
                 <div class="navigation">
                     <div>
-                        @for ($x = 0; $x <= $result; $x++) <label for="slides_{{ $x + 1 }}"><img width="90vw" height="90vh" src="{{ Storage::url('media/' . $car->car_numberPlate . $x . 'sm.' . pathinfo($car->car_photo_main, PATHINFO_EXTENSION)) }}" /></label>
+                        @for ($x = 0; $x < count($items); $x++) <label for="slides_{{ $x + 1 }}"><img src="{{ Storage::disk('images')->url($items[$x]->filename) }}" /></label>
                             @endfor
                     </div>
                 </div>
@@ -76,7 +76,7 @@
                         @endphp
                         <h2>{{ $cyl }} cc</h2>
                         <h3 class="">Tipo de vehículo</h3>
-                        <h2>{{ $car->car_horsePower }}</h2>
+                        <h2>{{ $car->car_body }}</h2>
                         <h3 class="">Fecha de matriculación</h3>
                         @php
                         $registration_date = explode('-', $car->car_registration_date);
@@ -97,7 +97,7 @@
                         <h2 class="">Equipamiento destacado</h2>
                     </div>
                     <div class="items">
-                        <h3>{!! html_entity_decode($EquipmentOrdered) !!}</h3>
+                        <h3>{{ $car->car_equipment }}</h3>
                     </div>
                 </div>
                 <div class="innerInfoNotes">

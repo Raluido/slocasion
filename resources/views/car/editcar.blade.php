@@ -125,14 +125,15 @@
                         </div>
                     </div>
                     <div class="thumbnails">
-                        @if(!empty($items[0]))
+                        @if(is_string($items))
                         <div class="">
-                            <p class="">Eliminar fotos</p>
+                            <p class="">{{ $items }}</p>
                         </div>
+                        @else
                         @foreach($items as $item)
                         <div class="thumbnail">
                             <div class="thumbnailImg">
-                                <img src="{{ Storage::url('media/' . str_replace('public/media/', '', $item->filename)) }}" alt="" class="">
+                                <img src="{{ Storage::disk('images')->url(auth()->id() . '/' . $item->filename) }}" alt="" class="">
                             </div>
                             <div class="thumbnailDelete">
                                 <a href="{{ route('deleteImg', $item->idItem) }}" class="text-white">X</a>
@@ -141,6 +142,7 @@
                         @endforeach
                         @endif
                     </div>
+                    <input type="hidden" id="cropMeasures" name="cropMeasures" value="" class="">
                     <div class="editButton">
                         <button type="submit" class="greenButton text-white">{{ Lang::get('car.editCar') }}</button>
                     </div>
@@ -149,4 +151,7 @@
         </div>
     </div>
 </div>
+@endsection
+@section('js')
+<script class="" src="{{ asset('js/editImages.js') }}" defer></script>
 @endsection

@@ -35,7 +35,7 @@
                         @foreach ($car->items as $item)
                         @if($item->main == 1)
                         <div class="img">
-                            <img class="" src="{{ Storage::disk('images')->url($item->filename) }}" />
+                            <img class="" src="{{ Storage::disk('images')->url(auth()->id() . '/' . $item->filename) }}" />
                         </div>
                         @if ($car->car_soldOrBooked == 'Vendido')
                         <div class="state"><img class="" src="{{ Storage::url('img/sold.png') }}"></div>
@@ -87,7 +87,7 @@
                         </select><br>
                         <button class="blueButton text-white" type="submit">{{ Lang::get('car.car_changeStatus') }}</button>
                     </form>
-                    <div class="editDelete">
+                    <div class="editDelete d-flex flex-col justify-center">
                         <div class="edit"><button class="greenButton"><a class="text-white" href="{{ url('editcar/' . $car->id) }}">{{ Lang::get('car.editCar') }}</a></button>
                         </div>
                         <div class="delete"><button class="redButton"><a class="text-white" href="{{ url('deletecar/' . $car->id) }}">Eliminar</a></button>
