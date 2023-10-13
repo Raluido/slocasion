@@ -32,7 +32,6 @@ class CreateCarsTable extends Migration
             $table->string("car_gear");
             $table->string("car_body");
             $table->date("car_registration_date");
-            $table->string("car_photo_main")->nullable();
             $table->timestamps();
         });
     }

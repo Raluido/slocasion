@@ -37,15 +37,15 @@
                         <div class="img">
                             <img class="" src="{{ Storage::disk('images')->url($item->filename) }}" />
                         </div>
-                        @endif
-                        @endforeach
-                        @endif
                         @if ($car->car_soldOrBooked == 'Vendido')
                         <div class="state"><img class="" src="{{ Storage::url('img/sold.png') }}"></div>
                         @elseif ($car->car_soldOrBooked == 'Reservado')
                         <div class="state"><img class="" src="{{ Storage::url('img/reservedBg.png') }}"></div>
                         @else
                         <div class="state"><img class="" src="{{ Storage::url('img/onsale.png') }}"></div>
+                        @endif
+                        @endif
+                        @endforeach
                         @endif
                     </div>
                     <div class="bottomCars">

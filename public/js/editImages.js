@@ -217,7 +217,6 @@ addEventListener('pointermove', function (event) {
     currentBottom = window.getComputedStyle(squareTemplate).getPropertyValue('bottom');
     data = {
         'id': i,
-        // 'main': i == 0 ? true : false,
         'top': currentTop,
         'bottom': currentBottom,
         'left': currentLeft,
@@ -233,11 +232,13 @@ addEventListener('pointermove', function (event) {
 })
 
 defaultCrop.addEventListener('click', function () {
-    clickDefault = true;
     data = {
+        'top': 0.1 * innerImgPrev.height + 'px',
+        'bottom': '0px',
+        'left': '0px',
+        'right': '0px',
         'width': innerImgPrev.width + 'px',
         'height': 0.8 * innerImgPrev.height + 'px',
-        'top': 0.1 * innerImgPrev.height + 'px',
         'webHeight': innerImgPrev.height,
         'webWidth': innerImgPrev.width,
     }
@@ -245,11 +246,13 @@ defaultCrop.addEventListener('click', function () {
 })
 
 resetCrop.addEventListener('click', function () {
-    clickReset = true;
     data = {
+        'top': '0%',
+        'bottom': '0%',
+        'left': '0%',
+        'right': '0%',
         'width': '100%',
         'height': '100%',
-        'top': '0%',
         'webHeight': innerImgPrev.height,
         'webWidth': innerImgPrev.width,
     }
@@ -259,23 +262,20 @@ resetCrop.addEventListener('click', function () {
 function saveTemplate(data, clickDefault, clickReset) {
     id = cropMeasures.findIndex(obj => obj.id == i);
     if (id >= 0) {
-        if (clickDefault || clickReset) {
-            cropMeasures[id].width = data.width;
-            cropMeasures[id].height = data.height;
-            cropMeasures[id].top = data.top;
-            squareTemplate.style.width = data.width;
-            squareTemplate.style.height = data.height;
-            squareTemplate.style.top = data.top;
-            clickDefault = false;
-            clickReset = false;
-        } else {
-            cropMeasures[id].top = data.top;
-            cropMeasures[id].bottom = data.bottom;
-            cropMeasures[id].left = data.left;
-            cropMeasures[id].right = data.right;
-            cropMeasures[id].width = data.width;
-            cropMeasures[id].height = data.height;
-        }
+        cropMeasures[id].top = data.top;
+        cropMeasures[id].bottom = data.bottom;
+        cropMeasures[id].left = data.left;
+        cropMeasures[id].right = data.right;
+        cropMeasures[id].width = data.width;
+        cropMeasures[id].height = data.height;
+        cropMeasures[id].webHeight = data.webHeight;
+        cropMeasures[id].webWidth = data.webWidth;
+        squareTemplate.style.top = data.top;
+        squareTemplate.style.bottom = data.bottom;
+        squareTemplate.style.left = data.left;
+        squareTemplate.style.right = data.right;
+        squareTemplate.style.width = data.width;
+        squareTemplate.style.height = data.height;
     }
     document.getElementById('cropMeasures').value = JSON.stringify(cropMeasures);
 }
@@ -332,6 +332,8 @@ const noCrop = () => {
             'right': '0px',
             'width': '100%',
             'height': '100%',
+            'webHeight': null,
+            'webWidth': null,
         }
         cropMeasures.push(data);
     }
@@ -356,13 +358,6 @@ const updateValues = () => {
             squareTemplate.style.right = cropMeasures[id].right;
             squareTemplate.style.height = cropMeasures[id].height;
             squareTemplate.style.width = cropMeasures[id].width;
-        } else {
-            squareTemplate.style.top = '0px';
-            squareTemplate.style.bottom = '0px';
-            squareTemplate.style.left = '0px';
-            squareTemplate.style.right = '0px';
-            squareTemplate.style.height = '100%';
-            squareTemplate.style.width = '100%';
         }
     }
 }

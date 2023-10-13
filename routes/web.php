@@ -34,7 +34,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('logout', [LogoutController::class, 'logout'])->name('logout');
 
     Route::get('showimages/{id}', [AdminController::class, 'showimages'])->name('showimages');
-    Route::get('editimage/{idorfilename}', [AdminController::class, 'editimage'])->name('editimage');
     Route::get('editcar/{id}', [AdminController::class, 'editCar']);
     Route::put('updatecar/{id}', [AdminController::class, 'updateCar']);
 

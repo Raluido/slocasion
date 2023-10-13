@@ -28,6 +28,15 @@ class AdminController extends Controller
         return view('car.newcar');
     }
 
+    public function showimages($id)
+    {
+        $car = Car::find($id);
+        $items = Item::where('car_id', $id)
+            ->get();
+
+        return view('image.showImages', compact('car', 'items'));
+    }
+
     public function createNewCar(Request $request)
     {
         $cropMeasures = $request->input('cropMeasures');
@@ -61,7 +70,7 @@ class AdminController extends Controller
                 $extension = $image->getClientOriginalExtension();
                 $extensionsallowed = ['jpg', 'png', 'jpeg'];
                 if (in_array($extension, $extensionsallowed)) {
-                    $tempName = 'temp_' . time() . '.' . $extension;
+                    $tempName = 'temp_Image.' . $extension;
                     $image->storeAs('images', $tempName);
                     $imgSize = getimagesize('images/' . $tempName);
                     $path = $numberPlate . '_' . $key . 'sm.' . $extension;
@@ -85,6 +94,7 @@ class AdminController extends Controller
                     $extensionErrors[] = 'La imagen ' . $image->getClientOriginalName() . ' no tiene una extensión permitida.';
                 }
             }
+            Storage::delete('images/' . $tempName);
         }
         if (!empty($items)) {
             $car->items()->saveMany($items);
@@ -99,10 +109,8 @@ class AdminController extends Controller
         $items = Item::where('car_id', $id)
             ->get();
         $car = Car::find($id);
-        $car->user_id = Auth::user()->id;
-        $car_equipment = DB::Table('cars')->where('id', $id)->value('car_equipment');
-        $car_observations = DB::Table('cars')->where('id', $id)->value('car_observations');
-        return view('car.editcar', compact('car', 'car_equipment', 'car_observations', 'items'));
+
+        return view('car.editcar', compact('car', 'items'));
     }
 
     public function updateCar(Request $request, $id)
@@ -127,7 +135,7 @@ class AdminController extends Controller
         $car->car_registration_date = $request->input('car_registration_date');
         $car->car_soldOrBooked = $request->input('car_soldOrBooked');
 
-        if ($request->hasFile('photoMain')) {
+        if ($request->hasFile('addPhotosInput')) {
             $oldFileMain = DB::Table('cars')
                 ->where('id', $id)
                 ->value('car_photo_main');
@@ -209,121 +217,40 @@ class AdminController extends Controller
             ->back();
     }
 
-    public function showimages($id)
-    {
-        $car = Car::find($id);
-        $items = Item::where('car_id', $id)
-            ->get();
-
-        return view('image.showImages', compact('car', 'items'));
-    }
-
-    public function editimage($idorfilename)
-    {
-        if (ctype_digit($idorfilename)) {
-            $item = Item::where('idItem', $idorfilename)
-                ->get();
-            $item = $item[0];
-            $car = "";
-        } else {
-            $car = Car::where('car_photo_main', $idorfilename)
-                ->get();
-            $car = $car[0];
-            $item = "";
-        }
-        return view('image.edit', compact('car', 'item'));
-    }
-
     public function deleteCar($id)
     {
-        $oldFileMain = DB::Table('cars')
-            ->where('id', $id)
-            ->value('car_photo_main');
-        if (Storage::exists('storage/media/' . $oldFileMain)) {
-            Storage::delete('storage/media/' . $oldFileMain);
-        }
-
-        $oldFiles = DB::Table('items')
-            ->select('filename')
+        DB::Table('items')
             ->where('car_id', $id)
-            ->get();
-        foreach ($oldFiles as $oldFile) {
-            $search = 'public/media/';
-            $oldFile = str_replace($search, '', $oldFile->filename);
-            if (Storage::exists('storage/media/' . $oldFile)) {
-                Storage::delete('storage/media/' . $oldFile);
-            }
+            ->delete();
+
+        if (Storage::exists('images/' . $id)) {
+            Storage::deleteDirectory('images/' . $id);
         }
 
-        $deleted = Item::where('car_id', $id)->delete();
-        if ($deleted >= 0) {
-            $deleted = Car::where('id', $id)->delete();
-            if ($deleted >= 0) {
-                return redirect()
-                    ->back()
-                    ->withSuccess("El anuncio se ha eliminado correctamente");
-            } else {
-                return redirect()
-                    ->back()
-                    ->withSuccess("Han habido errores al intentar eliminar el anuncio");
-            }
-        } else {
-            return redirect()
-                ->back()
-                ->withSuccess("Han habido errores al intentar eliminar el anuncio");
-        }
-    }
-
-    public function deleteImgMain($id)
-    {
-        $oldFile = DB::Table('cars')
+        DB::Table('cars')
             ->where('id', $id)
             ->get();
 
-        $path = 'storage/media/' . $oldFile[0]->car_photo_main;
-        if (Storage::exists($path)) {
-            Storage::delete($path);
-
-            $car = Car::find($id);
-            $car->car_photo_main = null;
-            $deleted = $car->update();
-
-
-            if ($deleted) {
-                return redirect()
-                    ->back()
-                    ->withSuccess("Se ha eliminado correctamente la foto");
-            } else {
-                return redirect()
-                    ->back()
-                    ->withErrors("Ha habido un error al intentar eliminar la foto");
-            }
-        }
+        return redirect()
+            ->back()
+            ->withSuccess("El anuncio se ha eliminado correctamente");
     }
 
     public function deleteImg($id)
     {
-        $oldFile = DB::Table('items')
+        $image = DB::Table('items')
+            ->where('id', $id)
+            ->value('filename');
+
+        $item = DB::Table('items')
             ->where('idItem', $id)
-            ->get();
+            ->delete();
 
-        $oldFile = (str_replace('public/media/', '', $oldFile[0]->filename));
-
-        $path = 'storage/media/' . $oldFile;
-        if (Storage::exists($path)) {
-            Storage::delete($path);
-
-            $deleted = Item::where('idItem', $id)
-                ->delete();
-            if ($deleted) {
-                return redirect()
-                    ->back()
-                    ->withSuccess("Se ha eliminado correctamente la foto");
-            } else {
-                return redirect()
-                    ->back()
-                    ->withErrors("Ha habido un error al intentar eliminar la foto");
-            }
+        if (Storage::exists('images/' . $id . '/' . $image->filename)) {
+            Storage::delete('images/' . $id . '/' . $image->filename);
         }
+        return redirect()
+            ->back()
+            ->withSuccess("Se ha eliminado correctamente la foto");
     }
 }
