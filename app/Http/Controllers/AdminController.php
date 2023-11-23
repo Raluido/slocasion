@@ -76,7 +76,7 @@ class AdminController extends Controller
                     }
                     $image->storeAs('images/' . 'temp', $tempName);
                     $imgSize = getimagesize('images/' . 'temp' . '/' . $tempName);
-                    $fileName = $numberPlate . '_' . $key . 'sm.' . $extension;
+                    $fileName = $numberPlate . '_' . time() . '_sm.' . $extension;
                     if ($cropMeasures[$key]->height == '100%' && $cropMeasures[$key]->width == '100%') {
                         if (!Storage::exists('images/' . $car->id)) {
                             Storage::makeDirectory('images/' . $car->id, [0755]);
@@ -165,7 +165,7 @@ class AdminController extends Controller
                     }
                     $image->storeAs('images/' . 'temp', $tempName);
                     $imgSize = getimagesize('images/' . 'temp' . '/' . $tempName);
-                    $fileName = $numberPlate . '_' . $key . 'sm.' . $extension;
+                    $fileName = $numberPlate . '_' . time() . '_sm.' . $extension;
                     if ($cropMeasures[$key]->height == '100%' && $cropMeasures[$key]->width == '100%') {
                         if (!Storage::exists('images/' . $car->id)) {
                             Storage::makeDirectory('images/' . $car->id, [0755]);

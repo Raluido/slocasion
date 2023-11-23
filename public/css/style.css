@@ -267,19 +267,28 @@ main .add {
     border: 1px solid lightgray;
 }
 
-.innerCars .innerCarsTop,
-.innerCars .innerCarsTop img {
+.innerCars .innerCarsTop .img,
+.innerCars .innerCarsTop .img img {
     width: 100%;
     height: auto;
     border-radius: 1%;
+}
+
+.innerCars .innerCarsTop .state,
+.innerCars .innerCarsTop .state img {
+    border-radius: 1%;
+    width: 75vw;
+    height: auto;
+}
+
+.innerCars .innerCarsTop .img {
     position: relative;
 }
 
-.innerCars .state {
+.innerCars .innerCarsTop .state {
     position: absolute;
     top: 0;
-    right: 0;
-    left: 0;
+    left: 15vw;
 }
 
 .innerCars .bottomCars {
