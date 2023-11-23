@@ -13,14 +13,14 @@ use Illuminate\Support\Facades\Log;
 
 class AdminController extends Controller
 {
-    public function updateStatus(Request $request, $id)
+    public function updateStatus($id, $newState)
     {
         $car = Car::find($id);
-        $car->car_soldOrBooked = $request->input('car_soldOrBooked');
+        $car->car_soldOrBooked = $newState;
         $car->update();
 
-        return redirect()
-            ->back();
+        $result = 'success';
+        return $result;
     }
 
     public function showNewCar()
@@ -71,21 +71,30 @@ class AdminController extends Controller
                 $extensionsallowed = ['jpg', 'png', 'jpeg'];
                 if (in_array($extension, $extensionsallowed)) {
                     $tempName = 'temp_Image.' . $extension;
-                    Storage::createDirectory('images/' . auth()->id(), [0755]);
-                    $image->storeAs('images/' . auth()->id(), $tempName);
-                    $imgSize = getimagesize('images/' . auth()->id() . '/' . $tempName);
+                    if (!Storage::exists('images/' . 'temp')) {
+                        Storage::makeDirectory('images/' . 'temp', [0755]);
+                    }
+                    $image->storeAs('images/' . 'temp', $tempName);
+                    $imgSize = getimagesize('images/' . 'temp' . '/' . $tempName);
                     $fileName = $numberPlate . '_' . $key . 'sm.' . $extension;
                     if ($cropMeasures[$key]->height == '100%' && $cropMeasures[$key]->width == '100%') {
-                        Image::open('images/' . auth()->id() . '/' . $tempName)
-                            ->save('images/' . auth()->id() . '/' . $fileName, 'guess', 50);
+                        if (!Storage::exists('images/' . $car->id)) {
+                            Storage::makeDirectory('images/' . $car->id, [0755]);
+                        }
+                        Image::open('images/' . 'temp' . '/' . $tempName)
+                            ->save('images/' . $car->id . '/' . $fileName, 'guess', 50);
                     } else {
+                        //cast to web format
                         $x = (((int)str_replace('px', '', $cropMeasures[$key]->left)) / $cropMeasures[$key]->webWidth) * $imgSize[0];
                         $y = (((int)str_replace('px', '', $cropMeasures[$key]->top)) / $cropMeasures[$key]->webHeight) * $imgSize[1];
                         $w = (((int)str_replace('px', '', $cropMeasures[$key]->width)) / $cropMeasures[$key]->webWidth) * $imgSize[0];
                         $h = (((int)str_replace('px', '', $cropMeasures[$key]->height)) / $cropMeasures[$key]->webHeight) * $imgSize[1];
-                        Image::open('images/' . auth()->id() . '/' . $tempName)
+                        if (!Storage::exists('images/' . $car->id)) {
+                            Storage::makeDirectory('images/' . $car->id, [0755]);
+                        }
+                        Image::open('images/' . 'temp' . '/' . $tempName)
                             ->crop($x, $y, $w, $h)
-                            ->save('images/' . auth()->id() . '/' . $fileName, 'guess', 50);
+                            ->save('images/' . $car->id . '/' . $fileName, 'guess', 50);
                     }
                     $items[] = new Item([
                         'filename' => $fileName,
@@ -94,10 +103,10 @@ class AdminController extends Controller
                 } else {
                     $extensionErrors[] = 'La imagen ' . $image->getClientOriginalName() . ' no tiene una extensión permitida.';
                 }
+                Storage::delete('images/temp/' . $tempName);
             }
-            Storage::delete('images/' . $tempName);
         }
-        if (!empty($items)) {
+        if (isset($items) && !empty($items)) {
             $car->items()->saveMany($items);
         }
         return redirect()
@@ -151,20 +160,30 @@ class AdminController extends Controller
                 $extensionsallowed = ['jpg', 'png', 'jpeg'];
                 if (in_array($extension, $extensionsallowed)) {
                     $tempName = 'temp_Image.' . $extension;
-                    $image->storeAs('images/' . auth()->id(), $tempName);
-                    $imgSize = getimagesize('images/' . auth()->id() . '/' . $tempName);
+                    if (!Storage::exists('images/' . 'temp')) {
+                        Storage::makeDirectory('images/' . 'temp', [0755]);
+                    }
+                    $image->storeAs('images/' . 'temp', $tempName);
+                    $imgSize = getimagesize('images/' . 'temp' . '/' . $tempName);
                     $fileName = $numberPlate . '_' . $key . 'sm.' . $extension;
                     if ($cropMeasures[$key]->height == '100%' && $cropMeasures[$key]->width == '100%') {
-                        Image::open('images/' . auth()->id() . '/' . $tempName)
-                            ->save('images/' . auth()->id() . '/' . $fileName, 'guess', 50);
+                        if (!Storage::exists('images/' . $car->id)) {
+                            Storage::makeDirectory('images/' . $car->id, [0755]);
+                        }
+                        Image::open('images/' . 'temp' . '/' . $tempName)
+                            ->save('images/' . $car->id . '/' . $fileName, 'guess', 50);
                     } else {
+                        //cast to web format
                         $x = (((int)str_replace('px', '', $cropMeasures[$key]->left)) / $cropMeasures[$key]->webWidth) * $imgSize[0];
                         $y = (((int)str_replace('px', '', $cropMeasures[$key]->top)) / $cropMeasures[$key]->webHeight) * $imgSize[1];
                         $w = (((int)str_replace('px', '', $cropMeasures[$key]->width)) / $cropMeasures[$key]->webWidth) * $imgSize[0];
                         $h = (((int)str_replace('px', '', $cropMeasures[$key]->height)) / $cropMeasures[$key]->webHeight) * $imgSize[1];
-                        Image::open('images/' . auth()->id() . '/' . $tempName)
+                        if (!Storage::exists('images/' . $car->id)) {
+                            Storage::makeDirectory('images/' . $car->id, [0755]);
+                        }
+                        Image::open('images/' . 'temp' . '/' . $tempName)
                             ->crop($x, $y, $w, $h)
-                            ->save('images/' . auth()->id() . '/' . $fileName, 'guess', 50);
+                            ->save('images/' . $car->id . '/' . $fileName, 'guess', 50);
                     }
                     $items[] = new Item([
                         'filename' => $fileName,
@@ -173,8 +192,8 @@ class AdminController extends Controller
                 } else {
                     $extensionErrors[] = 'La imagen ' . $image->getClientOriginalName() . ' no tiene una extensión permitida.';
                 }
+                Storage::delete('images/temp/' . $tempName);
             }
-            Storage::delete('images/' . $tempName);
         }
         if (!empty($items)) {
             $car->items()->saveMany($items);
@@ -186,16 +205,14 @@ class AdminController extends Controller
 
     public function deleteCar($id)
     {
-        DB::Table('items')
-            ->where('car_id', $id)
+        Item::where('car_id', $id)
             ->delete();
 
         if (Storage::exists('images/' . $id)) {
             Storage::deleteDirectory('images/' . $id);
         }
 
-        DB::Table('cars')
-            ->where('id', $id)
+        Car::find($id)
             ->delete();
 
         return redirect()
@@ -205,16 +222,15 @@ class AdminController extends Controller
 
     public function deleteImg($id)
     {
-        $image = DB::Table('items')
-            ->where('idItem', $id)
-            ->value('filename');
+        $image = Item::where('idItem', $id)
+            ->get();
 
-        DB::Table('items')
-            ->where('idItem', $id)
+        Item::where('idItem', $id)
             ->delete();
 
-        if (Storage::exists('images/' . $id . '/' . $image)) {
-            Storage::delete('images/' . $id . '/' . $image);
+
+        if (Storage::exists('images/' . $image[0]->car_id . '/' . $image[0]->filename)) {
+            Storage::delete('images/' . $image[0]->car_id . '/' . $image[0]->filename);
         }
         return redirect()
             ->back()

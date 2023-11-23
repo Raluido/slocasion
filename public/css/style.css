@@ -356,6 +356,12 @@ main .add {
     justify-content: space-around;
 }
 
+.edition .changeState {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
 .edition form select,
 .edition .editDelete .edit {
     margin-bottom: 1em;

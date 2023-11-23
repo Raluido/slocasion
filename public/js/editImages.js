@@ -242,7 +242,7 @@ defaultCrop.addEventListener('click', function () {
         'webHeight': innerImgPrev.height,
         'webWidth': innerImgPrev.width,
     }
-    saveTemplate(data, clickDefault);
+    saveTemplate(data);
 })
 
 resetCrop.addEventListener('click', function () {
@@ -256,10 +256,10 @@ resetCrop.addEventListener('click', function () {
         'webHeight': innerImgPrev.height,
         'webWidth': innerImgPrev.width,
     }
-    saveTemplate(data, clickReset);
+    saveTemplate(data);
 })
 
-function saveTemplate(data, clickDefault, clickReset) {
+function saveTemplate(data) {
     id = cropMeasures.findIndex(obj => obj.id == i);
     if (id >= 0) {
         cropMeasures[id].top = data.top;
