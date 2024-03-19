@@ -35,17 +35,17 @@
                         @foreach ($car->items as $item)
                         @if($item->main == 1)
                         <div class="img">
-                            <img class="" src="{{ Storage::disk('images')->url(auth()->id() . '/' . $item->filename) }}" />
+                            <img class="" src="{{ Storage::disk('images')->url($car->id . '/' . $item->filename) }}" />
                         </div>
+                        @endif
+                        @endforeach
+                        @endif
                         @if ($car->car_soldOrBooked == 'Vendido')
                         <div class="state"><img class="" src="{{ Storage::url('img/sold.png') }}"></div>
                         @elseif ($car->car_soldOrBooked == 'Reservado')
                         <div class="state"><img class="" src="{{ Storage::url('img/reservedBg.png') }}"></div>
                         @else
                         <div class="state"><img class="" src="{{ Storage::url('img/onsale.png') }}"></div>
-                        @endif
-                        @endif
-                        @endforeach
                         @endif
                     </div>
                     <div class="bottomCars">
@@ -74,9 +74,7 @@
                 </a>
                 @auth('web')
                 <div class="edition">
-                    <form method="POST" action="/updatestatus/{{ $car->id }}" enctype="multipart/form-data">
-                        @csrf
-                        @method('PUT')
+                    <div class="changeState">
                         <select name="car_soldOrBooked" id="car_soldOrBooked">
                             <option value="En venta" @if ($car->car_soldOrBooked == 'En venta') selected="selected" @endif>En venta
                             </option>
@@ -84,9 +82,9 @@
                             </option>
                             <option value="Reservado" @if ($car->car_soldOrBooked == 'Reservado') selected="selected" @endif>Reservado
                             </option>
-                        </select><br>
-                        <button class="blueButton text-white" type="submit">{{ Lang::get('car.car_changeStatus') }}</button>
-                    </form>
+                        </select>
+                        <button class="blueButton text-white" id="changeStateButton">{{ Lang::get('car.car_changeStatus') }}</button>
+                    </div>
                     <div class="editDelete d-flex flex-col justify-center">
                         <div class="edit"><button class="greenButton"><a class="text-white" href="{{ url('editcar/' . $car->id) }}">{{ Lang::get('car.editCar') }}</a></button>
                         </div>
@@ -96,9 +94,13 @@
                 </div>
                 @endauth
             </div>
+            <input type="hidden" value="{{ $car->id }}" id="idCar">
             @endforeach
             @endif
         </div>
     </div>
 </div>
+@endsection
+@section('js')
+<script type="text/javascript" src="{{ asset('js/changeState.js') }}"></script>
 @endsection

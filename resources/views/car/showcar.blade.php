@@ -28,22 +28,24 @@
         <div class="innerCarGallery">
             <div class="csslider infinity" id="slider1">
                 <input type="radio" name="slides" checked="checked" id="slides_1" />
-                @for ($i = 2; $i
-                <= count($items) + 1; $i++) <input type="radio" name="slides" id="slides_{{ $i }}" />
+                @for ($i = 2; $i<= count($items); $i++) 
+                    <input type="radio" name="slides" id="slides_{{ $i }}" />
                 @endfor
                 <ul class="obgaleria" id="galeria1">
-                    @for ($j = 0; $j < count($items); $j++) <li><img class="galleryImg" src="{{ Storage::disk('images')->url($items[$j]->filename) }}"></li>
-                        @endfor
+                    @for ($j = 0; $j < count($items); $j++) 
+                    <li><img class="galleryImg" src="{{ Storage::disk('images')->url($car->id . '/' . $items[$j]->filename) }}"></li>
+                    @endfor
                 </ul>
                 <div class="arrows">
-                    @for ($w = 1; $w <= count($items); $w++) <label for="slides_{{ $w }}"></label>
-                        @endfor
-                        <label class="goto-first" for="slides_1"></label>
-                        <label class="goto-last" for="slides_{{ count($items) }}"></label>
+                    @for ($w = 1; $w <= count($items); $w++) 
+                    <label for="slides_{{ $w }}"></label>
+                    @endfor
+                    <label class="goto-first" for="slides_1"></label>
+                    <label class="goto-last" for="slides_{{ count($items) }}"></label>
                 </div>
                 <div class="navigation">
                     <div>
-                        @for ($x = 0; $x < count($items); $x++) <label for="slides_{{ $x + 1 }}"><img src="{{ Storage::disk('images')->url($items[$x]->filename) }}" /></label>
+                        @for ($x = 0; $x < count($items); $x++) <label for="slides_{{ $x + 1 }}"><img src="{{ Storage::disk('images')->url($car->id . '/' . $items[$x]->filename) }}" /></label>
                             @endfor
                     </div>
                 </div>

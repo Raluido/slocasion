@@ -133,7 +133,7 @@
                         @foreach($items as $item)
                         <div class="thumbnail">
                             <div class="thumbnailImg">
-                                <img src="{{ Storage::disk('images')->url(auth()->id() . '/' . $item->filename) }}" alt="" class="">
+                                <img src="{{ Storage::disk('images')->url($car->id . '/' . $item->filename) }}" alt="" class="">
                             </div>
                             <div class="thumbnailDelete">
                                 <a href="{{ route('deleteImg', $item->idItem) }}" class="text-white">X</a>

@@ -40,7 +40,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('newcar', [AdminController::class, 'showNewCar']);
     Route::post('newcar', [AdminController::class, 'createNewCar']);
 
-    Route::put('updatestatus/{id}', [AdminController::class, 'updateStatus']);
+    Route::get('updatestatus/{id}/{newStatus}', [AdminController::class, 'updateStatus']);
 
     Route::get('deletecar/{id}', [AdminController::class, 'deleteCar'])->name('deleteCar');
     Route::get('deleteimg/{id}', [AdminController::class, 'deleteImg'])->name('deleteImg');
